@@ -1,0 +1,102 @@
+project:
+  type: book
+
+book:
+  title: "ENGG7518: Research Methods for Engineers"
+  subtitle: "Semester 2, 2026 - The University of Queensland"
+  author: "Prof. Zuduo Zheng, School of Civil Engineering"
+  date: "2026"
+  chapters:
+    - index.qmd
+    - part: "Administration"
+      chapters:
+        - admin/course-overview.qmd
+        - admin/assessments.qmd
+        - admin/communication.qmd
+    - part: "Research Fundamentals"
+      chapters:
+        - fundamentals/week1_what-is-science.qmd
+        - fundamentals/week2_norms-and-method.qmd
+        - fundamentals/week3_practical-research-skills.qmd
+    - part: "Tutorial Labs"
+      chapters:
+        - tutorials/week1-2_introduction_to_R.qmd
+    - part: "Statistics, Data Quality & Reproducibility"
+      chapters:
+        - stats/week4_basic-statistics.qmd
+        - stats/week5_basic-statistics.qmd
+        - stats/week6_reproducible-data-analysis.qmd
+        - stats/week6_intro-linear-regression.qmd
+        - stats/week7_linear-regression-diagnostics.qmd
+        - stats/week8_data-cleaning-and-quality.qmd
+    - part: "Engineering Optimisation"
+      chapters:
+        - optimisation/week10_intro-to-optimisation.qmd
+        - optimisation/week11_optimisation-part2.qmd
+        - optimisation/week12_constrained_classic_optimisation.qmd
+        - optimisation/week12_1d_iterative_search.qmd
+        - optimisation/week12_multivariable_numerical_methods.qmd
+    - references.qmd
+
+  page-navigation: true
+  back-to-top-navigation: true
+  page-footer:
+    left: "© 2026 The University of Queensland | School of Civil Engineering"
+    right: "ENGG7518 Course Book"
+
+  sidebar:
+    style: docked
+    search: false
+    collapse-level: 2
+
+  navbar:
+    title: "ENGG7518 Research Methods for Engineers"
+    href: index.html
+    search: true
+
+  repo-url: "https://github.com/your-org/engg7518-book"
+  repo-actions: [edit, issue]
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: slate
+    css: styles.css
+    include-after-body: toc-scrollspy.html
+    toc: true
+    toc-depth: 2
+    toc-expand: true
+    toc-location: right
+    smooth-scroll: true
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    code-overflow: wrap
+    code-link: true
+    lightbox: true
+    link-external-newwindow: true
+    link-external-icon: true
+    callout-appearance: simple
+    number-sections: true
+    number-depth: 2
+
+  typst:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    number-depth: 2
+    prefer-html: true
+    echo: false
+    margin:
+      x: 2cm
+      y: 2.5cm
+    include-before: |
+      #show outline: set block(breakable: true)
+
+execute:
+  warning: false
+  echo: true
+  eval: true

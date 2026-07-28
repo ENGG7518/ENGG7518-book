@@ -1,0 +1,284 @@
+---
+title: "Reason, Logic & Common Pitfalls"
+subtitle: "ENGG7518 Research Methods for Engineers: Week 2"
+author: "Prof. Zuduo Zheng"
+date: "Semester 2, 2026"
+---
+
+> *“The best time to plant a tree was 20 years ago. The second best time is now.”*  
+> - **Chinese proverb (shared by Prof. Zheng)
+
+## A Quick Refresher
+
+Last week we established the foundations: science is a human invention that relies on empirical evidence, and research is a structured, systematic inquiry. We ended with a crucial insight: **theory must guide every step of the research process**.
+
+The *desirable* sequence looks like this:
+
+```
+Literature review → Research question → Hypothesis → Study design → Data collection → Analysis → Recommendations
+```
+
+The *undesirable* sequence (increasingly common in the age of big data and AI) reverses this:
+
+```
+Data → Data crunching → Pattern spotting → Post‑hoc theorising
+```
+
+When we let data dictate our investigation, we risk producing conclusions that are not only wrong but sometimes absurd. The **dead grandmother/exam syndrome** example from last time showed just how ridiculous the outcome can be when we blindly trust data without theory.
+
+This week we go deeper into how we reason, what causality really means, and the most common traps that researchers fall into.
+
+---
+
+## Hypothesis: the Cornerstone of Research
+
+A **hypothesis** is a conjectural statement about a relation between two or more variables [@Pedhazur1997]. It is the engine of the scientific method.
+
+Two things you must never forget about a hypothesis:
+
+1. **A hypothesis can never be confirmed: only rejected, or not rejected.**  
+   When the evidence (data) is inconsistent with the hypothesis, we reject it. When the evidence is consistent, we may say “we fail to reject the hypothesis” - but we never claim to have “proved” it.  
+   *Why?* Because science is a process of moving closer to the truth, not of finding absolute truth. Future evidence may overturn what we believe today.
+
+2. **You must be able to state your hypothesis clearly before you touch any data.**  
+   If you cannot articulate your hypothesis in simple sentences, your research project is on shaky ground.
+
+---
+
+## Three Ways of Reasoning
+
+Scientific reasoning uses three distinct types of logic. Each has strengths and weaknesses.
+
+| Type | Direction | What it does | Is it reliable? |
+|------|-----------|-------------|-----------------|
+| **Induction** | From specific to general | Observes a sample, draws conclusions about the whole population | The most common method in science, but not foolproof; the conclusion is *probable*, not certain |
+| **Deduction** | From general to specific | Starts with premises believed to be true, derives a logical conclusion | Provides certainty *if* the premises are true, but cannot generate new knowledge beyond what is already contained in the premises |
+| **Abduction** | From observation to explanation | Sees a pattern and invents a plausible story to explain it | The weakest form of reasoning in research (essentially *post‑hoc theorising*) and should be avoided |
+
+### Induction
+
+Induction is the backbone of empirical science. You collect data on a **sample** of the objects you care about (people, roads, experiments, cities…) and then draw conclusions about the entire **population**.
+
+::: {.callout-tip}
+## Everyday induction
+- “I usually leave work after 6 p.m. and miss the traffic. Therefore, leaving after 6 p.m. always avoids traffic.”  
+  *Mostly true, but fails when there is a special event.*
+
+- “All managers at my office have college degrees. Therefore, you must have a degree to become a manager.”  
+  *Generally good advice, but not an absolute law.*
+:::
+
+Induction is not foolproof, but it becomes increasingly reliable when:
+
+- The sample is representative,
+- The analysis is rigorous,
+- And the conclusion is tested again and again by the wider scientific community.
+
+### Deduction
+
+Deduction is what we use in mathematics: step‑by‑step, black‑and‑white logic. It’s “top‑down” reasoning.
+
+::: {.callout-note}
+## Deduction in action
+- “My boss said the person with the highest sales gets a promotion. I had the highest sales. Therefore, I will be promoted.”  
+  *The conclusion follows logically, provided the boss keeps their word.*
+
+- “This course has a 40 % hurdle on the final exam. I scored 38 % on the final. Therefore, I cannot pass the course.”  
+  *Unambiguous and certain, once the rule is accepted.*
+:::
+
+For centuries, people believed deduction was the only valid route to knowledge. But deduction alone cannot discover new facts about the world; it only rearranges what we already assume to be true.
+
+### Abduction (Why You Should Avoid It)
+
+Abduction is the process of looking at a pattern and inventing an explanation *after the fact*. It is the reasoning behind the undesirable research sequence.
+
+::: {.callout-warning}
+## An abductive puzzle
+You see an abandoned bowl of hot soup on the kitchen table.  
+*How many explanations can you invent?*  
+
+- The owner is about to return.  
+- The owner was called away by an emergency.  
+- A burglar distracted the owner.  
+- …  
+
+The number of stories you can spin is limited only by your imagination. None of them can be trusted.
+:::
+
+In research, abductive reasoning leads to **post‑hoc theorising**, which we’ll dissect in the next section. The key lesson: **never let a pattern in your data become your theory after you’ve seen the data**.
+
+::: {.callout-tip icon=false}
+## A test for you
+> *“The sun will rise again tomorrow.”*  
+> Is this conclusion reached by deduction, induction, or abduction?
+
+If you answered **induction**, you are correct. We have observed the sun rise day after day, year after year. That vast body of evidence makes us confident, but no one can *prove* it will rise tomorrow. Even general relativity cannot give a 100 % guarantee. Our belief is built on accumulated inductive evidence.
+:::
+
+---
+
+## Causality vs. Association
+
+Engineers often ask: *“Does A cause B?”* Answering that question is much harder than it appears.
+
+- **Association (correlation):** two things tend to occur together or vary in a related way.  
+  *Ice‑cream sales and drowning incidents both rise in summer, but eating ice‑cream does not cause drowning.* - **Causality:** changing A directly produces a change in B.
+
+Most statistical and machine‑learning methods can detect association, **not** causation. Yet researchers (and the media) frequently slip from “A is associated with B” to “A causes B”. This is a serious mistake.
+
+### The five conditions for causality
+
+To claim that A causes B, *all* of the following must be demonstrated [@Washington]:
+
+| # | Condition | What it means |
+|---|-----------|---------------|
+| 1 | **Material explanation** | A plausible mechanism consistent with theory. |
+| 2 | **Consistency of effect** | The effect appears repeatedly across different studies, populations, and settings. |
+| 3 | **Dose‑response effect** | More of A produces more (or less) of B in a systematic way. |
+| 4 | **Effect from experiment** | A well‑designed, controlled experiment confirms the effect. |
+| 5 | **Temporal chain** | A must occur *before* B. |
+
+Consider a new COVID vaccine. To prove it lowers body temperature you must:
+
+- Have a biochemical theory for why the ingredients should work (#1).
+- Show it works in young, old, male, female, different ethnicities (#2).
+- Demonstrate that two tablets reduce fever more than one tablet (#3).
+- Run a randomised controlled trial with a placebo group (#4).
+- Ensure the fever reduction happens *after* taking the vaccine (#5).
+
+That is why establishing causality is so difficult, and why most of the time we can only say “A is associated with B”. And that is still valuable, as long as we are honest about it.
+
+---
+
+## Common Fallacies and Obstacles in Scientific Research
+
+Even well‑trained researchers fall into these traps. Recognising them is the first step to avoiding them.
+
+### 1. Post‑Hoc Theorising (Post hoc ergo propter hoc)
+
+**“After, therefore because.”** This is the fallacy of assuming that because event A occurred before event B, A must have caused B.
+
+- *There were no nuclear weapons before women had the right to vote, therefore nuclear war is a product of women voting.* 😕
+- *My child broke her leg after receiving a vaccine, therefore the vaccine caused the broken leg.*
+- *Everybody who goes to that optometrist ends up wearing glasses, therefore the optometrist makes people’s eyesight worse.*
+
+In research, post‑hoc theorising occurs when you:
+
+1. Analyse data without a clear hypothesis,
+2. Spot an interesting pattern,
+3. Then invent a theory to “explain” it.
+
+This is **not** a valid test of the theory. The same data that suggested the hypothesis will almost always seem to support it, a phenomenon known as **Type I error inflation** or data dredging. If you test enough combinations, you will eventually find something “significant” purely by chance.
+
+::: {.callout-important}
+## Golden rule
+The hypothesis must come **before** the data that tests it. Anything else is just storytelling dressed as science.
+:::
+
+### 2. Entrapment
+
+Entrapment happens when you have invested so much time, money, or ego into a project that you can no longer admit it might be failing.
+
+- You ignore warning signs.
+- You dismiss competing hypotheses.
+- You may even massage the data to protect your original belief.
+
+The case of a researcher who spends a $5 million, 5‑year government grant and has nothing to show is a classic example. The pressure to produce a “success” can be overwhelming.  
+
+**The best defence:** follow the desirable research sequence from day one, and regularly step back to ask, *“If I were a sceptical outsider, what would I think of my results so far?”*
+
+### 3. Selection of Research Tools: The “Hammer” Problem
+
+> *“Give a boy a hammer, and suddenly everything becomes a nail.”*
+
+Researchers tend to use the statistical or modelling techniques they already know, rather than the one best suited to the problem. You should always ask:
+
+- What is the nature of my data?
+- What is my research question?
+- What methods have other researchers used on similar problems?
+
+A structural equation model, a neural network, a simple t‑test; each has its place. Do not let your comfort zone dictate your toolbox.
+
+### 4. Poor Treatment of Outliers
+
+An outlier is a data point that lies far from the rest of the observations. It is tempting to simply delete it because it “messes up” the analysis.
+
+But **removing an outlier just because it is an outlier is scientific misconduct** unless you can provide a defensible reason:
+
+- A data‑coding error that cannot be corrected.
+- A material reason that truly sets that observation apart (e.g., equipment malfunction).
+- A documented, theory‑based justification.
+
+The story of the **Thanksgiving turkey** (see the next section) shows why careless removal of outliers can make you miss the most important discovery of your entire project.
+
+### 5. The Black Swan and the Thanksgiving Turkey
+
+In his book *The Black Swan*, Nassim Nicholas Taleb tells the story of a turkey who is fed every morning by a kind farmer. Day after day, the turkey’s happiness increases. A “smart turkey” even fits a linear regression model and predicts ever‑increasing happiness.
+
+Until the morning of Thanksgiving. The farmer appears not with a bucket of food, but with a knife. Happiness drops to zero.
+
+That single, catastrophic data point (the Black Swan event) is an outlier. If you blindly delete it, your model looks perfect but is utterly wrong. The outlier was the *truth*.
+
+::: {.callout-tip}
+**Before you remove any outlier, ask:**  
+Could this point be telling me something new about the phenomenon? Might it be the key to a real discovery?
+:::
+
+### 6. Statistical Significance ≠ Practical Significance
+
+A result can be **statistically significant** (small p‑value) yet completely unimportant in the real world.
+
+::: {.callout-note}
+## Example: Variable message sign
+An engineer tests a new electronic sign and finds that off‑ramp usage increases by **1 %** during peak hours, with a p‑value of 0.0001 (very significant).  
+But:
+
+- The three‑lane motorway carries 2000 vehicles per hour per lane (vphpl).
+- The one‑lane off‑ramp carries 1000 vphpl.
+- A 1 % increase means **10 extra vehicles per hour** on the off‑ramp, or a diversion of about **3.3 vphpl** on the mainline.
+
+Is that difference large enough to justify installing expensive signs everywhere? Probably not.
+:::
+
+Always report **effect sizes** alongside p‑values. Ask: *“Is the magnitude of the effect large enough to matter in practice?”*
+
+### 7. Confirmation Bias
+
+Confirmation bias is our tendency to:
+
+- Seek out information that supports our existing beliefs.
+- Interpret ambiguous evidence as supporting our beliefs.
+- Ignore or dismiss evidence that contradicts our beliefs.
+- Remember only the details that uphold our beliefs.
+
+As scientists, we must actively fight against this. One of the strongest weapons is **organised scepticism** (the fourth Mertonian norm), inviting others to find holes in our work.
+
+### 8. Publication Bias
+
+Journals are far more likely to publish studies that report **positive, statistically significant results** than studies that find no effect. This creates a distorted picture of reality:
+
+- Researchers may run 20 experiments but only publish the 1 that “worked”.
+- Negative or null results remain hidden in file drawers.
+- Literature reviews then overestimate the strength of an effect.
+
+This is another reason why reproducibility and pre‑registration of studies are so important in modern science.
+
+---
+
+## Key Takeaways for This Week
+
+1. **Hypothesis first, data second**: Never reverse the order.
+2. Induction is the workhorse of science; deduction gives certainty; abduction is a trap.
+3. Correlation does **not** imply causation; establishing causality is extremely difficult.
+4. Be honest about the limitations of your statistical tools.
+5. Guard against post‑hoc theorising, entrapment, confirmation bias, and the blind removal of outliers.
+6. Statistical significance is not enough; always ask about practical significance.
+
+---
+
+## Recommended Reading
+
+- Taleb, N. N. (2010). *The Black Swan: The Impact of the Highly Improbable*. Random House.
+- Wootton, D. (2015). *The Invention of Science: A New History of the Scientific Revolution*. HarperCollins.
+- Neuman, W. L. (2021). *Social Research Methods* (7th ed.). Pearson.

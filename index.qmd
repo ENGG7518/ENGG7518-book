@@ -1,0 +1,29 @@
+---
+title: "Welcome & Preface"
+---
+
+# Preface {.unnumbered}
+
+Welcome to **ENGG7518: Research Methods for Engineers** at The University of Queensland.
+
+This online book serves as the central repository for course notes, lecture materials, research principles, statistical foundations, data processing methods, and numerical optimisation techniques.
+
+## Course Structure
+
+The course is structured into four main modules:
+
+1. **Course Administration**: Overview, assessments, communication guidelines, and software setup.
+2. **Research Fundamentals**: The nature of scientific enquiry, Mertonian norms, logic & reasoning, research design, and literature reviews.
+3. **Statistics & Reproducibility**: Descriptive and inferential statistics, reproducible analysis with R and Quarto, and regression modelling.
+4. **Data & Optimisation**: Data processing, quality control, classical optimisation methods, and Newton's method.
+
+::: {.callout-note}
+## Note for Students
+Chapters will be published and updated progressively throughout the semester. The navigation menu on the left allows you to access all released course materials.
+:::
+
+## Teaching Team
+
+- **Course Coordinator & Lecturer**: Prof. Zuduo Zheng ([zuduo.zheng@uq.edu.au](mailto:zuduo.zheng@uq.edu.au))
+- **Lecturer**: Dr Weiming Zhao ([weiming.zhao@uq.edu.au](mailto:weiming.zhao@uq.edu.au))
+- **Tutor**: Dr Saeed Mohammadian ([s.mohammadian@uq.edu.au](mailto:s.mohammadian@uq.edu.au))

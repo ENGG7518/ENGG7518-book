@@ -1,0 +1,82 @@
+---
+title: "Course Overview"
+---
+
+## Topics by Week
+
+This is the roadmap for the semester. We move from fundamental concepts to specific techniques, always linking back to real engineering problems.
+
+| Week | Topic |
+|------|-------|
+| 1-2 | How to conduct research: principles |
+| 3-4 | How to conduct research: practical matters |
+| 5   | Statistics basics |
+| 6   | Reproducible research and data analysis |
+| 7-8 | Linear regression |
+| 9-10| Data processing and quality |
+| 11  | Introduction to numerical optimisation |
+| 12  | Classical optimisation methods |
+| 13  | Newton’s method |
+
+## Course Description
+
+This postgraduate course equips you with the fundamental tools to design, execute, and communicate engineering research. It is organised into four balanced blocks:
+
+- **Fundamental concepts of research design** (experimental & observational): ~25%
+- **Statistical methods** (modelling, handling empirical data, interpretation): ~25%
+- **Data processing and analysis techniques**: ~25%
+- **Numerical optimisation**: ~25%
+
+We will use real engineering datasets in class. You will gain hands‑on experience with the statistical software **R** (and optionally Excel) during tutorials and assignments.
+
+## Course Aims
+
+After completing ENGG7518 you should be able to:
+
+1. Understand research design in experimental and non‑experimental engineering settings.
+2. Estimate statistical models, interpret output, and communicate findings.
+3. Use common mathematical and computational methods to analyse data and extract useful information.
+4. Recognise and solve simple optimisation problems that arise in engineering contexts.
+
+## Learning Outcomes
+
+After successfully completing this course you should be able to:
+
+1. **LO1**: Explain the basic elements and process of conducting academic research, including but not limited to framing research questions, developing hypotheses, conducting critical literature reviews, designing experiments or observational studies, ethics issues and fallacies & obstacles to scientific research.
+2. **LO2**: Identify and cope with common data issues, and carry out descriptive data analysis.
+3. **LO3**: Estimate basic statistical models, interpret their findings, and convey results in a meaningful manner.
+4. **LO4**: Explain the basic principles of numerical optimisation problems in Engineering, how they arise, and how to solve basic problems.
+5. **LO5**: Explain basic concepts, theories, and procedures of some commonly used optimisation methods in Engineering.
+6. **LO6**: Articulate the limitations of your research and how to remain objective when reviewing your own research or research of others.
+7. **LO7**: Write and format your research report professionally and communicate research results in a reproducible manner.
+
+## Learning Resources
+
+Four recommended textbooks support the course. **You do not need to purchase any of them** as the UQ Library provides full digital access.
+
+- **Creswell, J.W. and Creswell, J.D.** (2023) *Research Design: Qualitative, Quantitative, and Mixed Methods Approaches*. 6th edn. SAGE Publications.  
+  *Focus:* Research design principles and methodological frameworks.  
+  👉 [Access via UQ Library Catalogue](https://search.library.uq.edu.au/primo-explore/search?query=any,contains,Research%20Design%20Creswell&vid=61UQ)
+
+- **Lock, R.H., Lock, P.F., Morgan, K.L., Lock, E.F. and Lock, D.F.** (2020) *Statistics: Unlocking the Power of Data*. 3rd edn. John Wiley & Sons.  
+  *Focus:* Applied statistics, empirical data handling, and interpretation.  
+  👉 [Access via UQ Library Catalogue](https://search.library.uq.edu.au/primo-explore/search?query=any,contains,Statistics%20Unlocking%20the%20Power%20of%20Data%20Lock&vid=61UQ)
+
+- **Neuman, W.L.** (2021) *Social Research Methods: Qualitative and Quantitative Approaches*. 7th edn. Pearson.  
+  *Focus:* Observational, qualitative, and experimental research methods.  
+  👉 [Access via UQ Library Catalogue](https://search.library.uq.edu.au/primo-explore/search?query=any,contains,Social%20Research%20Methods%20Neuman&vid=61UQ)
+
+- **Nocedal, J. and Wright, S.J.** (2006) *Numerical Optimization*. 2nd edn. Springer.  
+  *Focus:* Mathematical optimisation algorithms and iterative search.  
+  👉 [Access via UQ Library Catalogue](https://search.library.uq.edu.au/primo-explore/search?query=any,contains,Numerical%20Optimization%20Nocedal&vid=61UQ)
+
+## Teaching & Learning Activities
+
+- **Lectures**: Wednesdays 4:00-6:00 pm, Room 05-213 (Weeks 1-13).  
+  *Note: 12 August is a public holiday (Ekka Wednesday); no lecture or tutorial that week.*
+- **Tutorials**: Thursdays 4:00-6:00 pm, Room 11A-131 (Weeks 1-13).  
+  Tutorials support the lectures and assessments, with a strong emphasis on **hands-on coding and data analysis**.
+
+- All sessions are **recorded** and available on Blackboard. However, **attendance is highly encouraged**: Recorded sessions should be a backup, not the norm.
+
+The expected total workload is **~10 hours per week**: 4 hours contact (lecture + tutorial) and ~6 hours of independent study.

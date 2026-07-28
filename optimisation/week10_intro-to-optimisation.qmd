@@ -1,0 +1,291 @@
+---
+title: "Introduction to Engineering Optimisation Methods"
+subtitle: "ENGG7518 Research Methods for Engineers: Week 10"
+author: "Prof. Zuduo Zheng"
+date: "Semester 2, 2026"
+---
+
+
+::: {.callout-note appearance="simple"}
+## Learning Objectives
+By the end of this chapter, you should be able to:
+
+1. Appreciate the history and philosophy of mathematical optimisation.
+2. Identify real-world engineering applications of optimisation, from network flow to route choice.
+3. Formulate an optimisation problem using decision variables, objective functions, and constraints.
+4. Distinguish between various types of optimisation problems (e.g., linear, non-linear, unconstrained).
+5. Understand and calculate fundamental mathematical properties: Gradients (Jacobians) and Hessian matrices.
+6. Classify stationary points (local/global optima, saddle points) using convexity and the definiteness of the Hessian via leading principal minors.
+:::
+
+## The Philosophy of Optimisation
+
+In engineering, economics, and daily life, optimisation is the mathematical discipline of making the **best possible decision** under given constraints and limited resources. 
+
+> *"Nothing at all takes place in the universe in which some rule of maximum or minimum does not appear."*
+> -  **Leonhard Euler (1707-1783)**
+
+Whenever you optimise something, you are either seeking to **minimise** a penalty (e.g., cost, travel time, risk, energy consumption) or **maximise** a benefit (e.g., profit, yield, structural strength, academic grades). 
+
+Even everyday choices are optimisation problems. Deciding whether to attend a lecture in person is an optimisation task:
+
+*   **Objective:** Maximise academic learning and long-term career value.
+*   **Constraints:** Time is strictly limited to 24 hours per day. You have competing demands: assignments, sleep, and a part-time job.
+*   **Decision Variables:** How you allocate your available hours across these competing activities.
+
+## A Brief History of Optimisation
+
+Optimisation has a rich history spanning over two millennia, driving major advancements in mathematics and engineering:
+
+*   **300-100 BC (Euclid & Heron):** Euclid investigated minimal geometric distances. Philosopher-mathematician Heron of Alexandria proved that light rays reflecting off a mirror travel between two points along the path of *shortest total length*.
+*   **1600s (Johannes Kepler & Calculus):** While shopping for his wedding (and mathematically framing the problem of optimally choosing his second wife!), astronomer Johannes Kepler noticed how merchants measured wine barrels. He wrote a famous mathematical treatise on determining the **optimal shape of wine barrels** to maximise volume for a given surface area. Shortly after, Newton and Leibniz formalised calculus.
+*   **1800s (Least Squares & Gradient Descent):** Gauss and Legendre introduced the Method of Least Squares to minimise prediction errors in planetary orbits. Meanwhile, Augustin-Louis Cauchy proposed the Steepest Descent (Gradient Descent) algorithm, which is the exact mathematical foundation used today to train deep AI neural networks.
+*   **1800s (Abraham Lincoln & The TSP):** As a young trial lawyer in Illinois, Abraham Lincoln travelled on horseback to visit clients across county courthouses. Identifying the shortest route to visit all destinations without redundant travel is one of the earliest practical examples of the famous **Travelling Salesperson Problem (TSP)**.
+*   **1940s (George Dantzig):** During WWII, military logistics required allocating troops and fuel efficiently. In 1947, George Dantzig developed the **Simplex Algorithm** to solve Linear Programming (LP) problems, revolutionising modern operations research and supply chain management.
+
+## Modern Engineering Applications
+
+Today, optimisation algorithms power almost every sector of modern technology:
+
+1.  **Corporate Warehouse Location:** Where should Amazon or Coca-Cola build fulfilment centres to maximise global profit, balancing construction costs, labour rates, and delivery time guarantees?
+2.  **Emergency Evacuation:** During a natural disaster, network optimisation algorithms calculate evacuation routes to minimise overall evacuation time and prevent bottleneck gridlock.
+3.  **Cyber-Security & Network Resilience (Max-Flow/Min-Cut):** If a cyber-attack severs a critical fiber-optic link for a telecom provider (like Optus or Telstra), optimisation algorithms instantly reroute data packets across secondary links to minimise service disruption.
+4.  **Real-Time Route Optimisation (Shortest Path):** Google Maps uses Dijkstra’s and A* algorithms. Recommending a route based strictly on physical distance is useless if that road is congested. The algorithm optimises for the lowest *expected travel time* given real-world constraints.
+5.  **The Secretary / Marriage Problem:** A classic "optimal stopping" problem. If candidates arrive sequentially in random order and rejected candidates cannot be recalled, what is the mathematically optimal moment to stop interviewing and hire the best candidate?
+
+## Formulating an Optimisation Problem
+
+To translate a real-world problem into a solvable mathematical model, you must define three core components:
+
+1.  **Decision Variables ($x$):** The variables you have the power to control or choose (e.g., amount of raw materials, traffic flow allocated to a route).
+2.  **Objective Function ($f(x)$):** The scalar value you are trying to maximise or minimise.
+3.  **Constraints ($c_i(x)$):** The physical, financial, or logical bounds restricting your choices.
+
+### Standard Mathematical Form
+The general mathematical form of a constrained minimisation problem is:
+$$ \min f(x) $$
+$$ \text{subject to } c_i(x) \le b_i, \quad i = 1, 2, \dots, m $$
+
+*Note: There is no fundamental mathematical difference between minimisation and maximisation. Any maximisation problem can be converted to a minimisation problem by negating the objective function:*
+$$ \max f(x) = -\min [-f(x)] $$
+
+### Constraint Types
+*   **Unconstrained:** No limits on the decision variables.
+*   **Bounds / Box Constraints:** Variables are restricted within a simple range ($L \le x \le U$).
+*   **Linear Constraints:** Constraints form straight lines/planes.
+*   **Nonlinear Constraints:** Constraints involve curves or higher-order polynomials.
+*   **Equality Constraints:** ($h(x) = 0$). These are highly useful because they can often be substituted directly into the objective function to reduce the number of decision variables.
+
+::: {.callout-tip}
+## Formulation Example: System Optimisation in Route Choice
+**The Scenario:** 
+5,300 vehicles per hour must travel from a residential area ("Home") to a university campus ("UQ"). There are two available routes (Route A and Route B). The travel time ($T$) on each route increases as traffic volume ($Q$) increases:
+
+*   Route A Performance: $T_a = 5 + \frac{Q_a}{1000}$
+*   Route B Performance: $T_b = 7 + \frac{Q_b}{500}$
+
+```{mermaid}
+%%| label: fig-route-choice
+%%| fig-cap: "Network layout for the two-route traffic assignment problem."
+flowchart LR
+    Origin(("Home<br/>(5300 veh/h)")) -->|Q_a| RouteA["Route A<br/>T_a = 5 + Q_a / 1000"]
+    Origin -->|Q_b| RouteB["Route B<br/>T_b = 7 + Q_b / 500"]
+    RouteA --> Destination(("UQ Campus"))
+    RouteB --> Destination
+```
+
+**The Goal:** 
+Find the traffic volumes ($Q_a, Q_b$) that minimise the *Total System Travel Time ($S$)*.
+
+**Step 1: Formulate the Model**
+
+*   **Objective Function:** $S = Q_a T_a + Q_b T_b$
+*   **Constraint:** $Q_a + Q_b = 5300$
+
+**Step 2: Substitute and Simplify**
+Using the equality constraint, we know $Q_a = 5300 - Q_b$. Substitute this into the objective function:
+$$ S = (5300 - Q_b)\left[5 + \frac{5300 - Q_b}{1000}\right] + Q_b\left[7 + \frac{Q_b}{500}\right] $$
+Expanding and simplifying this expression gives a single-variable quadratic equation:
+$$ S = \min \left( 3 \times \frac{Q_b^2}{1000} - 8.6 Q_b + C \right) $$ *(Where C is a constant)*
+
+**Step 3: Solve via First Derivative**
+To find the minimum, take the first derivative with respect to $Q_b$ and set it to zero:
+$$ S' = \frac{6 Q_b}{1000} - 8.6 = 0 $$
+$$ Q_b = 1433 \text{ vehicles} $$
+Therefore, the optimal flow is $Q_b = 1433$ and $Q_a = 5300 - 1433 = 3867$ vehicles. (Since the second derivative $S'' > 0$, this point is confirmed as a minimum).
+:::
+
+## Mathematical Foundations: Gradients and Hessians
+
+To find optimal points for multi-variable functions, we must evaluate the rates of change in multiple dimensions.
+
+### 1. The Gradient (First Derivative)
+For a function of several variables, the **Gradient ($\nabla f$)** is a vector of its first-order partial derivatives. 
+$$ \nabla f = \begin{bmatrix} \frac{\partial f}{\partial x_1} \\ \frac{\partial f}{\partial x_2} \\ \vdots \\ \frac{\partial f}{\partial x_n} \end{bmatrix} $$
+
+*   **Intuition:** The gradient always points in the direction of the **greatest rate of increase** of the function. Therefore, to minimise a function, optimisation algorithms (like Steepest Descent) step in the direction of the *negative* gradient.
+*   **The Jacobian ($J$):** The generalisation of the gradient for vector-valued functions.
+
+### 2. The Hessian Matrix (Second Derivative)
+The **Hessian Matrix ($\mathbf{H}$)** is a square matrix of second-order partial derivatives. For most real-life continuous applications, the Hessian is a symmetric matrix.
+$$ \mathbf{H}_{i,j} = \frac{\partial^2 f}{\partial x_i \partial x_j} $$
+
+*   **Importance:** The Hessian describes the **local curvature** of the function. It is the coefficient of the quadratic term in a Taylor expansion, making it essential for advanced optimisation algorithms (like Newton's Method) and for the Second Derivative Test.
+
+## Stationary Points, Saddle Points, and Convexity
+
+### Stationary Points
+A **stationary point** is a location where the function stops changing; mathematically, it is where the first derivative (or gradient vector) is exactly zero ($\nabla f = \mathbf{0}$). A stationary point can be a local minimum, a local maximum, or a saddle point.
+
+*   **Local vs. Global Optima:** A *local* minimum is the lowest point within a specific immediate vicinity (a "valley"), while the *global* minimum is the absolute lowest point across the entire feasible region.
+
+### Saddle Points and Inflection Points
+*   **Saddle Point (Minimax):** A point where the gradient is zero, but the surface curves *up* in one direction and *down* in another, resembling a horse saddle. It is a minimum along one axis and a maximum along the crossing axis. The existence of saddle points makes finding global minima computationally difficult.
+*   **Inflection Point:** A point where the curvature of the function changes sign (defined by the second derivative). While related, an inflection point is not necessarily a stationary point unless its gradient is also zero.
+
+### The $n$-th Order Derivative Test for Single-Variable Functions
+When analysing a single-variable function $f(x)$, if the second derivative evaluated at a stationary point is zero ($f''(x^*) = 0$), the standard second derivative test is inconclusive. To resolve the nature of such points, we apply the **$n$-th Order Derivative Test**.
+
+::: {.callout-note appearance="simple"}
+## Theorem: $n$-th Order Derivative Test
+Let $f'(x^*) = f''(x^*) = \dots = f^{(n-1)}(x^*) = 0$, but the $n$-th derivative $f^{(n)}(x^*) \neq 0$. Then $f(x^*)$ is classified as follows:
+
+1. A **relative (local) minimum** if $f^{(n)}(x^*) > 0$ and $n$ is **even**.
+2. A **relative (local) maximum** if $f^{(n)}(x^*) < 0$ and $n$ is **even**.
+3. An **inflection point** (neither a maximum nor a minimum) if $n$ is **odd**.
+:::
+
+::: {.callout-tip}
+## Worked Example: Applying the $n$-th Order Test
+**Problem:** Determine all local maximum, local minimum, and inflection points of:
+$$ f(x) = 12x^5 - 45x^4 + 40x^3 + 5 $$
+
+**Step 1: First Derivative (FONC)**
+$$ f'(x) = 60x^4 - 180x^3 + 120x^2 = 60x^2(x^2 - 3x + 2) = 60x^2(x-1)(x-2) $$
+Setting $f'(x) = 0$ yields three candidate stationary points: $x = 0$, $x = 1$, and $x = 2$.
+
+**Step 2: Second Derivative (SOSC)**
+$$ f''(x) = 240x^3 - 540x^2 + 240x = 60(4x^3 - 9x^2 + 4x) $$
+
+- **At $x = 1$:** $f''(1) = 60(4 - 9 + 4) = -60 < 0$. By SOSC, $x = 1$ is a **Relative Maximum** with $f(1) = 12$.
+- **At $x = 2$:** $f''(2) = 60(32 - 36 + 8) = 240 > 0$. By SOSC, $x = 2$ is a **Relative Minimum** with $f(2) = -11$.
+- **At $x = 0$:** $f''(0) = 0$. The standard second derivative test is inconclusive!
+
+**Step 3: Higher-Order Derivative Check**
+Evaluate the third derivative:
+$$ f'''(x) = 720x^2 - 1080x + 240 = 60(12x^2 - 18x + 4) $$
+At $x = 0$: $f'''(0) = 240 \neq 0$.
+
+Since the first non-zero derivative occurs at order $n = 3$ (which is **odd**), the stationary point $x = 0$ is an **Inflection Point** (neither a maximum nor a minimum).
+
+```{r}
+#| label: fig-nth-order-test
+#| fig-cap: "Plot of $f(x) = 12x^5 - 45x^4 + 40x^3 + 5$ highlighting the inflection point at $x=0$, local maximum at $x=1$, and local minimum at $x=2$."
+#| fig-align: center
+#| fig-width: 7
+#| fig-height: 4.5
+
+library(ggplot2)
+
+fx <- function(x) 12*x^5 - 45*x^4 + 40*x^3 + 5
+x_vals <- seq(-0.6, 2.3, length.out = 300)
+df <- data.frame(x = x_vals, y = fx(x_vals))
+
+pts <- data.frame(
+  x = c(0, 1, 2),
+  y = c(fx(0), fx(1), fx(2)),
+  label = c("Inflection Point (0, 5)", "Local Max (1, 12)", "Local Min (2, -11)"),
+  vjust = c(-1.2, -1.2, 1.8)
+)
+
+ggplot(df, aes(x = x, y = y)) +
+  geom_line(color = "#2b5c8f", linewidth = 1.2) +
+  geom_point(data = pts, aes(x = x, y = y), color = "#d9534f", size = 3) +
+  geom_text(data = pts, aes(x = x, y = y, label = label, vjust = vjust), 
+            size = 3.5, fontface = "bold", color = "#222222") +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray60") +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "gray60") +
+  theme_minimal(base_size = 12) +
+  labs(
+    x = "x",
+    y = "f(x)",
+    title = "Stationary Points and Inflection Point Analysis"
+  ) +
+  coord_cartesian(ylim = c(-20, 25))
+```
+:::
+
+### Convexity: The Optimiser's Dream
+A set is **convex** if a straight line drawn between any two points in the set lies entirely within the set. 
+A function is **convex** if it is strictly "bowl-shaped." Mathematically, the line segment connecting any two points on the graph lies *above or on* the function's surface:
+$$ f(\alpha x + \beta y) \le \alpha f(x) + \beta f(y) \quad \text{for } \alpha + \beta = 1, \alpha \ge 0, \beta \ge 0 $$
+*(Conversely, a function is **concave** if it is "dome-shaped", where the line segment lies below the surface).*
+
+**Why is convexity so important?** In convex optimisation, **any local minimum is mathematically guaranteed to be the global minimum.** This completely eliminates the risk of an algorithm getting trapped in a sub-optimal valley.
+
+```{r}
+#| label: fig-convexity-comparison
+#| fig-cap: "Comparison between a convex function with a single global minimum and a non-convex function with multiple local minima."
+#| fig-align: center
+#| fig-width: 8
+#| fig-height: 4
+
+library(ggplot2)
+
+x <- seq(-2.2, 2.2, length.out = 300)
+
+df_convex <- data.frame(
+  x = x, 
+  y = x^2, 
+  Type = "Convex Function\n(Single Global Minimum)"
+)
+
+df_nonconvex <- data.frame(
+  x = x, 
+  y = x^4 - 3*x^2 + 0.5*x, 
+  Type = "Non-Convex Function\n(Multiple Local Minima)"
+)
+
+df_all <- rbind(df_convex, df_nonconvex)
+
+ggplot(df_all, aes(x = x, y = y)) +
+  geom_line(color = "#2b5c8f", linewidth = 1.2) +
+  facet_wrap(~Type, scales = "free_y") +
+  theme_minimal(base_size = 12) +
+  theme(
+    strip.text = element_text(face = "bold", size = 11),
+    panel.grid.minor = element_blank()
+  ) +
+  labs(
+    x = "Decision Variable (x)",
+    y = "Objective Function f(x)"
+  )
+```
+
+## Testing for Optima: Definiteness of the Hessian
+
+How do we prove if a stationary point is a minimum, maximum, or saddle point? We use the **Second Derivative Test** by evaluating the **definiteness** of the Hessian matrix at that point.
+
+For an $n \times n$ symmetric Hessian matrix $\mathbf{H}$:
+
+1.  **Positive Definite:** The quadratic form is always $> 0$. The function is strictly convex, and the point is a **unique global minimum**.
+2.  **Positive Semidefinite:** The quadratic form is $\ge 0$. The point is a global minimum, but not uniquely so (e.g., a flat valley floor).
+3.  **Negative Definite:** The quadratic form is always $< 0$. The function is strictly concave, and the point is a **unique global maximum**.
+4.  **Indefinite:** The quadratic form is positive in some directions and negative in others. The point is a **saddle point**.
+
+### How to Test Definiteness: Leading Principal Minors
+To determine the definiteness of a matrix by hand, we calculate its **Leading Principal Minors**. The $k$-th order leading principal minor is the determinant of the top-left $k \times k$ submatrix. 
+
+For a $3 \times 3$ matrix, you calculate three determinants:
+
+1.  $|A_1|$: The top-left $1 \times 1$ scalar ($a_{11}$).
+2.  $|A_2|$: The determinant of the top-left $2 \times 2$ matrix.
+3.  $|A_3|$: The determinant of the entire $3 \times 3$ matrix.
+
+**The Decision Rules:**
+
+*   **Positive Definite:** *All* leading principal minors are strictly positive ($|A_1| > 0, |A_2| > 0, |A_3| > 0$).
+*   **Negative Definite:** The leading principal minors strictly *alternate in sign*, starting with negative ($|A_1| < 0, |A_2| > 0, |A_3| < 0$).
+*   **Indefinite:** If the minors are non-zero but fail to fit either the purely positive or the alternating sign patterns, the matrix is indefinite (indicating a saddle point).
+
+Mastering these matrix operations and gradient calculations provides the foundational tools required to execute and understand the powerful numerical optimisation algorithms we will explore in subsequent chapters.

@@ -1,0 +1,273 @@
+
+---
+title: "Constrained Classical Optimisation (Lagrange Multipliers)"
+subtitle: "ENGG7518 Research Methods for Engineers: Week 12"
+author: "Prof. Zuduo Zheng"
+date: "Semester 2, 2026"
+---
+
+::: {.callout-note appearance="simple"}
+## Learning Objectives
+By the end of this chapter, you should be able to:
+
+1. Formulate constrained engineering problems and understand the geometric intuition of parallel gradients.
+2. Properly construct a Lagrangian function by converting equality constraints into a zero-rhs format.
+3. Apply the First-Order Necessary Conditions (FONC) to a Lagrangian function to find optimal candidate points.
+4. Solve multi-variable constrained optimisation problems systematically.
+5. Conceptually understand how the Bordered Hessian is used to evaluate sufficient conditions along allowable constraint directions.
+:::
+
+## Introduction to Constrained Optimisation
+
+In our previous explorations of classical optimisation, we developed methods to find the minimum or maximum of a function where the decision variables could take any value (unconstrained optimisation). However, in real-world engineering and data science, our choices are almost always restricted by physical, financial, or temporal limits. For example:
+
+*   **Traffic operations** are constrained by the physical capacity of the road network.
+*   **Portfolio optimisation** is constrained by a strict total financial budget.
+*   **Project scheduling** is constrained by time and personnel availability.
+
+When dealing with constraints, you cannot simply hunt for the absolute bottom of a "valley" on the objective function's surface, because that minimum point might lie outside your allowed region. You must find the lowest point *that still satisfies all your constraints*.
+
+### Two Popular Approaches
+To solve constrained problems, mathematicians developed methods to essentially **"get rid of" the constraints**- converting the constrained problem into an unconstrained format so standard calculus tools can be applied.
+
+1.  **The Simplex Method:** Used specifically for *Linear Programming* problems (where both the objective and all constraints are strictly linear). 
+2.  **Lagrange Multipliers:** A highly versatile and powerful method used for *Nonlinear Programming*, allowing us to handle equality constraints analytically. This will be the focus of our chapter.
+
+## The Geometric Insight of Lagrange Multipliers
+
+Consider a standard constrained minimisation problem with two decision variables ($x_1, x_2$) and one equality constraint:
+$$ \min_{x_1, x_2} f(x_1, x_2) $$
+$$ \text{subject to } g(x_1, x_2) = 0 $$
+
+To understand how Lagrange Multipliers work, we must visualise the problem geometrically. Imagine looking down at a 2D topographical map of the objective function $f(x_1, x_2)$, represented by contour lines (curves of equal value). Drawn on top of this map is a single line representing the constraint curve $g(x_1, x_2) = 0$.
+
+If you "walk" along the constraint curve searching for the lowest possible value of $f(x_1, x_2)$, the optimal point occurs exactly where **the contour line of the objective function and the constraint curve just touch each other tangentially**. 
+
+Because the two curves touch at a single point and share the exact same tangent line, their normal vectors (their gradients) must be pointing in the exact same (or directly opposite) direction. Mathematically, this means the gradients are **collinear** (parallel):
+$$ \nabla f(x^*) = -\lambda \nabla g(x^*) $$
+$$ \nabla f(x^*) + \lambda \nabla g(x^*) = \mathbf{0} $$
+
+Here, the scalar $\lambda$ (lambda) is known as the **Lagrange Multiplier**. It acts as a scaling factor that perfectly aligns the lengths of the two parallel gradient vectors.
+
+```{r}
+#| label: fig-lagrange-geometry
+#| fig-cap: "Geometric intuition of Lagrange Multipliers: At the optimal point x*, the contour line of f(x) and the constraint g(x) = 0 are tangent, meaning their gradient vectors ∇f and ∇g are collinear."
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 7
+#| fig-height: 5
+
+library(ggplot2)
+
+# Grid for contour lines
+grid_data <- expand.grid(x = seq(-1, 5, length.out = 200),
+                         y = seq(-1, 5, length.out = 200))
+# Objective function f(x, y) = (x-1)^2 + (y-1)^2
+grid_data$z <- (grid_data$x - 1)^2 + (grid_data$y - 1)^2
+
+# Constraint equation: x + y = 4 => y = 4 - x
+# Tangency occurs at x* = 2, y* = 2 where f(2,2) = 2
+opt_x <- 2
+opt_y <- 2
+
+constraint_df <- data.frame(
+  x = seq(0.2, 3.8, length.out = 100),
+  y = 4 - seq(0.2, 3.8, length.out = 100)
+)
+
+ggplot() +
+  # Contour lines of objective function
+  geom_contour(data = grid_data, aes(x = x, y = y, z = z), 
+               breaks = c(0.5, 1, 2, 3.5, 5.5, 8), 
+               color = "grey60", linewidth = 0.6) +
+  geom_text(aes(x = 1, y = 1), label = "f(x) contours", color = "grey40", size = 3.5, vjust = -1) +
+  # Constraint line g(x) = 0
+  geom_line(data = constraint_df, aes(x = x, y = y), color = "#D95F02", linewidth = 1.2) +
+  annotate("text", x = 3.3, y = 1.1, label = "Constraint g(x) = 0", color = "#D95F02", fontface = "bold", size = 4) +
+  # Optimal point
+  geom_point(aes(x = opt_x, y = opt_y), color = "#7570B3", size = 4) +
+  annotate("text", x = opt_x + 0.35, y = opt_y - 0.25, label = "Optimal point x*", color = "#7570B3", fontface = "bold", size = 4) +
+  # Gradient vectors at optimal point
+  # ∇f arrow
+  geom_segment(aes(x = opt_x, y = opt_y, xend = opt_x + 0.8, yend = opt_y + 0.8),
+               arrow = arrow(length = unit(0.25, "cm")), color = "#1B9E77", linewidth = 1.1) +
+  annotate("text", x = opt_x + 0.95, y = opt_y + 0.95, label = "∇f(x*)", color = "#1B9E77", fontface = "bold", size = 4) +
+  # ∇g arrow
+  geom_segment(aes(x = opt_x, y = opt_y, xend = opt_x + 0.45, yend = opt_y + 0.45),
+               arrow = arrow(length = unit(0.2, "cm")), color = "#E7298A", linewidth = 1.1) +
+  annotate("text", x = opt_x + 0.3, y = opt_y + 0.6, label = "∇g(x*)", color = "#E7298A", fontface = "bold", size = 4) +
+  scale_x_continuous(limits = c(0, 4.5), expand = c(0,0)) +
+  scale_y_continuous(limits = c(0, 4.5), expand = c(0,0)) +
+  coord_fixed() +
+  labs(x = expression(x[1]), y = expression(x[2])) +
+  theme_minimal() +
+  theme(
+    axis.title = element_text(size = 12, face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+## Constructing the Lagrangian Function
+
+Using this geometric relationship, we can construct a brand-new, *unconstrained* objective function called the **Lagrangian Function**, denoted by $L$:
+
+$$ L(x_1, x_2, \lambda) = f(x_1, x_2) + \lambda \cdot g(x_1, x_2) $$
+
+By introducing $\lambda$, we have increased the dimension of our problem from two variables ($x_1, x_2$) to three variables ($x_1, x_2, \lambda$). 
+
+**Generalising to Multiple Constraints:**
+If an engineering problem has $m$ different equality constraints, we simply introduce $m$ different Lagrange multipliers ($\lambda_1, \lambda_2, \dots, \lambda_m$). Using vector notation, where $\boldsymbol{\lambda} \in \mathbb{R}^m$, the generalised Lagrangian function is:
+$$ L(\mathbf{x}, \boldsymbol{\lambda}) = f(\mathbf{x}) + \boldsymbol{\lambda}^T g(\mathbf{x}) $$
+
+::: {.callout-warning}
+## The "Constraint Zero" Trap
+When constructing the Lagrangian function, it is absolutely critical that your constraint equation is rearranged so that the right-hand side is exactly zero.
+
+*   **Incorrect:** If the constraint is $x_1^2 + x_2^2 = 1$, using $g(x_1, x_2) = x_1^2 + x_2^2$ is a fatal error.
+*   **Correct:** You must rewrite it as $x_1^2 + x_2^2 - 1 = 0$, defining $g(x_1, x_2) = x_1^2 + x_2^2 - 1$.
+If you fail to do this, the mathematics will break down during the differentiation step.
+:::
+
+## The "Magic" of the Necessary Conditions
+
+Because the Lagrangian $L(x_1, x_2, \lambda)$ operates as an unconstrained function, we find its stationary points using the standard First-Order Necessary Condition (FONC) by taking the partial derivatives with respect to all variables and setting them to zero:
+
+$$ \frac{\partial L}{\partial x_1} = \frac{\partial f}{\partial x_1} + \lambda \frac{\partial g}{\partial x_1} = 0 $$
+$$ \frac{\partial L}{\partial x_2} = \frac{\partial f}{\partial x_2} + \lambda \frac{\partial g}{\partial x_2} = 0 $$
+$$ \frac{\partial L}{\partial \lambda} = g(x_1, x_2) = 0 $$
+
+Look closely at the third equation. When we take the partial derivative of $L$ with respect to $\lambda$, the $f(x_1, x_2)$ term drops out, leaving only $g(x_1, x_2) = 0$. **We have automatically recovered our exact original constraint!** 
+
+This is the "magic" of the Lagrange Multiplier method. By solving this unconstrained system of equations, the mathematics implicitly guarantee that any candidate point we find will strictly satisfy the original physical boundaries of the problem.
+
+## Comprehensive Worked Example
+
+Let us apply this method step-by-step to a concrete nonlinear optimisation problem.
+
+**Problem Statement:**
+Find the minimum of the following function:
+$$ \min_{x_1, x_2} \quad f(x_1, x_2) = \frac{1}{x_1 x_2^2} $$
+$$ \text{subject to } \quad x_1^2 + x_2^2 = 1 $$
+
+*(Assume $x_1 > 0$ and $x_2 > 0$ for this physical-domain problem).*
+
+**Step 1: Construct the Lagrangian Function**
+First, rearrange the constraint so it equals zero: $g(x_1, x_2) = x_1^2 + x_2^2 - 1 = 0$.
+Now, build the Lagrangian $L$:
+$$ L(x_1, x_2, \lambda) = \frac{1}{x_1 x_2^2} + \lambda(x_1^2 + x_2^2 - 1) $$
+
+**Step 2: Apply the First-Order Necessary Conditions (FONC)**
+Take the partial derivative with respect to $x_1$, $x_2$, and $\lambda$, and set them to $0$:
+
+1.  $$ \frac{\partial L}{\partial x_1} = -x_1^{-2} x_2^{-2} + 2\lambda x_1 = 0 \implies -\frac{1}{x_1^2 x_2^2} + 2\lambda x_1 = 0 $$
+2.  $$ \frac{\partial L}{\partial x_2} = -2x_1^{-1} x_2^{-3} + 2\lambda x_2 = 0 \implies -\frac{2}{x_1 x_2^3} + 2\lambda x_2 = 0 $$
+3.  $$ \frac{\partial L}{\partial \lambda} = x_1^2 + x_2^2 - 1 = 0 $$
+
+**Step 3: Solve the System of Equations**
+From Equation 1, isolate $\lambda$:
+$$ 2\lambda x_1 = \frac{1}{x_1^2 x_2^2} \implies \lambda = \frac{1}{2x_1^3 x_2^2} $$
+
+From Equation 2, isolate $\lambda$:
+$$ 2\lambda x_2 = \frac{2}{x_1 x_2^3} \implies \lambda = \frac{1}{x_1 x_2^4} $$
+
+Equate the two expressions for $\lambda$:
+$$ \frac{1}{2x_1^3 x_2^2} = \frac{1}{x_1 x_2^4} $$
+
+Cross-multiply to simplify (since $x_1, x_2 > 0$):
+$$ x_1 x_2^4 = 2x_1^3 x_2^2 $$
+Divide both sides by $x_1 x_2^2$:
+$$ x_2^2 = 2x_1^2 $$
+
+Now, substitute this geometric relationship back into Equation 3 (the constraint):
+$$ x_1^2 + (2x_1^2) - 1 = 0 $$
+$$ 3x_1^2 = 1 \implies x_1^2 = \frac{1}{3} \implies x_1 = \frac{1}{\sqrt{3}} $$
+
+Substitute $x_1^2$ back to find $x_2$:
+$$ x_2^2 = 2\left(\frac{1}{3}\right) = \frac{2}{3} \implies x_2 = \sqrt{\frac{2}{3}} $$
+
+**Final Solution:**
+The optimal stationary point that minimises the function subject to the circular constraint is:
+$$ \mathbf{x}^* = \left( \frac{1}{\sqrt{3}}, \sqrt{\frac{2}{3}} \right) $$
+
+```{r}
+#| label: fig-lagrange-worked-example
+#| fig-cap: "Contour plot and constraint for the worked example. The contour curve f(x₁, x₂) = 2.6 is tangent to the circular constraint x₁² + x₂² = 1 at the optimal point (1/√3, √(2/3))."
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 7
+#| fig-height: 5.5
+
+library(ggplot2)
+
+# Grid for contour plot
+grid_ex <- expand.grid(x1 = seq(0.15, 1.2, length.out = 300),
+                       x2 = seq(0.15, 1.2, length.out = 300))
+grid_ex$z <- 1 / (grid_ex$x1 * grid_ex$x2^2)
+
+# Circular constraint in 1st quadrant: x1^2 + x2^2 = 1
+theta <- seq(0, pi/2, length.out = 200)
+circle_df <- data.frame(
+  x1 = cos(theta),
+  x2 = sin(theta)
+)
+
+opt_x1 <- 1 / sqrt(3)
+opt_x2 <- sqrt(2/3)
+opt_z <- 1 / (opt_x1 * opt_x2^2) # approx 2.598
+
+ggplot() +
+  # Objective function contours
+  geom_contour(data = grid_ex, aes(x = x1, y = x2, z = z),
+               breaks = c(1.8, 2.2, opt_z, 3.5, 5, 8),
+               color = "grey50", linewidth = 0.6) +
+  # Highlight the tangent contour line passing through optimal point
+  geom_contour(data = grid_ex, aes(x = x1, y = x2, z = z),
+               breaks = c(opt_z),
+               color = "#1B9E77", linewidth = 1, linetype = "dashed") +
+  annotate("text", x = 0.95, y = 0.45, label = paste0("f(x) = ", round(opt_z, 2), " (Tangent Contour)"), 
+           color = "#1B9E77", fontface = "bold", size = 3.5) +
+  # Constraint curve x1^2 + x2^2 = 1
+  geom_line(data = circle_df, aes(x = x1, y = x2), color = "#D95F02", linewidth = 1.2) +
+  annotate("text", x = 0.35, y = 0.98, label = expression(x[1]^2 + x[2]^2 == 1), 
+           color = "#D95F02", fontface = "bold", size = 4) +
+  # Optimal Point
+  geom_point(aes(x = opt_x1, y = opt_x2), color = "#7570B3", size = 4) +
+  annotate("point", x = opt_x1, y = opt_x2, color = "black", size = 1.5) +
+  annotate("text", x = opt_x1 + 0.22, y = opt_x2 + 0.08, 
+           label = expression(x*"*" == group("(", list(frac(1, sqrt(3)), sqrt(frac(2, 3))), ")")), 
+           color = "#7570B3", fontface = "bold", size = 4) +
+  scale_x_continuous(limits = c(0, 1.25), expand = c(0,0)) +
+  scale_y_continuous(limits = c(0, 1.25), expand = c(0,0)) +
+  coord_fixed() +
+  labs(x = expression(x[1]), y = expression(x[2])) +
+  theme_minimal() +
+  theme(
+    axis.title = element_text(size = 12, face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+## Sufficient Conditions: The Bordered Hessian
+
+In unconstrained optimisation, we used the standard Hessian matrix to verify whether a stationary point was a minimum, maximum, or saddle point. For constrained optimisation, the standard Hessian is not enough. 
+
+Why? Because we do not care how the function curves in *every* possible direction; we only care how it curves along **allowable directions** that keep us strictly moving on the constraint surface. 
+
+An allowable direction vector $\mathbf{d}$ must be orthogonal to the constraint gradient (meaning movement along $\mathbf{d}$ does not change the value of the constraint):
+$$ \nabla g(x)^T \mathbf{d} = 0 $$
+
+We then evaluate the curvature of the Lagrangian function specifically along these allowed directions:
+$$ \mathbf{d}^T \nabla_x^2 L(x, \lambda) \mathbf{d} $$
+
+This is mathematically formalised using a **Bordered Hessian Matrix**- which is a standard Hessian matrix "bordered" or padded with the gradients of the constraints. 
+
+*   If this quadratic form is **positive** for all valid $\mathbf{d}$, the curve opens upward $\implies$ **Local Minimum**.
+*   If it is **negative** for all valid $\mathbf{d}$, the curve opens downward $\implies$ **Local Maximum**.
+*   If it has mixed signs, it is a **Saddle Point**.
+
+::: {.callout-note}
+## Practical Scope for Engineering
+Evaluating the Bordered Hessian by hand is highly mathematically intensive. In standard engineering practice (and for the scope of this course's assessments), you are generally not required to manually calculate the Bordered Hessian. Because most physical engineering problems feature a single logical extreme point within the bounded region, you can usually calculate the candidate points using FONC, plug them back into the original objective function $f(x)$, and observe which candidate yields the lowest or highest value.
+:::

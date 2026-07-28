@@ -1,0 +1,252 @@
+/* Custom styles for ENGG7518 course book - UQ Purple Branding */
+
+/* Light mode defaults */
+:root {
+  --uq-purple: #51247A;
+  --uq-purple-dark: #3b1959;
+  --uq-purple-light: rgba(81, 36, 122, 0.1);
+  --toc-active-color: #51247A;
+  --toc-active-bg: rgba(81, 36, 122, 0.12);
+  --toc-active-border: #51247A;
+}
+
+/* Soft "Dimmed" Dark Mode Overrides (Lighter Slate/Blue-Grey background for comfortable reading) */
+html[data-bs-theme="dark"],
+body.quarto-dark,
+.quarto-dark {
+  --uq-purple: #DDA0DD;
+  --uq-purple-dark: #F3E8FF;
+  --uq-purple-light: rgba(221, 160, 221, 0.2);
+  --toc-active-color: #FFFFFF;
+  --toc-active-bg: rgba(199, 125, 255, 0.32);
+  --toc-active-border: #DDA0DD;
+  background-color: #2b303c !important;
+  color: #e6edf3 !important;
+}
+
+/* Lighter content area & sidebar in dark mode */
+html[data-bs-theme="dark"] #quarto-content,
+html[data-bs-theme="dark"] main,
+body.quarto-dark #quarto-content,
+body.quarto-dark main {
+  background-color: #2b303c !important;
+  color: #e6edf3 !important;
+}
+
+/* Left Sidebar Dark Mode Container & Text Colors */
+html[data-bs-theme="dark"] #quarto-sidebar,
+html[data-bs-theme="dark"] .sidebar,
+body.quarto-dark #quarto-sidebar,
+body.quarto-dark .sidebar {
+  background-color: #212631 !important;
+  border-right: 1px solid #3c4454 !important;
+}
+
+html[data-bs-theme="dark"] #quarto-sidebar a,
+html[data-bs-theme="dark"] #quarto-sidebar .sidebar-title,
+html[data-bs-theme="dark"] #quarto-sidebar .sidebar-item-text,
+html[data-bs-theme="dark"] #quarto-sidebar .sidebar-link,
+html[data-bs-theme="dark"] #quarto-sidebar .sidebar-section-title,
+html[data-bs-theme="dark"] #quarto-sidebar .sidebar-navigation,
+html[data-bs-theme="dark"] .sidebar a,
+html[data-bs-theme="dark"] .sidebar-title,
+html[data-bs-theme="dark"] .sidebar-link,
+html[data-bs-theme="dark"] .sidebar-item-text,
+body.quarto-dark #quarto-sidebar a,
+body.quarto-dark #quarto-sidebar .sidebar-title,
+body.quarto-dark #quarto-sidebar .sidebar-item-text,
+body.quarto-dark #quarto-sidebar .sidebar-link,
+body.quarto-dark #quarto-sidebar .sidebar-section-title,
+body.quarto-dark .sidebar a,
+body.quarto-dark .sidebar-title,
+body.quarto-dark .sidebar-link,
+body.quarto-dark .sidebar-item-text {
+  color: #e6edf3 !important;
+}
+
+/* Sidebar toggle icons / carets in dark mode */
+html[data-bs-theme="dark"] #quarto-sidebar .sidebar-item-toggle,
+html[data-bs-theme="dark"] #quarto-sidebar .ms-1,
+body.quarto-dark #quarto-sidebar .sidebar-item-toggle,
+body.quarto-dark #quarto-sidebar .ms-1 {
+  color: #cbd5e1 !important;
+}
+
+/* Sidebar link hover & active states in dark mode */
+html[data-bs-theme="dark"] #quarto-sidebar a:hover,
+html[data-bs-theme="dark"] #quarto-sidebar .sidebar-link:hover,
+body.quarto-dark #quarto-sidebar a:hover,
+body.quarto-dark #quarto-sidebar .sidebar-link:hover {
+  color: #ffffff !important;
+  background-color: rgba(199, 125, 255, 0.2) !important;
+  border-radius: 4px;
+}
+
+html[data-bs-theme="dark"] #quarto-sidebar .sidebar-link.active,
+html[data-bs-theme="dark"] #quarto-sidebar .active > .sidebar-link,
+body.quarto-dark #quarto-sidebar .sidebar-link.active,
+body.quarto-dark #quarto-sidebar .active > .sidebar-link {
+  color: #ffffff !important;
+  background-color: rgba(199, 125, 255, 0.32) !important;
+  font-weight: 700 !important;
+  border-radius: 4px;
+}
+
+html[data-bs-theme="dark"] .navbar,
+body.quarto-dark .navbar {
+  background-color: #212631 !important;
+  border-bottom: 1px solid #3c4454 !important;
+}
+
+html[data-bs-theme="dark"] .card,
+html[data-bs-theme="dark"] .callout,
+body.quarto-dark .card,
+body.quarto-dark .callout {
+  background-color: #343b48 !important;
+  border-color: #454f60 !important;
+  color: #f0f6fc !important;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: var(--uq-purple);
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--uq-purple-dark);
+}
+
+.callout {
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+table {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* Ensure Table of Contents list is always visible and never collapsed by Bootstrap */
+#TOC ul,
+#TOC ul.collapse,
+#TOC ul.collapse:not(.show) {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Prominent visual highlight for the active section being read in right Table of Contents */
+#TOC ul li a.nav-link.active,
+.margin-sidebar nav#TOC ul li a.active,
+.margin-sidebar nav#TOC ul li a.nav-link.active {
+  color: var(--toc-active-color) !important;
+  font-weight: 700 !important;
+  background-color: var(--toc-active-bg) !important;
+  border-left: 4px solid var(--toc-active-border) !important;
+  border-radius: 0 4px 4px 0 !important;
+  padding-left: 0.6rem !important;
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+  display: block;
+}
+
+#TOC ul li a.nav-link {
+  transition: all 0.15s ease-in-out;
+  padding-left: 0.5rem;
+  border-left: 4px solid transparent;
+}
+
+#TOC ul li a.nav-link:hover {
+  color: var(--uq-purple) !important;
+  background-color: var(--uq-purple-light);
+}
+
+/* ==========================================================================
+   Dark Mode Search Bar & Search Modal Overrides
+   ========================================================================== */
+
+/* Search input box & container */
+html[data-bs-theme="dark"] .aa-Form,
+html[data-bs-theme="dark"] .aa-InputWrapper,
+html[data-bs-theme="dark"] .aa-Input,
+html[data-bs-theme="dark"] #quarto-search input,
+html[data-bs-theme="dark"] #quarto-search .form-control,
+html[data-bs-theme="dark"] .quarto-search-button,
+body.quarto-dark .aa-Form,
+body.quarto-dark .aa-InputWrapper,
+body.quarto-dark .aa-Input,
+body.quarto-dark #quarto-search input,
+body.quarto-dark #quarto-search .form-control,
+body.quarto-dark .quarto-search-button,
+.quarto-dark .aa-Form,
+.quarto-dark .aa-Input {
+  background-color: #343b48 !important;
+  color: #f8f9fa !important;
+  border-color: #4c566a !important;
+  box-shadow: none !important;
+}
+
+/* Search input placeholder text */
+html[data-bs-theme="dark"] .aa-Input::placeholder,
+html[data-bs-theme="dark"] #quarto-search input::placeholder,
+body.quarto-dark .aa-Input::placeholder,
+body.quarto-dark #quarto-search input::placeholder {
+  color: #d8dee9 !important;
+  opacity: 1 !important;
+}
+
+/* Search icons */
+html[data-bs-theme="dark"] .aa-SubmitIcon,
+html[data-bs-theme="dark"] .aa-ClearButton,
+html[data-bs-theme="dark"] .aa-LoadingIcon,
+html[data-bs-theme="dark"] .quarto-search-button i,
+html[data-bs-theme="dark"] .quarto-search-button svg,
+body.quarto-dark .aa-SubmitIcon,
+body.quarto-dark .aa-ClearButton,
+body.quarto-dark .aa-LoadingIcon,
+body.quarto-dark .quarto-search-button i,
+body.quarto-dark .quarto-search-button svg {
+  color: #e5e9f0 !important;
+  fill: #e5e9f0 !important;
+}
+
+/* Search results dropdown panel */
+html[data-bs-theme="dark"] .aa-Panel,
+html[data-bs-theme="dark"] .aa-PanelLayout,
+html[data-bs-theme="dark"] #quarto-search-results,
+html[data-bs-theme="dark"] .search-results,
+body.quarto-dark .aa-Panel,
+body.quarto-dark .aa-PanelLayout,
+body.quarto-dark #quarto-search-results,
+body.quarto-dark .search-results {
+  background-color: #2c3340 !important;
+  color: #f8f9fa !important;
+  border: 1px solid #4c566a !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Individual search result items */
+html[data-bs-theme="dark"] .aa-Item,
+html[data-bs-theme="dark"] .search-item,
+html[data-bs-theme="dark"] .search-result-item,
+body.quarto-dark .aa-Item,
+body.quarto-dark .search-item,
+body.quarto-dark .search-result-item {
+  background-color: #2c3340 !important;
+  color: #e5e9f0 !important;
+}
+
+/* Selected or hovered search result items */
+html[data-bs-theme="dark"] .aa-Item[aria-selected="true"],
+html[data-bs-theme="dark"] .aa-Item:hover,
+html[data-bs-theme="dark"] .search-item:hover,
+body.quarto-dark .aa-Item[aria-selected="true"],
+body.quarto-dark .aa-Item:hover,
+body.quarto-dark .search-item:hover {
+  background-color: rgba(199, 125, 255, 0.3) !important;
+  color: #ffffff !important;
+}

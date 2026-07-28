@@ -1,0 +1,475 @@
+---
+title: "Practical Research Skills"
+subtitle: "ENGG7518 Research Methods for Engineers: Week 3"
+author: "Prof. Zuduo Zheng"
+date: "Semester 2, 2026"
+---
+
+> *“Passion and obsession, even talent, are only useful tools if you have the work ethic to back them up.”*  
+> - **David Goggins
+
+## Introduction
+
+In the first two weeks we built the philosophical foundations of science and research. Now we shift to the **practical tasks** you will face when starting your own project, whether it is a semester‑long research assignment or a larger thesis. The journey begins with one of the most underestimated yet most powerful tools a researcher possesses: the **literature review**.
+
+This chapter will take you through the entire practical workflow:
+
+- Why a literature review is essential and how to do it systematically
+- How to use Google Scholar like a pro to find, manage, and stay current with the literature
+- How to read papers efficiently and organise your findings
+- How to turn gaps into a solid research problem and testable hypothesis
+- How to write a compelling research proposal and a professional research report
+- How to think critically about everything you read and write
+
+Let’s begin at the beginning.
+
+## The Research Process: A Quick Reminder
+
+Every research project follows a well‑defined cycle. At its centre lies **theory**, and an essential early step is *selecting a good topic*. How do you choose? The answer, as many of you correctly recalled, is through a thorough review of what others have already done.
+
+![The typical research process](../images/research-process.png)
+
+## What Is a Literature Review?
+
+A literature review is the process of **gathering, evaluating, and synthesising** the existing body of knowledge on a particular topic. The underlying assumption is that science is cumulative: over generations, researchers build on each other’s work. If those past studies were conducted with scientific rigour, their collective findings become increasingly reliable and accurate.
+
+For you as a beginner, the most efficient way to start is to **stand on the shoulders of giants** (as Isaac Newton famously said). Instead of reinventing the wheel, you first educate yourself about the development history, the current state, and the state‑of‑the‑art in your field.
+
+## Why Is the Literature Review So Important?
+
+### Avoid the ultimate embarrassment
+
+Imagine spending years of effort and millions of dollars, only to have a colleague point out during a conference presentation: “*Somebody already discovered the same thing ten years ago.*” This actually happened at the prestigious ISTTT conference in transport engineering. The very first question from the audience was: “Have you conducted a literature review or not?” The presenter had no good defence.
+
+Conducting a proper review protects you from wasting time on questions that have already been answered, and from public embarrassment.
+
+### The hierarchy of scientific evidence
+
+Not all evidence carries the same weight. Think of the strength of evidence as a pyramid:
+
+- **Bottom layer (weakest):** personal opinion, anecdotes, newspaper articles.
+- **Middle layers:** case studies, cross‑sectional studies, well‑designed experiments.
+- **Top layer (strongest):** **systematic reviews and meta‑analyses.**
+
+A systematic review is a special type of literature review that:
+
+- Scrutinises the quality of every included study,
+- Identifies common issues and consensus conclusions,
+- Points out future research needs.
+
+Because its conclusion is based on the *entirety* of available evidence rather than a single study, a systematic review provides the most trustworthy scientific evidence.
+
+## Goals of a Literature Review
+
+A good review should help you:
+
+1. **Educate yourself**: Become an expert on what has already been done.
+2. **Demonstrate familiarity** with a body of knowledge: show that you know what you’re talking about.
+3. **Show the path of prior research**: Explain how your project connects to earlier work.
+4. **Integrate and condense** a massive amount of information into key, digestible points.
+5. **Learn from others’ mistakes**: Avoid pitfalls that have already been identified.
+6. **Identify gaps**: Those gaps become the foundation for your own research question.
+
+### Types of literature review
+
+Depending on your goal, your review may take one or more of the following forms:
+
+- **Self‑study review**: Increases the reader’s confidence in your understanding of the field.
+- **Context review**: Places your specific project in the big picture.
+- **Historical review**: Traces the development of an issue over time.
+- **Theoretical review**: Compares how different theories address the same issue.
+- **Integrative review**: Summarises what is known at a given point in time.
+- **Methodological review**: Examines how methodology varies across studies.
+
+Most student projects will be a combination of self‑study, context, and integrative reviews.
+
+## How to Conduct a Systematic Review: The PRISMA Framework
+
+When you write a literature review, someone else should be able to **reproduce** exactly what you did. Unfortunately, many published reviews fail this test: they do not report which keywords were used, which databases were searched, or why certain papers were excluded.
+
+The **PRISMA** (Preferred Reporting Items for Systematic Reviews and Meta‑Analyses) framework solves this problem. It provides a clear, transparent checklist and a flow diagram that documents every decision you make during the review process.
+
+### The PRISMA flow diagram
+
+The process consists of three major phases:
+
+1. **Identification**: Search databases, remove duplicates, record numbers.
+2. **Screening**: Read titles and abstracts, exclude irrelevant records, retrieve full texts, assess eligibility.
+3. **Included**: The final set of studies that form the basis of your review.
+
+At every step you document *how many* records were kept or excluded and *why*. This guarantees transparency and reproducibility.
+
+### Tools to help
+
+- **Covidence**: an online platform that streamlines PRISMA workflows (duplicate detection, screening, data extraction). UQ provides **free access** to all students.
+- For smaller projects you can manage the process manually, but always keep a detailed log of your search strategy and decisions.
+
+For more resources, visit the UQ Library’s systematic review guide or talk to a librarian.
+
+---
+
+## Searching the Literature with Google Scholar
+
+Before the internet, researchers had to physically browse shelves of journals. In the early internet era, we had to search multiple databases one by one. Today, **Google Scholar** is the go‑to tool that integrates almost everything into a single, powerful search engine. It should be your first stop for any literature search.
+
+::: {.callout-tip}
+If you haven’t used Google Scholar before, open it now at [scholar.google.com](https://scholar.google.com) and follow along.
+:::
+
+### Basic vs. Advanced Search
+
+By default, Google Scholar treats your search terms as:
+
+- **Not case‑sensitive** (“Traffic” = “traffic”)
+- **Combined with AND** if you type multiple words
+- **Searched everywhere**: Full text, title, abstract, citations
+
+This gives you a huge number of results, many of which are irrelevant. To narrow things down, use the **Advanced Search** (accessible from the menu). You can:
+
+- **Find articles with all words**: Only show papers that contain every keyword you specify.
+- **Find articles with the exact phrase**: Useful for multi‑word terms like “climate change”.
+- **Find articles without certain words**: Exclude topics you don’t care about.
+- **Find articles by a specific author**: Track the work of a leading researcher.
+- **Limit by publication date**: Focus on recent developments.
+
+Additional tips:
+
+- Use **quotes** to search for an exact phrase.
+- Use **Boolean operators** (AND, OR, NOT) to refine your search.
+- Use keywords, not full sentences.
+
+Practise with a few searches and compare the number and relevance of results. A well‑crafted advanced search can reduce thousands of hits to a manageable, focused list.
+
+### One‑click access to full text
+
+Google Scholar can be linked directly to the **UQ Library**. Once you set this up, you’ll see a “Find it @ UQ Library” link next to search results. Click it, log in with your UQ credentials, and you’ll be taken straight to the full paper; no need to worry about which database or journal it comes from.
+
+**How to set up Library Links:**
+
+1. Go to **Settings** → **Library links**.
+2. Search for “University of Queensland” and select it.
+3. Save. The “Find it @ UQ Library” link will now appear.
+
+If the library doesn’t have access to a particular paper, you can request it for free through the library’s document delivery service.
+
+### Citation management made painless
+
+Managing references manually is tedious and error‑prone. Google Scholar gives you a simple shortcut:
+
+- Click the **“Cite”** button (the quotation mark icon) under any search result.
+- Google Scholar displays the reference in five common styles (MLA, APA, Chicago, Harvard, Vancouver); APA is often used in engineering.
+- You can copy and paste the formatted reference directly into your report, or export it in a format compatible with **EndNote** (which UQ provides for free).
+
+You can also set your preferred bibliography manager (e.g., EndNote) in the Settings menu so that an “Import into EndNote” link appears with every search result.
+
+### Stay up‑to‑date with Alerts
+
+If you’re serious about a research topic, create a **Google Scholar Alert**:
+
+- Perform a search for your keywords or a specific author.
+- Click **“Create alert”** (on the left sidebar).
+- Choose how often you want to receive email updates (weekly is a good start).
+
+Google Scholar will then automatically notify you whenever a new paper matches your search. This is the most efficient way to keep abreast of the latest research without constantly re‑checking.
+
+### Assessing journal and conference quality
+
+Not all publications are equal. Some journals are profit‑driven and will publish almost anything for a fee; these are essentially unvetted. You need to know which venues are trustworthy.
+
+Google Scholar’s **Metrics** page (accessible from the top menu) helps:
+
+1. Click **Metrics**.
+2. Select the category **Engineering & Computer Science**.
+3. Choose the subcategory most relevant to you (e.g., Transportation).
+4. The list shows the top‑ranked journals and conferences in that field, sorted by their h5‑index (a measure of citation impact).
+
+The ranking is not perfect, but the top 20 to 30 venues are almost certainly reputable. In transport engineering, for instance, *Transportation Research Part B* and *Part C* are widely recognised as top journals. Publication in such journals involves a rigorous peer‑review process that can take a year or more, so you know the papers have been thoroughly scrutinised.
+
+When you assess the quality of a study during your review, the venue in which it was published is a useful (though not the only) indicator.
+
+### Expanding your review: forward and backward searching
+
+Two powerful techniques can quickly expand your literature review:
+
+- **Forward searching**: Look at papers that have *cited* the paper you just read. Google Scholar’s “Cited by” link shows you more recent work that builds on the same foundations.
+- **Backward searching**: Examine the reference list of a key paper to find earlier, foundational studies.
+
+These methods turn one good paper into a web of related work.
+
+---
+
+## How to Read Papers Efficiently
+
+After your search you may face a stack of 100+ papers. Reading every word of every paper is impossible, and unnecessary. Here is a strategy that works.
+
+### Step 1: Skim the title and abstract
+
+This takes seconds. Ask: *Is this paper genuinely relevant to my topic?* If no, discard it.
+
+### Step 2: Read the introduction and conclusion
+
+- The **introduction** explains the research background, the gap being addressed, and the authors’ contributions. It’s usually straightforward, with few equations.
+- The **conclusion** summarises key findings and, crucially, points out **limitations and future work**. This is where authors are most honest about what they didn’t achieve.
+
+After reading these two sections you should have a very good idea of whether the paper is a **VIP** for your project. Most papers won’t be.
+
+### Step 3: For VIP Papers Only: Read the Middle
+
+If a paper’s research question is very close to yours, and the limitations they mention are things you think you could improve, then it’s a VIP. Only at this stage do you invest the time to read the methodology and results in detail.
+
+::: {.callout-important}
+During the literature review phase, you **do not** need to understand every equation. Your goal is to see *what kinds of methods* are being used, not to master each one. Later, once you’ve chosen your own method, you can return to the relevant VIP papers and study the technical details more deeply.
+:::
+
+### A tip: read with a clear purpose
+
+Before you even open a paper, ask yourself: *What do I need from this paper right now?* Are you looking for background knowledge, a specific method, a data source, or a gap to exploit? This focus will speed up your reading enormously.
+
+---
+
+## Organising Your Review: The Summary Table
+
+The biggest mistake students make is reading a paper, understanding it, and then forgetting everything three days later. To avoid this, create a **summary table** as you read.
+
+| Title | Year | Country | Research Question | Method | Major Findings | My Comments |
+|-------|------|---------|-------------------|--------|-----------------|-------------|
+| Paper 1 | | | | | | |
+| Paper 2 | | | | | | |
+| ... | | | | | | |
+
+- **My Comments**: Your own thoughts, criticisms, or ideas sparked by the paper. Write these down *immediately* before you forget.
+
+When the time comes to write your literature review, this table becomes your single source of truth. You won’t need to re‑read every paper; you’ll just synthesise the table.
+
+## What a Good Review Looks Like
+
+A **bad** literature review is a collection of disconnected paragraphs, each summarising one paper in isolation, often stitched together with copied sentences.
+
+A **good** literature review:
+
+- **Compares and contrasts** studies: who agrees, who disagrees, and why?
+- **Identifies themes**: Groups papers by approach, finding, or theory.
+- **Establishes the connection** between past work and your own research question.
+- **Highlights gaps**: Specifically those gaps that your project will address.
+
+It is not a list of summaries; it is a **story** that leads the reader inexorably to the conclusion that your research is necessary.
+
+---
+
+## Formulating a Research Problem
+
+A thorough literature review should have revealed **gaps**: Questions that previous studies have not fully answered, or limitations in their methods that you could improve. Your research problem is born directly from those gaps.
+
+The formulation should be:
+
+- **Specific**: Avoid broad, vague statements.
+- **Rooted in the literature**: You must be able to say exactly which studies left the gap open.
+- **Answerable**: You need to have (or be able to collect) the data and apply the methods to address it.
+
+To articulate the gap clearly, follow this structure:
+
+1. Clearly state the gap(s) in the literature.
+2. Clearly state the consequence of the gap(s).
+3. Clearly state which gap(s) your research project focuses on.
+
+### Types of research gaps
+
+Not all gaps are the same. Understanding the *type* of gap can help you articulate your research problem more precisely:
+
+| Gap type | Definition |
+|----------|------------|
+| **Evidence gap** (Contradictory evidence) | Results from individual studies allow for conclusions, but they contradict each other when examined from a higher perspective. |
+| **Knowledge gap** (Knowledge void) | Desired research findings simply do not exist yet. |
+| **Practical‑knowledge gap** (Action‑knowledge conflict) | Professional behaviour or practice deviates from what research suggests, or is not covered by research at all. |
+| **Methodological gap** | A variation of research methods is needed to generate new insights or avoid distorted findings. |
+| **Empirical gap** (Evaluation void) | Research findings or propositions have not been empirically verified. |
+| **Theoretical gap** (Theory application void) | Theory should be applied to certain research issues to generate new insights; a lack of theory creates a gap. |
+| **Population gap** | A specific population (e.g., gender, age, ethnicity) is not adequately represented or under‑researched. |
+
+*Source: Kumar DM (2020), adapted from Miles (2017) and others.*
+
+### Examples of real research problem statements
+
+Here are two examples from successful ARC (Australian Research Council) proposals. Notice how each one states the knowledge deficit, its consequence, and the proposed solution.
+
+**Example 1: Connected and automated vehicles**
+
+> *“Connected and automated vehicle research will leverage the potentially transformative capabilities of wireless technology to make road transport safer, smarter, and greener. However, **no existing traffic flow models are capable of reproducing features of mixed traffic flow** consisting of traditional, connected, and automated vehicles. This project addresses this knowledge deficit and develops an analytical tool with the capability of accurately modelling mixed traffic flow.”*
+
+**Example 2: Balancing safety and efficiency**
+
+> *“This project aims to balance road safety and efficiency as conflicting goals of transport systems mixed with connected and automated vehicles. **Existing models cannot co‑estimate efficiency and safety impacts** of CAVs. This project will generate ground‑breaking models capable of doing so, and develop control strategies to safely and efficiently integrate CAVs into existing transport systems.”*
+
+In both cases, the gap is specific, its consequence is clear, and the response is directly tied to the gap.
+
+---
+
+## Constructing Hypotheses
+
+A **hypothesis** is a tentative proposition that states a predicted relationship between two or more variables. According to Bailey (1978), a hypothesis is:
+
+> “a proposition that is stated in a testable form and that predicts a particular relationship between two (or more) variables. If we think that a relationship exists, we first state it as a hypothesis and then test the hypothesis in the field.”
+
+### Characteristics of a hypothesis
+
+- It is **tentative**: Its validity is unknown at the time it is proposed.
+- It specifies a **relationship** between variables.
+- It must be **testable**: You need to be able to collect data and analyse it to determine whether the hypothesis is supported or not.
+
+### Examples of simple hypotheses
+
+- Automation makes roads safer.
+- The summer in Brisbane is getting hotter.
+- Humans are getting taller.
+- Human life expectancy is becoming longer.
+- Talking on a mobile phone while driving leads to more collisions.
+
+Some of these are broad; in practice you will need to operationalise them (e.g., “drivers using a hand‑held mobile phone have longer reaction times than drivers not using one”). Hypothesis construction and testing will be covered in greater depth when we move into statistical methods.
+
+---
+
+## Writing a Research Proposal
+
+A research proposal is fundamentally a **sales pitch**. Your potential “customers” are funding bodies (e.g., the Australian Research Council, government departments, industry partners) or your thesis committee. They control resources (money, time, equipment), and you must convince them that:
+
+1. Your idea is important.
+2. You have a feasible plan to execute it.
+3. You are the right person (or team) to carry it out.
+
+### The “What, Why, How” framework
+
+- **What** is your research idea?
+- **Why** is it important?
+- **How** will you do it? (methodology, timeline, your qualifications)
+
+**What a proposal should NOT do**: it should not try to answer the research question. You haven’t done the work yet! The proposal is about planning and convincing, not reporting results.
+
+### Typical structure of a research proposal
+
+| Section | Purpose |
+|---------|---------|
+| **Project title** | A concise, descriptive statement of the project. |
+| **Aims and objectives** | A bullet‑proof list of what the project will achieve. |
+| **Background/introduction** | Sets the scene: what is known, what is unknown. |
+| **Literature review** | A critical synthesis that demonstrates you understand the field and have identified the gap. |
+| **Proposed methodology** | The step‑by‑step approach: data, models, experiments, analysis. |
+| **Significance/expected contribution** | Why this matters: practical impact, theoretical contribution. |
+| **Workplan/timeline** | A realistic schedule (e.g., Gantt chart). |
+| **References** | Only the key sources that directly support your proposal. |
+
+---
+
+## Writing a Research Report
+
+Once your proposal has been accepted and the hard work of data collection and analysis is complete, you must communicate your findings clearly. A research report follows a different structure:
+
+| Section | What it contains |
+|---------|------------------|
+| **Project title** | Clear and informative. |
+| **Abstract/summary** | A standalone summary of the problem, method, key results, and conclusion. |
+| **Introduction** | Background, research gap, objectives, and outline of the report. |
+| **Literature review** | Critical synthesis of prior work. |
+| **Data and methodology** | How the data were obtained, what methods were used. |
+| **Data analysis** | Present your findings with tables, graphs, and statistical outputs. |
+| **Results and discussion** | Interpret the results: what do they mean? How do they compare with previous studies? Limitations? |
+| **Conclusions and recommendations** | Summarise the main take‑home message and suggest practical actions or future research. |
+
+Notice that the **proposal** and the **report** serve completely different purposes: one *plans*, the other *reports*.
+
+---
+
+## Professionalism Matters: Formatting Your Report
+
+Small presentation details can make an enormous difference in how your report is received, and in your final mark.
+
+- **Font and layout**: use a consistent, professional font (e.g., Times New Roman or Arial, 12 pt) and stick to it throughout the report unless there is a strong reason not to.
+- **Tables**: number them consecutively (Table 1, Table 2…). Give each a clear caption, and place it **above** the table. If the table is based on another author’s work, add “Adapted from” or “After” followed by a citation.
+- **Figures**: number them consecutively (Figure 1, Figure 2…). Give each a clear caption, and place it **below** the figure. Again, cite the source if adapted.
+- **Equations**: insert using an equation editor (e.g., MS Word Equation Editor). Number equations consecutively.
+- **Cross‑referencing**: every table, figure, and equation must be cited in the main body of the text before it appears.
+
+These are the little things that, when done consistently, make a report look polished and professional. In my experience, careful proofreading is the single most effective way to increase your mark before submission.
+
+---
+
+## Citing Sources Properly
+
+### When must you cite?
+
+You must always cite the source of:
+
+- Direct quotations, opinions, and predictions (whether quoted or paraphrased).
+- Statistics derived by the original author.
+- Visuals (tables, figures, images).
+- Another author’s theories or case studies.
+- Another author’s experimental methods, results, or specialised procedures.
+
+When in doubt, cite. It is better to over‑cite than to risk plagiarism.
+
+### Two common citation systems
+
+**Author‑year system (Harvard, APA, Chicago author‑date)**: Indicate the author(s) and year right in the text, in parentheses.
+  - Example: *In recent decades, anthropogenic activities have significantly altered the land surface (Nicholson 2007).*
+  - Example: *Furlong et al. (2001) estimate that…*
+- If two or more articles by the same author(s) in the same year, distinguish them with a, b, c: *(Toon 1989a)*, *(Toon 1989b)*.
+
+**Number system (Vancouver, IEEE)**: Assign a number to each source in the order it appears. Use that number in brackets or parentheses throughout the text.
+  - Example: *If the load on the thrust bearing can be decreased, the life of the turbodrill can be significantly increased (1).*
+- If you cite the same source again, reuse its original number.
+
+### Managing references
+
+Don’t manually format your reference list. Use reference management software like **EndNote** (free via UQ) or the built‑in tools in MS Word. Google Scholar’s “Cite” button can export references directly into EndNote or give you a pre‑formatted citation to paste.
+
+Stick to **one referencing style** throughout your document. In engineering, APA and Harvard are common, but check your assignment guidelines.
+
+---
+
+## Critical Thinking
+
+Critical thinking is the skill of questioning, analysing, interpreting, evaluating, and making a judgement about what you read, hear, say, or write. It is **not** about being negative; it is about making reliable judgements based on reliable information.
+
+### The six steps to developing critical thinking
+
+1. **Clarify your thinking purpose and context**: What is the problem? What question am I addressing? What different viewpoints must I consider?
+2. **Question your sources of information**: Not all sources are equally credible, accurate, or relevant.
+3. **Identify arguments**: Recognise when someone is trying to persuade you or prove a point.
+4. **Analyse sources and arguments**: Examine evidence, reasoning, assumptions, and methodologies.
+5. **Evaluate the arguments of others**: Weigh the strengths and weaknesses.
+6. **Create your own arguments**: Synthesise evidence, reasoning, and claims to form your own well‑supported position.
+
+### The Ultimate Cheatsheet for Critical Thinking
+
+Whenever you encounter new information, ask yourself these questions:
+
+|   | **Who** | **What** | **Where** | **When** | **Why** | **How** |
+|---|---------|----------|-----------|----------|---------|---------|
+| **…benefits from this?** | …are the strengths/weaknesses? | …would we see this in the real world? | …is this acceptable/unacceptable? | …is this a problem? | …is this similar to ___? |
+| **…is this harmful to?** | …is another perspective? | …are there similar concepts? | …would this benefit society? | …is it relevant? | …does this disrupt things? |
+| **…makes decisions?** | …is another alternative? | …is there the most need? | …would this cause a problem? | …is this the best/worst scenario? | …do we know the truth? |
+| **…is most affected?** | …would be a counter-argument? | …is this a problem in the world? | …is the best time to act? | …are people influenced? | …will we approach this safely? |
+
+These questions are simple but powerful. Get into the habit of using them every time you read a paper, hear a claim, or write your own arguments.
+
+---
+
+## Key Takeaways for This Chapter
+
+1. A **literature review** is the foundation of all research; it educates you, reveals gaps, and justifies your project.
+2. Use **Google Scholar** with Advanced Search, Library Links, and Alerts to work efficiently.
+3. Read papers strategically: abstract → intro & conclusion → VIP papers only → full reading. Keep a **summary table**.
+4. Your **research problem** must flow directly from the gaps you identified. Know the *type* of gap you are addressing.
+5. A **hypothesis** is a testable prediction; it is the cornerstone of the scientific method.
+6. A **research proposal** sells an idea; a **research report** presents results. Do not confuse the two.
+7. Pay obsessive attention to **formatting and citations**: They signal professionalism.
+8. **Critical thinking** is not optional; it is the engine that drives good science. Use the cheatsheet every day.
+
+## Further Reading
+
+- Neuman, W. L. (2013). *Social Research Methods* (7th ed.). Chapter 5: How to Review the Literature and Conduct Ethical Studies.
+- Schall, J. *Style for Students Online* -  Effective Technical Writing in the Information Age. [Free access](https://www.e-education.psu.edu/styleforstudents/)
+- UQ Library’s systematic review guide: [guides.library.uq.edu.au](https://guides.library.uq.edu.au)
+
+---
+
+*This concludes the Week 3 lecture material. Next week we move into data quality and the beginning of statistical analysis; things will get more technical, but you now have the practical toolkit to handle them.*

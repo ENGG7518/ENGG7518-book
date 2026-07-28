@@ -1,0 +1,422 @@
+---
+title: "Statistics Basics: From Description to Inference"
+subtitle: "ENGG7518 Research Methods for Engineers: Week 5"
+author: "Prof. Zuduo Zheng"
+date: "Semester 2, 2026"
+---
+
+> *“Shoot for the moon, even if you miss you’ll land among the stars.”*  
+> - **Norman Vincent Peale
+
+## Introduction
+
+Welcome to the first truly quantitative lecture of this course. From today onward, the content becomes more technical: we are going to learn how to carry out **actual data analysis** using statistical methods. Even if you have studied statistics before, I encourage you to revisit these foundational concepts. In my experience, they are very easy to misunderstand, even for experienced researchers. My goal is to help you develop an *intuitive* understanding, not just a formula‑based one.
+
+Today’s plan:
+
+1. Basic concepts: population, sample, parameter, statistic
+2. Descriptive statistics: central tendency, variability, and distribution shapes
+3. The normal distribution and why it matters
+4. Inferential statistics: the sampling distribution and the Central Limit Theorem
+5. Confidence intervals and the **bootstrap** method
+
+We will not rush. If we need a little extra time next lecture for hypothesis testing, that is perfectly fine.
+
+## What Is Statistics?
+
+**Statistics** is the science of collecting, organising, analysing, and interpreting data. The raw material for any statistical analysis is **data**. Before you do anything, you must have data and you must check that it is good enough to answer your research question.
+
+### Population vs. Sample
+
+Two fundamental concepts sit behind every dataset:
+
+| Concept | Definition | Notation |
+|---------|------------|----------|
+| **Population** | The complete set of observations about which you want to draw conclusions. | Parameters use Greek letters (e.g. $\mu$, $\sigma$) |
+| **Sample** | A subset of the population (the data you actually have). | Statistics use Roman letters (e.g. $\bar{x}$, $s$) |
+
+```{mermaid}
+%%| label: fig-population-sample
+%%| fig-cap: "The relationship between population parameters and sample statistics in empirical research."
+flowchart LR
+    subgraph Pop ["Target Population"]
+        P["Entire Population<br/><b>Parameters:</b> μ, σ (Unknown)"]
+    end
+
+    subgraph Samp ["Empirical Sample"]
+        S["Random Sample (n)<br/><b>Statistics:</b> x̄, s (Observed)"]
+    end
+
+    Pop -- "Random Sampling" --> Samp
+    Samp -- "Statistical Inference" --> Pop
+
+    style Pop fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style Samp fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+```
+
+::: {.callout-tip}
+## Think about it
+Which is harder to collect: data for a population or data for a sample?  
+The population, of course. A sample is a compromise we make because measuring the entire population is usually impossible.
+:::
+
+A **parameter** is a numerical feature of the population (true mean $\mu$, true standard deviation $\sigma$). A **statistic** is the corresponding feature calculated from a sample ($\bar{x}$, $s$).
+
+Here is the crucial point that many beginners forget: **our end goal is always to understand the population, not the sample**. The sample is just a vehicle. When I survey 1000 recent UQ graduates about their salary, I do not care about those 1000 individuals per se; I want to use their data to make a general statement about *all* recent UQ graduates.
+
+### The Importance of Good Sampling
+
+Because we generalise from a sample to a population, **how we select the sample matters enormously**.
+
+::: {.callout-warning}
+## A poor sampling example
+You receive a survey link on WeChat or WhatsApp from a friend. Is this a good way to sample?  
+No. You are only reaching the friend’s social circle, which is not representative of the broader population.
+:::
+
+Ideally, every member of the population should have an **equal probability** of being selected. That is what *random sampling* achieves.
+
+Now, imagine you could repeat your random sampling many times (say, survey 1000 graduates, then another 1000, then another. Would you get the same average income every time? Almost certainly not. This variability from sample to sample is called **sampling variability** (or sampling error). The only way to reduce sampling error to zero is to measure the entire population, which is why governments spend millions on a national census every few years.
+
+## Descriptive Statistics: Making Sense of Your Sample
+
+Once you have a sample, your first job is **descriptive analysis**: Simple summaries that give you a feel for the data before you build any complex models.
+
+Let’s work with a real example: a dataset containing **40 blood pressure readings** taken over one week by an automatic device (every half hour). The variables are:
+
+- **ID**: 1 to 40 (categorical; do not average this)
+- **Time** of measurement
+- **Day/Night**: a binary indicator (sun = day, moon = night)
+- **Systolic BP** - **Diastolic BP**
+- **Heart rate**
+
+::: {.callout-note}
+## Tidy data first
+Before any analysis, convert your raw data into a **tidy** format. For “Day/Night”, create a dummy variable (e.g. 0 = day, 1 = night). R and Python need numbers to work with.
+:::
+
+### Central tendency
+
+We often want a single number that summarises the “centre” of the data.
+
+- **Mode**: The most frequently occurring value.
+- **Mean** ($\bar{x}$): The arithmetic average.  
+  *Sensitive to outliers!* If Elon Musk accidentally ends up in your graduate salary survey, the mean becomes meaningless.
+
+- **Median**: The middle value when data are sorted.  
+  If $n$ is even, take the average of the two middle values.
+
+::: {.callout-tip}
+## When is the mean misleading?
+Ask yourself: “What is the average number of legs for people in Australia?”  
+It’s slightly less than 2. Does that “mean” anything useful? No. The median (2) is far more informative here. Always think before you report a mean.
+:::
+
+### Variability
+
+Knowing the centre is not enough; we need to know how much the data **spread**.
+
+- **Range** = maximum - minimum.
+- **Standard deviation** ($s$):
+
+$$
+s = \sqrt{\frac{\sum (x_i - \bar{x})^2}{n-1}}
+$$
+
+The denominator $n-1$ appears because we are using the sample to estimate the population standard deviation; this correction (degrees of freedom) makes the estimate unbiased.
+
+### Visualising distributions: the histogram
+
+To see the shape of your data, build a **histogram**:
+
+1. Divide the range into equal‑width bins.
+2. Count how many observations fall into each bin.
+3. Draw bars with height proportional to the count.
+4. If you smooth over the tops of the bars, you get the **distribution** of your data.
+
+For my blood pressure readings, the histogram of systolic pressure might look something like a bell curve, which brings us to a very special distribution.
+
+## The Normal Distribution
+
+The **normal distribution** (the bell curve) was described by Carl Friedrich Gauss over 200 years ago. It is a *probability distribution* that tells us how likely different values are.
+
+Key properties:
+
+- Symmetric around the mean.
+- The mean, median, and mode are all the same.
+- The probability of an observation falls off rapidly as you move away from the centre.
+
+```{r}
+#| label: fig-normal-distribution
+#| fig-cap: "The Standard Normal Distribution showing the 68-95-99.7 Empirical Rule."
+#| fig-width: 8
+#| fig-height: 4.5
+library(ggplot2)
+
+x_vals <- seq(-4, 4, length.out = 1000)
+df_norm <- data.frame(
+  x = x_vals,
+  y = dnorm(x_vals, mean = 0, sd = 1)
+)
+
+ggplot(df_norm, aes(x = x, y = y)) +
+  geom_area(data = subset(df_norm, x >= -3 & x <= 3), aes(fill = "99.7% (±3σ)"), alpha = 0.3) +
+  geom_area(data = subset(df_norm, x >= -2 & x <= 2), aes(fill = "95.4% (±2σ)"), alpha = 0.5) +
+  geom_area(data = subset(df_norm, x >= -1 & x <= 1), aes(fill = "68.3% (±1σ)"), alpha = 0.7) +
+  geom_line(color = "#1f77b4", linewidth = 1.2) +
+  scale_fill_manual(values = c("68.3% (±1σ)" = "#3182bd", "95.4% (±2σ)" = "#9ecae1", "99.7% (±3σ)" = "#deebf7")) +
+  scale_x_continuous(breaks = -3:3, labels = c("μ-3σ", "μ-2σ", "μ-1σ", "μ", "μ+1σ", "μ+2σ", "μ+3σ")) +
+  labs(
+    title = "Standard Normal Distribution & Empirical Rule",
+    x = "Standard Deviations from Mean (σ)",
+    y = "Probability Density",
+    fill = "Coverage"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "top",
+    plot.title = element_text(face = "bold", hjust = 0.5)
+  )
+```
+
+::: {.callout-tip}
+## Is the normal distribution one distribution, or many?
+If you answered “many”, you are correct. The normal distribution is actually a **family** of distributions. Each member is defined by two parameters:
+
+- $\mu$ (mean): Decides the location.
+- $\sigma$ (standard deviation): Decides the spread.
+
+Change $\mu$ or $\sigma$ and you get a different normal curve, yet all share the same familiar bell shape.
+:::
+
+### Why do we have so many named distributions?
+
+A question I love to ask: *Why do hundreds of named distributions exist (normal, logistic, Gumbel, Poisson…)?*
+
+Here is how I think about it. Centuries ago, researchers plotted histograms of different datasets and noticed a recurring bell‑shaped pattern. Gauss gave that pattern a name (“normal”) and a precise mathematical formula that depends on just two parameters. Later, other researchers found datasets that did **not** fit the bell shape; they were “abnormal”. They gave those different shapes different names and different formulas. Over time, this process produced the catalogue of distributions we have today.
+
+In practice, you look at your data’s histogram, choose a distribution family that seems reasonable, and then use the corresponding formula to make inferences. That’s it. Do not memorise dozens of equations; understand the principle.
+
+## Inferential Statistics: From Sample to Population
+
+Descriptive statistics are useful, but they only describe the sample. The real magic, and the core of most statistical methods, is **inference**: using sample data to draw conclusions about the population.
+
+### The sampling distribution: a hypothetical but essential concept
+
+Imagine you could do the following:
+
+1. Take a random sample of size $n$ from the population.
+2. Calculate the sample mean $\bar{x}$.
+3. Put the sample back and repeat steps 1-2 thousands of times.
+4. Plot all the resulting $\bar{x}$ values.
+
+The distribution you obtain is called the **sampling distribution of the mean**.
+
+::: {.callout-important}
+## Two kinds of distribution (do not confuse them)
+1. **Data distribution**: the histogram of your actual observations (e.g. 40 blood pressure readings). This is real, you can see it on your computer.
+2. **Sampling distribution**: the distribution of a *statistic* (e.g. the mean) over many hypothetical samples. This is a theoretical idea, because in reality you almost never get to collect more than one sample.
+:::
+
+The sampling distribution is crucial because it tells us **how much the sample mean would vary from one sample to another**. The standard deviation of the sampling distribution has a special name: the **standard error** (SE).
+
+#### Standard Deviation vs. Standard Error
+
+| Concept | Measures... | Formula |
+|---------|-------------|---------|
+| **Standard Deviation** | Spread of individual data points in a dataset | $s = \sqrt{\frac{\sum(x_i - \bar{x})^2}{n-1}}$ |
+| **Standard Error (SE)** | Spread of sample statistics from repeated samples | $SE = \frac{s}{\sqrt{n}}$ |
+
+Remember: $s$ is the standard deviation of the data; $SE$ is the standard deviation of the statistic (e.g., sample mean) across many hypothetical samples. A common student mistake is to confuse the two when interpreting results.
+
+### The Central Limit Theorem: why the normal distribution is everywhere
+
+There are two powerful results about the sampling distribution of the mean:
+
+1. If the population is normally distributed, the sampling distribution is also normal.
+2. **Even if the population is NOT normal**, as long as your sample size is at least 30, the sampling distribution of the mean is approximately normal.
+
+This second fact is called the **Central Limit Theorem** (CLT). It is the reason the normal distribution plays such a central role in statistics: no matter what your data look like, the *means* of large enough samples will behave nicely.
+
+```{r}
+#| label: fig-clt-simulation
+#| fig-cap: "Demonstration of the Central Limit Theorem: As sample size n increases, the sampling distribution of sample means becomes increasingly bell-shaped and symmetric, even when drawing from a heavily skewed population."
+#| fig-width: 9
+#| fig-height: 5.5
+library(ggplot2)
+
+set.seed(7518)
+# Highly skewed population (Exponential distribution)
+N <- 100000
+pop_data <- rexp(N, rate = 0.5)
+
+get_sample_means <- function(sample_size, num_reps = 5000) {
+  replicate(num_reps, mean(sample(pop_data, size = sample_size, replace = TRUE)))
+}
+
+df_clt <- data.frame(
+  Value = c(sample(pop_data, 5000), get_sample_means(2), get_sample_means(10), get_sample_means(30)),
+  Group = factor(rep(c("Population Data (Skewed)", "Sample Means (n = 2)", "Sample Means (n = 10)", "Sample Means (n = 30)"), each = 5000),
+                 levels = c("Population Data (Skewed)", "Sample Means (n = 2)", "Sample Means (n = 10)", "Sample Means (n = 30)"))
+)
+
+ggplot(df_clt, aes(x = Value, fill = Group)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 40, color = "white", alpha = 0.75, show.legend = FALSE) +
+  geom_density(color = "#08519c", linewidth = 0.8) +
+  facet_wrap(~Group, scales = "free", ncol = 2) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    title = "Central Limit Theorem: Convergence of Sample Means to Normality",
+    x = "Value / Sample Mean",
+    y = "Density"
+  ) +
+  theme_bw(base_size = 12) +
+  theme(
+    strip.text = element_text(face = "bold"),
+    plot.title = element_text(face = "bold", hjust = 0.5)
+  )
+```
+
+## Confidence Intervals: How Confident Can I Be?
+
+Let’s return to my blood pressure data. From 40 readings I calculated a mean systolic pressure of 111 mm Hg. But I know that if I took another 40 readings tomorrow, the mean would probably be slightly different. So instead of trusting one single number, a smarter question is:
+
+> **“What range of values is likely to contain my true, long‑term blood pressure?”**
+
+That range is a **confidence interval**.
+
+### The logic of a 95 % confidence interval
+
+Imagine once more that we could draw thousands of samples from the population. For each sample we compute a 95 % confidence interval. The idea is that **95 % of those intervals will capture the true population parameter**. In practice we have only one sample, so we say we are “95 % confident” that our computed interval contains the truth.
+
+### The general formula
+
+For the mean, a confidence interval takes the form:
+
+$$
+\bar{x} \;\pm\; \text{margin of error}
+$$
+
+where the margin of error = **(critical value) × (standard error)**.
+
+For a 95 % confidence interval based on a normal sampling distribution, the critical value is approximately **2** (more precisely 1.96, but 2 is good enough for quick calculations).
+
+### The problem: we usually have only one sample!
+
+The beautiful theory above assumes we can draw many samples to get the standard error. In reality, we almost never can. So how do we estimate the standard error from a single sample?
+
+## The Bootstrap: Simulating the Sampling Distribution
+
+**Bootstrapping** is a brilliant, simulation‑based method that lets us estimate the sampling distribution using only the original sample.
+
+### How it works
+
+1. Start with your original sample of size $n$ (e.g. 40 blood pressure readings).
+2. **Randomly draw $n$ observations WITH REPLACEMENT** from the original sample.  
+   - “With replacement” means after you pick an observation, you put it back so it can be picked again. This is why bootstrap samples differ from one another.
+3. Calculate the statistic of interest (e.g. the mean) for this bootstrap sample.
+4. Repeat steps 2-3 a large number of times (e.g. 10 000).
+5. The collection of bootstrap statistics is the **bootstrap distribution**, which serves as an estimate of the true sampling distribution.
+
+::: {.callout-tip}
+## Key insight
+You are using the original sample as a “miniature population”. Resampling from it with replacement mimics the process of drawing many real samples from the actual population, without ever needing to collect new data.
+:::
+
+### From bootstrap distribution to confidence interval
+
+Once you have the bootstrap distribution (which, by the CLT, will look approximately normal), you can find the 95 % confidence interval in two equivalent ways:
+
+**Method 1: Using the standard error**: Compute the standard deviation of the bootstrap statistics. This is the bootstrap standard error ($SE_{\text{boot}}$).
+- The 95 % CI is $\bar{x}_{\text{original}} \pm 2 \times SE_{\text{boot}}$.
+
+**Method 2: Percentile method**: Sort the bootstrap statistics.
+- The lower bound is the value at the 2.5 th percentile; the upper bound is the value at the 97.5 th percentile.
+
+Both methods give similar results and are easy to implement in R.
+
+### Blood pressure example (conceptual)
+
+1. Original sample mean $\bar{x} = 111$.
+2. Generate 10 000 bootstrap means.
+3. The bootstrap standard error might be, say, 2.3.
+4. 95 % CI = $111 \pm 2 \times 2.3 = [106.4,\; 115.6]$.
+
+I can now say: “I am 95 % confident that my true mean systolic blood pressure lies between 106.4 and 115.6 mm Hg.” Much more informative than a single number!
+
+```{r}
+#| label: fig-bootstrap-ci
+#| fig-cap: "Bootstrap Distribution of 10,000 Resampled Means for Blood Pressure Data, showing the original sample mean and 95% Confidence Interval bounds."
+#| fig-width: 8.5
+#| fig-height: 4.5
+library(ggplot2)
+
+set.seed(7518)
+bp_sample <- c(108, 114, 114, 120, 106, 110, 108, 108, 101, 121, 116, 113, 111, 94, 107, 116, 108, 105, 108, 111, 117, 102, 106, 117, 118, 116, 117, 113, 111, 117, 111, 102, 132, 103, 111, 114, 110, 117, 108, 115)
+
+boot_means <- replicate(10000, mean(sample(bp_sample, size = length(bp_sample), replace = TRUE)))
+
+ci_lower <- quantile(boot_means, 0.025)
+ci_upper <- quantile(boot_means, 0.975)
+orig_mean <- mean(bp_sample)
+
+df_boot <- data.frame(mean = boot_means)
+
+ggplot(df_boot, aes(x = mean)) +
+  geom_histogram(bins = 45, fill = "#a6bddb", color = "white", alpha = 0.8) +
+  geom_vline(xintercept = orig_mean, color = "#08519c", linewidth = 1.2, linetype = "solid") +
+  geom_vline(xintercept = c(ci_lower, ci_upper), color = "#de2d26", linewidth = 1.2, linetype = "dashed") +
+  annotate("text", x = orig_mean, y = 650, label = paste0("Sample Mean: ", round(orig_mean, 1)), color = "#08519c", fontface = "bold", angle = 90, vjust = -0.5) +
+  annotate("text", x = ci_lower - 0.4, y = 450, label = paste0("2.5%: ", round(ci_lower, 1)), color = "#de2d26", fontface = "bold") +
+  annotate("text", x = ci_upper + 0.4, y = 450, label = paste0("97.5%: ", round(ci_upper, 1)), color = "#de2d26", fontface = "bold") +
+  labs(
+    title = "Bootstrap Distribution of Mean Systolic Blood Pressure",
+    subtitle = "10,000 Resamples with Replacement (n = 40)",
+    x = "Bootstrap Sample Means (mmHg)",
+    y = "Frequency"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5), plot.subtitle = element_text(hjust = 0.5))
+```
+
+### Common misinterpretations of confidence intervals
+
+The concept of a confidence interval is subtle, and even experienced researchers sometimes get it wrong. Here are three common statements you must avoid:
+
+::: {.callout-warning}
+## Common Misinterpretations to Avoid
+
+**❌ Misinterpretation 1:** *“A 95% confidence interval contains 95% of the data in the population.”*  
+**Why it is wrong:** The confidence interval is about the *population parameter* (e.g. the true mean $\mu$), not about individual data points. It does **not** say that 95% of individual blood pressure readings fall within the interval.
+
+***
+
+**❌ Misinterpretation 2:** *“I am 95% sure that the mean of a sample will fall within a 95% confidence interval for the mean.”*  
+**Why it is wrong:** The confidence interval is constructed around the sample mean ($\bar{x}$); by definition, the sample mean is always at the centre of the interval. The target is the *population* mean.
+
+***
+
+**❌ Misinterpretation 3:** *“The probability that the population parameter is in this particular 95% confidence interval is 0.95.”*  
+**Why it is wrong:** Once a specific numerical interval (e.g., $[106.4, 115.6]$) is calculated from data, the fixed parameter $\mu$ is either inside it or not (the probability is either 1 or 0). The “95%” refers to the long-run success rate of the procedure: if we repeated sampling and interval calculation 100 times, about 95 of those intervals would contain the true parameter.
+:::
+
+The safest phrasing is: **“I am 95% confident that the interval [lower, upper] contains the true population mean.”**
+
+---
+
+## What We Covered Today
+
+1. **Statistics** is the science of learning from data. We always aim to understand the **population**, using a **sample**.
+2. **Descriptive statistics** summarise the sample: mean, median, standard deviation, histograms.
+3. The **normal distribution** is a family of bell‑shaped curves defined by $\mu$ and $\sigma$. The **Central Limit Theorem** guarantees that sample means are normally distributed for $n \ge 30$.
+4. A **sampling distribution** is the hypothetical distribution of a statistic over many samples; its standard deviation is the **standard error**.
+5. A **confidence interval** gives a plausible range for a population parameter. The **bootstrap** lets us compute confidence intervals from a single sample by resampling with replacement.
+6. **Interpret confidence intervals correctly**: They describe the reliability of the method, not the probability of a specific interval containing the true value.
+
+## Looking Ahead
+
+**Next lecture** we will build on this foundation and learn about **hypothesis testing**, the formal procedure for deciding whether an observed effect is real or just due to chance. Tomorrow’s tutorial will give you hands‑on practice with bootstrapping in R. Please attend; it will make the concepts click.
+
+---
+
+*“The best time to plant a tree was 20 years ago. The second best time is now.” (Chinese proverb*

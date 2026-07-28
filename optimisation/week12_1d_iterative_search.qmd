@@ -1,0 +1,332 @@
+
+---
+title: "Numerical Optimisation & 1D Iterative Search"
+subtitle: "ENGG7518 Research Methods for Engineers: Week 12"
+author: "Prof. Zuduo Zheng"
+date: "Semester 2, 2026"
+---
+
+::: {.callout-note appearance="simple"}
+## Learning Objectives
+By the end of this chapter, you should be able to:
+
+1. Explain the necessity of numerical optimisation and iterative search in complex engineering problems.
+2. Differentiate between derivative-free and derivative-based search methods.
+3. Understand the unimodality assumption and the concept of the uncertainty interval.
+4. Execute the derivative-free **Dichotomous Search Algorithm** and explain the geometric necessity of four evaluation points.
+5. Execute the **Bisection Method** using first-order derivatives and trace its convergence via iteration tables.
+:::
+
+## The Shift to Numerical Optimisation
+
+In the previous chapters, we focused on **classical (analytical) optimisation techniques**. These methods are highly rigorous: if you can write down the explicit mathematical equations for the first and second derivatives, you can solve for the exact optimal solution algebraically by setting gradients to zero ($\nabla f = \mathbf{0}$). 
+
+However, in modern engineering practice, analytical solutions are often impossible. Why?
+
+1. **Mathematical Complexity:** Objective functions are rarely neat polynomials. They frequently involve complex simulations, "black-box" systems, or massive datasets where explicit analytical forms of derivatives cannot be derived.
+2. **Computational Scale:** Solving massive, non-linear systems of equations algebraically is often computationally prohibitive. 
+
+To overcome this, we transition to **Numerical Optimisation (Iterative Search Procedures)**. 
+
+Instead of solving for the answer in one step, a numerical algorithm starts with a rough initial guess ($x_0$) and applies mathematical rules to generate a sequence of progressively better approximations ($x_1, x_2, \dots, x_k$). Over successive iterations, the objective function value decreases, and the sequence mathematically converges toward the optimal solution.
+
+::: {.callout-tip}
+## The Philosophy of Iterative Search
+*"There is no need to fear any problem you are working on. If you work on it, then you are influencing the outcome. It's the problems you don't address that should concern you."* (James Clear)
+
+Numerical optimisation embodies this philosophy. Algorithms do not solve complex problems instantly; they take calculated, iterative steps, constantly influencing and improving the outcome until the target is successfully reached.
+:::
+
+### Classification of Numerical Methods
+We categorise numerical search methods into two broad families:
+
+*   **Derivative-Free Methods (Direct Search):** These algorithms only evaluate the objective function $f(x)$ itself. They never calculate gradients or Hessians. They are highly robust and easy to program, though generally slower to converge. *(Example: Dichotomous Search)*.
+*   **Derivative-Based Methods:** These algorithms require the calculation of first derivatives (gradients) and sometimes second derivatives (Hessians). They converge much faster and are highly accurate, but require the objective function to be smooth and differentiable. *(Examples: Bisection Method, Steepest Descent, Newton's Method)*.
+
+## Fundamentals of 1D Search: The Uncertainty Interval
+
+Before tackling multi-variable problems, we must master single-variable (1D) search algorithms. *(Note: 1D search methods are the backbone of advanced multi-variable algorithms, which rely on 1D "Line Searches" at every step!)*
+
+For 1D optimisation, algorithms rely on continuously shrinking an **Interval of Uncertainty**, denoted as $[a, b]$. We know the optimal solution lies somewhere between $a$ and $b$, but we are uncertain of its exact location.
+
+### The Unimodality Assumption
+For basic 1D search methods to work, we assume the objective function $f(x)$ is **unimodal** within the interval $[a, b]$. 
+
+*   A **unimodal** function has exactly *one* local minimum in that interval. It smoothly drops down to the minimum and goes back up, without any secondary peaks or valleys.
+
+If an engineering problem has multiple local minima (multi-modal), the standard practice is to perform a rough initial scan to divide the function's domain into multiple unimodal sub-intervals, applying the search algorithm independently to each.
+
+```{r}
+#| label: fig-unimodality
+#| fig-cap: "Comparison of a unimodal function (having a single unique minimum in [a, b]) versus a multi-modal function (having multiple local minima)."
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 8.5
+#| fig-height: 4
+
+library(ggplot2)
+
+x_vals <- seq(0, 4, length.out = 200)
+
+df_uni <- data.frame(
+  x = x_vals,
+  y = (x_vals - 2)^2 + 1,
+  type = "Unimodal (Single Minimum)"
+)
+
+df_multi <- data.frame(
+  x = x_vals,
+  y = sin(3 * x_vals) + 0.5 * (x_vals - 2)^2 + 2,
+  type = "Multi-Modal (Multiple Minima)"
+)
+
+df_all <- rbind(df_uni, df_multi)
+df_all$type <- factor(df_all$type, levels = c("Unimodal (Single Minimum)", "Multi-Modal (Multiple Minima)"))
+
+ggplot(df_all, aes(x = x, y = y)) +
+  geom_line(aes(color = type), linewidth = 1.2) +
+  geom_vline(xintercept = c(0, 4), linetype = "dashed", color = "grey40") +
+  facet_wrap(~type, scales = "free_y") +
+  scale_color_manual(values = c("Unimodal (Single Minimum)" = "#1B9E77", "Multi-Modal (Multiple Minima)" = "#E7298A")) +
+  labs(x = "x", y = "f(x)") +
+  theme_minimal() +
+  theme(
+    strip.text = element_text(size = 11, face = "bold"),
+    legend.position = "none",
+    panel.grid.minor = element_blank()
+  )
+```
+
+## Derivative-Free: The Dichotomous Search Method
+
+The basic concept of Dichotomous Search is to evaluate the objective function at interior points to determine which half of the interval contains the minimum, and then discard the other half. 
+
+### Why Three Points are Not Enough
+A common question arises: *Can we just evaluate the function at the two boundaries ($a$ and $b$) and the exact midpoint ($M$), giving us 3 points?*
+
+**No, three points are insufficient.** If you only evaluate $f(a)$, $f(b)$, and $f(M)$, you cannot definitively ascertain whether the true minimum lies in the left half $[a, M]$ or the right half $[M, b]$. The curve could be steeply asymmetric, hiding the true minimum in the unselected half.
+
+### The Four-Point Strategy
+To safely reduce the uncertainty interval, we MUST evaluate **four points** by inserting *two* new interior points symmetrically around the midpoint. 
+
+```{r}
+#| label: fig-dichotomous-elimination
+#| fig-cap: "Dichotomous search four-point strategy and interval reduction. Evaluating f(λ) and f(μ) around the midpoint allows discarding half of the uncertainty interval at each step."
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 4.5
+
+library(ggplot2)
+
+# Unimodal curve
+x_curve <- seq(0, 4, length.out = 200)
+f_curve <- function(x) (x - 2.6)^2 + 1.5
+
+df_curve <- data.frame(x = x_curve, y = f_curve(x_curve))
+
+# Points
+a_val <- 0
+b_val <- 4
+mid_val <- (a_val + b_val) / 2
+eps <- 0.3
+lam_val <- mid_val - eps
+mu_val <- mid_val + eps
+
+pts_df <- data.frame(
+  name = c("a", "λ", "μ", "b"),
+  x = c(a_val, lam_val, mu_val, b_val),
+  y = f_curve(c(a_val, lam_val, mu_val, b_val)),
+  color = c("grey30", "#D95F02", "#1B9E77", "grey30")
+)
+
+ggplot() +
+  # Main unimodal curve
+  geom_line(data = df_curve, aes(x = x, y = y), color = "grey40", linewidth = 1) +
+  # Shaded discarded region [a, lambda] because f(lambda) > f(mu)
+  annotate("rect", xmin = a_val, xmax = lam_val, ymin = 0, ymax = Inf, fill = "#D95F02", alpha = 0.15) +
+  annotate("text", x = (a_val + lam_val)/2, y = 7, label = "Discarded Region\n[a, λ]", color = "#D95F02", fontface = "bold", size = 3.5) +
+  # Remaining interval [lambda, b]
+  annotate("text", x = (lam_val + b_val)/2, y = 1.2, label = "New Uncertainty Interval [λ, b]", color = "#1B9E77", fontface = "bold", size = 3.5) +
+  # Vertical dashed lines for points
+  geom_vline(data = pts_df, aes(xintercept = x, color = color), linetype = "dashed", linewidth = 0.7) +
+  geom_point(data = pts_df, aes(x = x, y = y, color = color), size = 3.5) +
+  # Point labels
+  annotate("text", x = a_val + 0.1, y = 8.3, label = "a", fontface = "bold", size = 4.5) +
+  annotate("text", x = lam_val, y = f_curve(lam_val) + 0.5, label = expression(lambda == frac(a+b, 2) - epsilon), color = "#D95F02", fontface = "bold", size = 3.5) +
+  annotate("text", x = mu_val, y = f_curve(mu_val) - 0.5, label = expression(mu == frac(a+b, 2) + epsilon), color = "#1B9E77", fontface = "bold", size = 3.5) +
+  annotate("text", x = b_val - 0.1, y = 3.7, label = "b", fontface = "bold", size = 4.5) +
+  scale_color_identity() +
+  labs(x = "x", y = "f(x)") +
+  theme_minimal() +
+  theme(
+    panel.grid.minor = element_blank()
+  )
+```
+
+::: {.callout-note appearance="simple"}
+## Algorithm 1: Dichotomous Search Procedure
+**Inputs:** 
+
+*   Initial interval of uncertainty: $[a, b]$
+*   Tolerance limit for stopping: $L > 0$
+*   A very small shift parameter: $\epsilon > 0$
+
+**Initialisation:** 
+Set iteration index $k = 0$. Let $a_k = a$ and $b_k = b$.
+
+**Step 1: Uncertainty Check**
+While the interval width $(b_k - a_k) > L$:
+
+**Step 2: Generate Interior Points**
+Calculate the two symmetric test points:
+
+*   $\lambda_k = \frac{a_k + b_k}{2} - \epsilon$
+*   $\mu_k = \frac{a_k + b_k}{2} + \epsilon$
+
+**Step 3: Evaluate and Update Boundaries**
+Evaluate $f(\lambda_k)$ and $f(\mu_k)$.
+
+*   **If $f(\lambda_k) \ge f(\mu_k)$:** The curve is trending downward to the right. 
+    *   Set $a_{k+1} = \lambda_k$ and $b_{k+1} = b_k$.
+*   **If $f(\lambda_k) < f(\mu_k)$:** The curve is trending upward to the right. 
+    *   Set $a_{k+1} = a_k$ and $b_{k+1} = \mu_k$.
+
+Increment $k = k + 1$ and return to Step 1.
+
+**Output:** 
+Once $(b_k - a_k) \le L$, terminate. The approximate minimum is the midpoint: $x^* \approx \frac{a_k + b_k}{2}$.
+:::
+
+Each iteration effectively halves the uncertainty interval, closing in on the minimum without ever calculating a derivative.
+
+## Derivative-Based: The Bisection Method
+
+If your objective function is continuous and differentiable ($f \in C^1$), we can drastically improve our search efficiency using the **Bisection Method**. 
+
+Because we have access to the first derivative $f'(x)$, which reveals the exact slope of the curve, we **no longer need four points**. We only need to generate **one** additional interior point: the exact midpoint.
+
+::: {.callout-note appearance="simple"}
+## Algorithm 2: Bisection Method Procedure
+**Inputs:** Initial interval $[a, b]$, stopping tolerance $L > 0$.
+**Initialisation:** Set $k = 1$, $a_k = a$, $b_k = b$.
+
+**Step 1: Midpoint Evaluation**
+While $(b_k - a_k) > L$:
+Calculate the midpoint: $c_k = \frac{a_k + b_k}{2}$.
+Evaluate the derivative at the midpoint: $f'(c_k)$.
+
+**Step 2: Update Boundaries via Slope**
+
+*   **If $f'(c_k) = 0$:** The exact minimum is found! **Stop.** Output $x^* = c_k$.
+*   **If $f'(c_k) > 0$:** The slope is positive (heading upward). The minimum must lie to the left. 
+    *   Set $a_{k+1} = a_k$ and $b_{k+1} = c_k$.
+*   **If $f'(c_k) < 0$:** The slope is negative (heading downward). The minimum must lie to the right.
+    *   Set $a_{k+1} = c_k$ and $b_{k+1} = b_k$.
+
+Increment $k = k + 1$ and return to Step 1.
+:::
+
+## Worked Example: Tracing the Bisection Method
+
+Let us trace the Bisection Method on a concrete polynomial function to see exactly how the computational convergence works step-by-step.
+
+**Problem:** Find the numerical minimum point of $f(x) = 2x^6 + 3x^4 - 12x$.  
+**Given Parameters:** Initial interval $[a, b] = [0, 2]$, and a tolerance limit $L = 0.02$.
+
+**Step 1: Determine the Derivative**  
+Before starting the iterations, we must derive the first-order derivative:
+$$ f'(x) = 12x^5 + 12x^3 - 12 $$
+
+**Step 2: Iterative Execution**
+
+*   **Iteration 1:**
+    *   **Current Interval:** $[a_1, b_1] = [0, 2]$. Interval width $\Delta x = 2$.
+    *   **Midpoint:** $c_1 = \frac{0 + 2}{2} = 1$.
+    *   **Evaluate slope:** Plug $c_1$ into the derivative: 
+        $$ f'(1) = 12(1)^5 + 12(1)^3 - 12 = 12 $$
+
+    *   **Decision:** Since $f'(1) = 12 > 0$, the slope is positive (heading upward). Because the function is unimodal, the minimum must have already occurred to the *left*. We replace the right boundary $b$ with $c_1$.
+    *   **New Interval:** $[0, 1]$.
+
+*   **Iteration 2:**
+    *   **Current Interval:** $[a_2, b_2] = [0, 1]$. Interval width $\Delta x = 1$.
+    *   **Midpoint:** $c_2 = \frac{0 + 1}{2} = 0.5$.
+    *   **Evaluate slope:** 
+        $$ f'(0.5) = 12(0.5)^5 + 12(0.5)^3 - 12 = -10.125 $$
+
+    *   **Decision:** Since $f'(0.5) = -10.125 < 0$, the slope is negative (heading downward). The minimum must lie further to the *right*. We replace the left boundary $a$ with $c_2$.
+    *   **New Interval:** $[0.5, 1]$.
+
+*   **Iteration 3:**
+    *   **Current Interval:** $[a_3, b_3] = [0.5, 1]$. Interval width $\Delta x = 0.5$.
+    *   **Midpoint:** $c_3 = \frac{0.5 + 1}{2} = 0.75$.
+    *   **Evaluate slope:** 
+        $$ f'(0.75) = 12(0.75)^5 + 12(0.75)^3 - 12 \approx -4.0898 $$
+
+    *   **Decision:** Since $f'(0.75) < 0$, the slope is still downward. The minimum lies to the *right*. We replace the left boundary again.
+    *   **New Interval:** $[0.75, 1]$.
+
+**Step 3: Summary of the Algorithm Run**
+
+If we let a computer continue this exact logical loop, it generates the following iteration table. Notice how the interval width ($\Delta x$) halves at each iteration, rapidly zeroing in on the true minimum.
+
+| Iteration ($k$) | Lower Bound ($a_k$) | Upper Bound ($b_k$) | Midpoint ($c_k$) | Derivative $f'(c_k)$ | Function $f(c_k)$ | Width $\Delta x$ |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 1 | 0.0000 | 2.0000 | **1.0000** | 12.0000 | -7.0000 | 2.0000 |
+| 2 | 0.0000 | 1.0000 | **0.5000** | -10.1250 | -5.7812 | 1.0000 |
+| 3 | 0.5000 | 1.0000 | **0.7500** | -4.0898 | -7.6948 | 0.5000 |
+| 4 | 0.7500 | 1.0000 | **0.8750** | 2.1939 | -7.8438 | 0.2500 |
+| 5 | 0.7500 | 0.8750 | **0.8125** | -1.3143 | -7.8671 | 0.1250 |
+| 6 | 0.8125 | 0.8750 | **0.8437** | 0.3396 | -7.8829 | 0.0625 |
+| 7 | 0.8125 | 0.8437 | **0.8281** | -0.5112 | -7.8815 | 0.0312 |
+| 8 | 0.8281 | 0.8437 | **0.8359** | -0.0918 | -7.8838 | **0.0156** |
+
+**Conclusion:**
+By **Iteration 8**, the interval width $\Delta x = 0.0156$ drops below our tolerance limit $L = 0.02$. The algorithm successfully terminates. 
+
+The derivative at the final midpoint ($f'(0.8359) \approx -0.09$) is extremely close to zero, mathematically proving we are practically at the bottom of the curve. The highly accurate numerical approximation for the optimal solution is **$x^* \approx 0.8359$**.
+
+```{r}
+#| label: fig-bisection-trajectory
+#| fig-cap: "Bisection method convergence on f(x) = 2x⁶ + 3x⁴ - 12x. Vertical dashed lines show how midpoints c₁, c₂, c₃ systematically halve the search space toward x* ≈ 0.8359."
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+library(ggplot2)
+
+f <- function(x) 2*x^6 + 3*x^4 - 12*x
+
+x_grid <- seq(0, 1.8, length.out = 300)
+df_f <- data.frame(x = x_grid, y = f(x_grid))
+
+# Midpoints from iterations 1, 2, 3 and final optimal
+mids <- data.frame(
+  x = c(1.0, 0.5, 0.75, 0.8359),
+  y = f(c(1.0, 0.5, 0.75, 0.8359)),
+  col = c("#E7298A", "#D95F02", "#7570B3", "#1B9E77")
+)
+
+ggplot(df_f, aes(x = x, y = y)) +
+  geom_line(color = "grey30", linewidth = 1.2) +
+  geom_vline(data = mids, aes(xintercept = x, color = col), linetype = "dashed", linewidth = 0.8) +
+  geom_point(data = mids, aes(x = x, y = y, color = col), size = 3.5) +
+  # Label the midpoints
+  annotate("text", x = 1.0 + 0.16, y = f(1.0) + 1.0, label = "c[1] == 1.0 ~ (f*minute > 0)", parse = TRUE, color = "#E7298A", fontface = "bold", size = 3.5) +
+  annotate("text", x = 0.5 - 0.16, y = f(0.5) - 0.8, label = "c[2] == 0.5 ~ (f*minute < 0)", parse = TRUE, color = "#D95F02", fontface = "bold", size = 3.5) +
+  annotate("text", x = 0.75 - 0.18, y = f(0.75) - 0.8, label = "c[3] == 0.75 ~ (f*minute < 0)", parse = TRUE, color = "#7570B3", fontface = "bold", size = 3.5) +
+  annotate("text", x = 0.8359 + 0.18, y = f(0.8359) - 0.3, label = "x* (Optimal Minimum)", color = "#1B9E77", fontface = "bold", size = 3.8) +
+  scale_color_identity() +
+  scale_x_continuous(limits = c(0, 1.6), expand = c(0,0)) +
+  labs(x = "x", y = "f(x) = 2x⁶ + 3x⁴ - 12x") +
+  theme_minimal() +
+  theme(
+    axis.title = element_text(size = 11, face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
