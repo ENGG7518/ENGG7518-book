@@ -72,9 +72,8 @@ Four recommended textbooks support the course. **You do not need to purchase any
 
 ## Teaching & Learning Activities
 
-- **Lectures**: Wednesdays 4:00-6:00 pm, Room 05-213 (Weeks 1-13).  
-  *Note: 12 August is a public holiday (Ekka Wednesday); no lecture or tutorial that week.*
-- **Tutorials**: Thursdays 4:00-6:00 pm, Room 11A-131 (Weeks 1-13).  
+- **Lectures**: Thursdays 10:00 am - 12:00 pm, Room 81-313 (Otto Hirschfeld Building).  
+- **Tutorials**: Fridays 10:00 am - 12:00 pm, Room 69-209 (Building 69).  
   Tutorials support the lectures and assessments, with a strong emphasis on **hands-on coding and data analysis**.
 
 - All sessions are **recorded** and available on Blackboard. However, **attendance is highly encouraged**: Recorded sessions should be a backup, not the norm.
