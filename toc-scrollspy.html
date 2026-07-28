@@ -1,0 +1,147 @@
+<script>
+// Persistent bi-directional light/dark theme handler across chapter navigations
+(function() {
+  function getSavedTheme() {
+    try {
+      return sessionStorage.getItem("quarto-color-scheme-forced") || localStorage.getItem("quarto-color-scheme");
+    } catch(e) {
+      return null;
+    }
+  }
+
+  function saveTheme(themeValue) { // "alternate" for dark, "default" for light
+    try {
+      sessionStorage.setItem("quarto-color-scheme-forced", themeValue);
+      try { localStorage.setItem("quarto-color-scheme", themeValue); } catch(e) {}
+    } catch(e) {}
+  }
+
+  var saved = getSavedTheme();
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // 1. Apply saved theme state on initial page load
+    if (saved === "alternate" || saved === "dark") {
+      var alternateSheets = document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      alternateSheets.forEach(function(s) {
+        if (s.rel !== 'stylesheet') s.rel = 'stylesheet';
+      });
+      document.body.classList.add('quarto-dark');
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+      
+      var toggles = document.querySelectorAll('.quarto-color-scheme-toggle');
+      toggles.forEach(function(t) { t.classList.add('alternate'); });
+    } else if (saved === "default" || saved === "light") {
+      var alternateSheets = document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      alternateSheets.forEach(function(s) {
+        s.rel = 'disabled-stylesheet';
+      });
+      document.body.classList.remove('quarto-dark');
+      document.documentElement.setAttribute('data-bs-theme', 'light');
+      
+      var toggles = document.querySelectorAll('.quarto-color-scheme-toggle');
+      toggles.forEach(function(t) { t.classList.remove('alternate'); });
+    }
+
+    // 2. Listen for clicks on the theme toggle button to accurately save user preference
+    document.addEventListener("click", function(e) {
+      var toggle = e.target.closest('.quarto-color-scheme-toggle');
+      if (toggle) {
+        setTimeout(function() {
+          // Check if dark mode stylesheet is currently enabled
+          var darkSheet = document.querySelector('link.quarto-color-scheme.quarto-color-alternate');
+          var isDark = toggle.classList.contains('alternate') || (darkSheet && darkSheet.rel === 'stylesheet');
+          
+          if (isDark) {
+            saveTheme("alternate");
+            document.body.classList.add('quarto-dark');
+            document.documentElement.setAttribute('data-bs-theme', 'dark');
+          } else {
+            saveTheme("default");
+            document.body.classList.remove('quarto-dark');
+            document.documentElement.setAttribute('data-bs-theme', 'light');
+            // Ensure alternate stylesheets are disabled
+            var alternateSheets = document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+            alternateSheets.forEach(function(s) {
+              s.rel = 'disabled-stylesheet';
+            });
+          }
+        }, 100);
+      }
+    });
+  });
+})();
+
+document.addEventListener("DOMContentLoaded", function () {
+  const tocEl = document.querySelector('nav#TOC[role="doc-toc"]');
+  if (!tocEl) return;
+
+  const tocLinks = Array.from(tocEl.querySelectorAll("a[data-scroll-target]"));
+  if (!tocLinks.length) return;
+
+  const sections = tocLinks.map(link => {
+    const target = link.getAttribute("data-scroll-target");
+    if (!target) return null;
+    if (target.startsWith("#")) {
+      return document.getElementById(decodeURI(target.slice(1)));
+    } else {
+      return document.querySelector(decodeURI(target));
+    }
+  });
+
+  function getAbsoluteTop(elem) {
+    if (!elem) return 0;
+    return elem.getBoundingClientRect().top + window.pageYOffset;
+  }
+
+  let currentActive = -1;
+
+  function updateTOC() {
+    const pageY = window.pageYOffset;
+    const windowHeight = window.innerHeight;
+    const bodyHeight = document.body.offsetHeight;
+
+    let sectionIndex = -1;
+
+    // If scrolled at the very bottom of page, activate last section
+    if (pageY + windowHeight >= bodyHeight - 50) {
+      sectionIndex = sections.length - 1;
+    } else {
+      // Find section currently in view using absolute offset
+      for (let i = sections.length - 1; i >= 0; i--) {
+        if (sections[i]) {
+          const top = getAbsoluteTop(sections[i]);
+          if (pageY >= top - 140) {
+            sectionIndex = i;
+            break;
+          }
+        }
+      }
+    }
+
+    if (sectionIndex === -1 && sections.length > 0) {
+      sectionIndex = 0;
+    }
+
+    if (sectionIndex !== currentActive && sectionIndex >= 0) {
+      currentActive = sectionIndex;
+
+      tocLinks.forEach((link, idx) => {
+        if (idx === sectionIndex) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+    }
+  }
+
+  window.addEventListener("scroll", function() {
+    requestAnimationFrame(updateTOC);
+  }, { passive: true, capture: true });
+
+  window.addEventListener("resize", updateTOC, { passive: true });
+  setTimeout(updateTOC, 100);
+  setTimeout(updateTOC, 500);
+  setTimeout(updateTOC, 1000);
+});
+</script>

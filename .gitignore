@@ -1,0 +1,16 @@
+# Quarto build outputs and cache
+.quarto/
+_book/
+*.knit.md
+*.utf8.md
+*.pdf
+index.typ
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# R / RStudio files
+.Rhistory
+.RData
+.Rproj.user/

@@ -1,0 +1,241 @@
+---
+title: "Practical Lab 1: Introduction to R, Data Structures, and Data Import"
+subtitle: "ENGG7518 Research Methods for Engineers: Tutorial 1"
+author: "Prof. Zuduo Zheng"
+date: "Semester 2, 2026"
+---
+
+::: {.callout-note appearance="simple"}
+## Learning Objectives
+
+By the end of this tutorial, you should be able to:
+
+1. Understand the history and advantages of the R programming language.
+2. Navigate the RStudio environment and execute basic mathematical operations.
+3. Create and manipulate fundamental data structures: Vectors, Factors, Lists, Matrices, and Data Frames.
+4. Manage working directories using relative paths and RStudio Projects to avoid "backslash" errors.
+5. Import and export datasets across various formats using the `rio` package.
+6. Utilise R's built-in help features and keyboard shortcuts to troubleshoot code.
+:::
+
+## Why Use R?
+
+R is a programming language and free software environment designed specifically for statistical computing and data analysis. Originally developed in 1992 as a research project in Auckland, New Zealand by Robert Gentleman and Ross Ihaka, R has grown into the most popular programming language in the statistical community. 
+
+**Key Advantages of R:**
+
+- **Free and Open-Source:** R is freely available and constantly updated.
+- **Massive Community:** It boasts a rich ecosystem of packages (hosted on CRAN) specifically designed for data manipulation and publication-ready graphics.
+- **Reproducibility:** When combined with tools like Quarto, R provides an end-to-end workbench for conducting 100% reproducible scientific research.
+
+While base R provides the computational engine, we interface with it using **RStudio**, a powerful Integrated Development Environment (IDE) that dramatically enhances user-friendliness.
+
+## Basic Operations and Syntax
+
+At its simplest, the R console acts as a powerful calculator. You can type commands directly into the prompt `>`. 
+
+```r
+1 + 1
+#> [1] 2
+```
+
+*(Note: The `[1]` in the output indicates that the answer is a vector, and `2` is the first element of that vector).*
+
+### Important Syntax Rules
+
+- **Comments:** Anything following a hashtag `#` is ignored by R.
+- **Case Sensitivity:** R is strictly case-sensitive. The variable `x` is entirely different from `X`.
+- **The Assignment Operator:** The standard way to assign a value to a variable in R is using the **leftward arrow `<-`**.
+    ```r
+    x <- 4          # The most common assignment operator in R
+    assign("x", 4)  # A functional alternative
+    ```
+
+### Formatting Numerical Output
+
+By default, R displays up to 7 digits for numerical outputs. You can control this using formatting functions:
+
+```r
+options(digits=3)       # Changes global display to 3 digits
+round(3.14159, 2)       # Rounds to 2 decimal places (3.14)
+ceiling(3.14)           # Rounds up (4)
+floor(3.14)             # Rounds down (3)
+```
+
+## Core Data Structures
+
+R’s data structures are specifically optimised for statistical analysis. You can check the type and structure of any object using `typeof()` and `class()`.
+
+### 1. Atomic Vectors
+
+The atomic vector is the simplest data structure in R. It stores a 1D sequence of values of the **same data type** (integer, double, logical, or character). We create vectors using the `c()` (concatenate) function.
+
+```r
+# Double (Numeric) Vector
+dbl_spd <- c(35, 54, 70)
+typeof(dbl_spd) # Returns "double"
+
+# Integer Vector (requires the 'L' suffix)
+int_spd <- c(35L, 54L, 70L)
+
+# Character Vector
+chr_spd <- c("35", "54", "70")
+```
+
+You can assign names to elements within a vector to increase readability:
+
+```r
+names(dbl_spd) <- c("congested", "heavy", "free")
+dbl_spd["heavy"]  # Accesses the element named "heavy"
+```
+
+### 2. Factors
+
+A factor is a special integer vector used to store **categorical data** (data with a limited, fixed set of possible values, like gender or transport mode). Factors contain a `levels` attribute acting as a container for predefined categories.
+
+```r
+trans_mode_fct <- factor(c("Car", "Bus", "Bus", "Car", "Bike"), 
+                         levels = c("Bus", "Car", "Bike"))
+```
+
+*Note on Packages:* To handle factors flexibly, the `forcats` package is highly recommended:
+
+```r
+if(!require(forcats)) { install.packages("forcats"); require(forcats) }
+```
+
+### 3. Lists
+
+A list is similar to a vector, but it can store elements of **different data types** (including other lists, vectors, or matrices!). 
+
+```r
+CF_models <- list(
+  Name = c("GHR", "IDM", "OVM"),
+  Year = c(1961L, 2000L, 1998L)
+)
+is.list(CF_models) # Returns TRUE
+```
+
+### 4. Matrices
+
+A matrix is a 2D rectangular array where all columns must contain the **same data type**.
+
+```r
+# Create a 2-row, 3-column matrix
+mat_spd <- matrix(c(35, 25, 54, 55, 70, 80), ncol = 3, nrow = 2, byrow = TRUE)
+
+# Assign names to rows and columns
+colnames(mat_spd) <- c("congested", "heavy", "free")
+rownames(mat_spd) <- c("Sunny Road", "Four_wells Road")
+
+# Accessing data in a matrix [row, column]
+mat_spd[1, 1]                            # Access by numeric index
+mat_spd["Sunny Road", "congested"]       # Access by name
+mat_spd[c(1, 2), 1]                      # Access multiple elements
+```
+
+You can combine matrices by column using `cbind()` or by row using `rbind()`.
+
+### 5. Data Frames
+
+The **Data Frame** is the most important structure for data science in R. It is a 2D table where each column can contain a *different* data type. When you import a CSV file into R, it is automatically stored as a Data Frame.
+
+```r
+# Creating a data frame manually
+frm_spd <- data.frame("congested" = c(35, 25), 
+                      "heavy" = c(54, 55),
+                      "free" = c(70, 80))
+
+# Checking dimensions
+dim(frm_spd)   # Returns rows and columns
+nrow(frm_spd)  # Returns number of rows
+
+# Accessing data within a data frame
+frm_spd$congested     # The $ operator returns the column as a vector
+frm_spd[, 1]          # Equivalent to the above
+frm_spd$congested[1]  # Returns the 1st element of the 'congested' column
+```
+
+## File Management and RStudio Projects
+
+Managing where your computer saves and loads files can be tricky.
+
+- `getwd()`: Returns your current working directory.
+- `setwd("path/to/folder")`: Changes your working directory.
+
+::: {.callout-warning}
+## The Windows Backslash Error
+
+In Windows, file paths use backslashes (`C:\Folder\file`). In R, the backslash `\` is an "escape character." If you paste a Windows path into R, it will throw an error. 
+
+**The Fix:** You must either double the backslashes (`C:\\Folder\\file`) or switch them to forward slashes (`C:/Folder/file`). Forward slashes are recommended.
+:::
+
+**Absolute vs. Relative Paths:**
+
+Using absolute paths (`C:/Users/name/Project/data.csv`) ruins reproducibility because that exact folder structure does not exist on your colleague's computer. 
+
+**The Solution:** Use **RStudio Projects**. Creating an RStudio Project keeps your data, scripts, and figures together in one folder. You can then use **relative paths** (e.g., `"./data.csv"`), which will work perfectly on any computer.
+
+## Importing and Exporting Data
+
+While base R has built-in functions like `read.csv()`, modern data scientists use the **`rio`** package - often called the "Swiss-Army Knife for Data I/O". 
+
+The `rio` package uses `import()` and `export()` to automatically determine the correct data structure from the file extension (e.g., `.csv`, `.xlsx`, `.sav`, `.dta`).
+
+```r
+# Install and load rio
+if(!require(rio)) { install.packages("rio"); require(rio) }
+
+# Exporting data from R to your computer
+export(mtcars, "mtcars.csv")    # Saves as Comma-Separated Values
+export(mtcars, "mtcars.sav")    # Saves as SPSS format
+
+# Importing data back into R
+my_data <- import("mtcars.csv")
+
+# Convert files instantly
+convert("mtcars.sav", "mtcars.dta") # Converts SPSS directly to Stata!
+```
+
+## Getting Help and Useful Shortcuts
+
+Programming involves constant troubleshooting. R has excellent built-in help features:
+
+- **`?mean`** or **`help(mean)`**: Opens the official documentation for the `mean` function.
+- **`example(mean)`**: Runs pre-written examples to show you how the function works.
+- **`??correlation`** or **`RSiteSearch("correlation")`**: Searches your computer or the internet for functions related to a keyword.
+
+::: {.callout-tip}
+## Essential RStudio Keyboard Shortcuts
+
+- **Run Current Line:** `Ctrl + Enter` (Windows) / `Cmd + Return` (Mac)
+- **Insert Assignment Operator (`<-`):** `Alt + -` / `Option + -`
+- **Clear Console:** `Ctrl + L`
+- **Navigate Command History:** `Up Arrow` / `Down Arrow` in the console.
+- **Find and Replace:** `Ctrl + F` / `Cmd + F`
+:::
+
+---
+
+## Lab Assignments
+
+Test your new R skills by completing the following two challenges.
+
+### Task 1: Basic CSV Import
+
+1. Download the provided data file `B1.csv` from the course portal.
+2. Save it into your local RStudio Project folder.
+3. Import it into R and assign it to a variable named `driver1.base` as a data frame. *(Note: This dataset will be used in future tutorials!)*
+
+### Task 2: Data Export and Manipulation with the "iris" Dataset
+
+The built-in `iris` dataset contains data on various iris flowers, including sepal and petal measurements.
+
+**Objectives:**
+
+1. **Export** the built-in `iris` dataset to a CSV file named `"iris_data.csv"` in your working directory.
+2. **Import** the `"iris_data.csv"` file back into R using the `rio` package, and rename it as a new variable called `imported_iris`.
+3. **Explore Headers:** Identify and print the different column names of the `imported_iris` dataset.
+4. **Identify Types:** Determine the data type of the variables in each column (e.g., numeric, character, factor) using `str()` or `class()`.
+5. **Count Variables:** Count how many columns contain `double` (numeric) values and how many contain `character` (string) values.

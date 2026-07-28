@@ -1,0 +1,63 @@
+---
+title: "Assessments"
+---
+
+Your final grade is built from four components. Pay close attention to the **hurdle requirement** in the final exam.
+
+| Assessment | Type | Weight | Due Date | Learning Outcomes |
+|------------|------|--------|----------|---------------------|
+| In‑class quizzes | Online / in‑person | 10 % | Ongoing (Weeks 1-10) | LO1, LO2, LO3, LO4, LO5 |
+| Data analysis project | Written (Turnitin) | 20 % | **6 October 2026, 4:00 pm** | LO1, LO2, LO3, LO6, LO7 |
+| Problem set | Written (Turnitin) | 20 % | **28 October 2026, 4:00 pm** | LO3, LO4, LO5 |
+| Final exam | In‑person, identity verified | 50 % | Exam period (7-21 Nov 2026) | LO1, LO2, LO3, LO4, LO5, LO6 |
+
+## In‑class Quizzes (10 %)
+
+- There are **10 quizzes** across Weeks 1-10 (submitted via Blackboard before the end of each lecture).  
+- Each quiz is worth **1.66 marks**.
+- Your final score is calculated from your **best 6 out of 10** quizzes.  
+- Because only the best 6 of 10 contribute and answers are released soon after, no late submissions or extensions are permitted without a valid central extension request.
+
+## Data Analysis Project (20 %)
+
+You will apply the statistical techniques taught in class to a provided engineering dataset to estimate a statistical model and explain the data generating process.
+
+The report must be fully reproducible. You must submit both:
+1. The `.qmd` (or `.rmd`) source file.
+2. The rendered report (PDF, HTML, or MS Word format).
+
+Submit via **Turnitin on Blackboard** by **6 October 2026, 4:00 pm**.
+
+## Problem Set (20 %)
+
+A set of applied problems covering statistics, data processing, and numerical optimisation. This assessment is designed to help you **prepare for the final exam**.  
+
+Submit via **Turnitin on Blackboard** by **28 October 2026, 4:00 pm**.
+
+## Final Exam (50 %): Hurdle Requirement
+
+- In‑person, identity‑verified examination during the official exam period (**7 November 2026-21 November 2026**).
+- **Hurdle requirement**: You must achieve **at least 40 % on the final exam** to pass the course with a Grade 4 or higher.
+- Format: Closed book paper-based exam (10 mins planning, 120 mins duration). Permitted materials: One double-sided A4 sheet of handwritten notes and a UQ approved calculator (Casio FX82 series). Generative AI / MT tools are strictly prohibited.
+- Most students who fail ENGG7518 do so because they do not reach this 40 % hurdle.
+
+::: {.callout-important}
+## Final exam Q&A
+To ensure fairness, I will not answer individual questions about the final exam. Instead, the **last tutorial of the semester** will be entirely dedicated to exam preparation. Bring all your questions there.
+:::
+
+## Late Submission & Extensions
+
+- All assessments must be submitted **on or before the due date**.
+- If you need an extension (medical, family emergency, etc.), you must apply **before the due date** via the central UQ system:  
+  [https://my.uq.edu.au/information-and-services/manage-my-program/exams-and-assessment/applying-extension](https://my.uq.edu.au/information-and-services/manage-my-program/exams-and-assessment/applying-extension)
+
+- Do **not** email me directly for extensions; they are centrally managed.
+
+**Late penalty** (without approved extension):
+
+- **10 % of the maximum possible mark** deducted per 24‑hour period (including weekends).
+- After **7 calendar days**, the mark becomes **0**.
+- Example: For an assignment worth 20 marks, a 2‑day late submission loses 4 marks.
+
+All written assignments must be submitted through **Turnitin** on Blackboard.

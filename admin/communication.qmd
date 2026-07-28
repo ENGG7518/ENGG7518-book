@@ -1,0 +1,62 @@
+---
+title: "Communication & Support"
+---
+
+## How to Reach Us
+
+| Channel | When to use | Response time |
+|---------|-------------|---------------|
+| **Blackboard** | Preferred: check for announcements, readings, and submission links | N/A |
+| **Tutorials** | Best for detailed questions about content, coding, or assignments | Instant help from Dr Mohammadian |
+| **After lectures** | Quick clarifications | Right after class |
+| **Email** | Only for personal matters not suitable for the public forum | Within 48 business hours |
+
+### Email Policy
+
+My email address is: **zuduo.zheng@uq.edu.au**  
+
+Please note:
+
+- I (and the teaching team) check emails only between **12:00 pm and 5:00 pm** on working days (Monday to Friday, excluding public holidays).
+- I aim to reply within **48 business hours**. If you email on a Saturday, do not expect a reply before Tuesday.
+- For technical coding questions, the tutorial is almost always faster and more effective.
+
+## Before You Email
+
+1. Check Blackboard: the answer is often already there.
+2. Review the course book (this site) and the syllabus.
+3. Ask a classmate: they might have the same question.
+
+If you still need to email, please:
+
+- Use your UQ student email account.
+- Include **ENGG7518** in the subject line.
+- Be specific about what you need.
+
+## Expectations & Mutual Respect
+
+> *“Every action you take is a vote for the type of person you wish to become.”*  
+> - **James Clear**
+
+### Classroom Dos and Don’ts
+
+::: {.callout-tip}
+## What I encourage
+- Ask questions and start discussions at any time.
+- Attend as many lectures and tutorials as possible; it is the best investment of your time.
+- Show your effort: a **10‑hour per week** workload (4 contact h + 6 self‑study) is the norm for a 2‑unit course.
+:::
+
+::: {.callout-warning}
+## What disrupts learning
+- Chatting on your phone or with people around you (unless I ask you to discuss something).
+- Playing sounds or making noise from your smartphone.
+
+My bottom line: you may even take a quiet nap if you must, but **never disturb** other students’ learning.
+:::
+
+### Mutual Effort
+
+I respect and genuinely care about our students, especially those who are far from home. As a small step, I reply to emails **within 48 business hours** (weekends and public holidays excluded). I will always treat you with respect, and I expect the same in return.
+
+As they say, *it takes two to tango*. Attend tutorials, prepare for assessments, and actively participate. If we both do our part, the semester will be smooth and enjoyable.

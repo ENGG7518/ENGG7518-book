@@ -1,0 +1,174 @@
+---
+title: "Introduction to Linear Regression Models"
+subtitle: "ENGG7518 Research Methods for Engineers: Week 6 (Part II)"
+author: "Prof. Zuduo Zheng"
+date: "Semester 2, 2026"
+---
+
+::: {.callout-note appearance="simple"}
+## Learning Objectives
+By the end of this part, you should be able to:
+
+1. Understand the philosophy of statistical modelling and why "all models are wrong, but some are useful."
+2. Distinguish between different types of variables (dependent, independent, control, confounding) and their roles.
+3. Formulate the general linear regression model mathematically.
+4. Compare parameter estimation techniques (OLS vs. MLE) and explain the mechanical spring analogy for OLS.
+5. Evaluate model assumptions (linearity, normality, homoscedasticity, multicollinearity) and identify influential data points.
+6. Interpret regression coefficients, $p$-values, $R^2$, and $F$-tests correctly.
+:::
+
+## The Philosophy of Statistical Modelling
+
+Before diving into equations, we must understand what a statistical model actually is. Data-driven research generally follows this framework:
+
+$$[\text{Population}] \rightarrow [\text{Sample Selection}] \rightarrow [\text{Sample Data}] \rightarrow [\text{Statistical Modelling}] \rightarrow [\text{Population Inference}]$$
+
+A model is not a perfect replica of reality; it is an **approximation**. Real-world systems are infinitely complex, so a model simplifies that system to extract key insights. As two famous pioneers of mathematics and statistics noted:
+
+*   *"Truth is much too complicated to allow anything but approximations."* - **John von Neumann**
+*   *"All models are wrong, but some are useful."* - **George Box**
+
+Your goal in developing a statistical model is **not** to reduce empirical error to zero. If you force error to zero, you have simply overfitted your sample data, capturing noise rather than the underlying truth.
+
+### Where Does Uncertainty Come From?
+Uncertainty is often viewed as a nuisance, but it is the very reason statistical methods exist. In any dataset, uncertainty arises from:
+
+*   Measurement errors (precision problems).
+*   Interference during the measurement process (e.g., response bias).
+*   Omission of unknown or unmeasured factors.
+*   Inclusion of irrelevant factors.
+*   Inherent randomness in human behaviour or physical processes.
+
+## Variables in Data Analysis
+
+To build any statistical model, you must first distinguish clearly between two primary categories of variables.
+
+| Variable Type | Common Aliases | Definition and Role |
+| :--- | :--- | :--- |
+| **Independent Variable (IV)** | Predictor, Factor, Explanatory Variable ($X$) | Variables hypothesised to cause, influence, or explain variations in the outcome. They act as the "cause." |
+| **Dependent Variable (DV)** | Outcome, Response, Measured Effect ($Y$) | The primary metric or variable of interest being predicted or explained. It acts as the "effect." |
+
+### Intuitive Example: Baking a Birthday Cake
+To build intuitive understanding, let us treat the process of baking a birthday cake as a linear regression model.
+
+*   **Dependent Variable ($Y$):** The final size or quality of the cake.
+*   **Independent Variables ($X$):** Flour ($X_1$), Sugar ($X_2$), and Water ($X_3$).
+
+We can formulate this process into a regression equation:
+
+$$ \text{Cake} = \beta_0 + \beta_1(\text{Flour}) + \beta_2(\text{Sugar}) + \beta_3(\text{Water}) + \epsilon $$
+
+*   **Intercept ($\beta_0$):** The baseline outcome when all inputs are zero.
+*   **Coefficients ($\beta_1, \beta_2, \beta_3$):** Parameters representing how much each ingredient contributes to the final cake. 
+*   **Error Term ($\epsilon$):** Captures all *omitted* ingredients (like butter, eggs, or baking powder) and unmeasured factors (like oven temperature). Because our dataset only recorded flour, sugar, and water, all other influences are lumped into this error term.
+
+## The Mathematical Formulation
+
+The general mathematical formulation for a multiple linear regression model is expressed as:
+
+$$ Y = \beta_0 + \beta_1 X + \epsilon $$
+
+This equation is divided into two distinct parts:
+
+1.  **Deterministic Component ($\beta_0 + \beta_1 X$):** Represents the known, predictable linear relationship between inputs and outputs.
+2.  **Stochastic Component ($\epsilon$):** Represents the random, unobservable error distribution. In classical linear regression, we assume the error term follows a normal distribution centred at zero mean with constant variance $\sigma^2$, denoted as $\epsilon \sim N(0, \sigma^2)$.
+
+This model explicitly states that once you have estimated the meaningful information in the data (the deterministic part), there should be nothing left over in the error term except "white noise."
+
+## Model Estimation
+
+Once you have defined your variables and collected sample data, your next task is **model estimation**- finding the optimal numerical values for parameters ($\beta_0, \beta_1$).
+
+### Ordinary Least Squares (OLS)
+Model estimation is essentially an optimisation problem. The standard method used is **Ordinary Least Squares (OLS)**. 
+
+For any observation $i$, there is a residual error ($e_i$) representing the difference between the actual observed value ($Y_i$) and the model's predicted value ($\hat{Y}_i$). If we simply added up these errors, positive and negative errors would cancel each other out. To prevent this, OLS **squares** each residual before summing them up, creating the **Sum of Squared Errors (SSE)**.
+
+The objective of OLS is to find the parameters ($\alpha, \beta$) that minimise this sum:
+
+$$ \min_{\alpha, \beta} \sum_{i=1}^{n} (Y_i - \alpha - \beta X_i)^2 $$
+
+::: {.callout-tip}
+## The Spring Analogy for OLS
+Imagine plotting your data points on a scatterplot and connecting each point to a straight line using flexible mechanical springs. When you let go, the springs push and pull on the line. The line will shift and rotate until the overall spring tension reaches physical equilibrium. That specific equilibrium position is the OLS regression line, where the sum of squared distances is minimised.
+:::
+
+Because this is a simple convex optimisation problem, taking the partial derivatives and setting them to zero yields an exact analytical closed-form solution. According to the **Gauss-Markov Theorem**, provided certain assumptions are met, OLS produces the Best Linear Unbiased Estimator (BLUE).
+
+### Maximum Likelihood Estimation (MLE)
+While OLS seeks to minimise error, **MLE** seeks to find parameters that maximise the probability (likelihood) of observing your exact dataset. In a linear model, *if the errors are normally distributed*, OLS estimators and MLE estimators are mathematically identical. 
+
+### Sample Size Rule of Thumb
+How much data do you need to estimate these parameters reliably? While there is no perfect "gold standard," a highly recommended rule of thumb in linear regression is to maintain a minimum of **20 cases per independent variable**. For example, a model with 5 independent variables should have at least 100 observations.
+
+## Key Assumptions and Diagnostics
+
+For an OLS linear regression model to be valid, it must produce residuals that have a mean of zero, a constant variance, and are not correlated with other variables. We check this through four key assumptions.
+
+### Assumption 1: Linearity
+The relationship modelled must be linear **in parameters**. This does *not* mean the relationship between $X$ and $Y$ must be a straight line. You can model curvature by including nonlinear variables (e.g., $X^2$, $\log(X)$), so long as the coefficients ($\beta$) themselves remain linear multipliers.
+
+### Assumption 2: Normality
+The error terms should be normally distributed. This is typically checked using:
+
+*   **P-P Plots:** Magnifies deviations from the proposed distribution in the middle of the data.
+*   **Q-Q Plots:** Magnifies deviations on the tails (extremes). If the empirical data plots as a straight line against the theoretical normal data, the assumption holds.
+
+### Assumption 3: Homoscedasticity (Constant Variance)
+Homoscedasticity means the variance of the error term is the same across all values of the independent variables. 
+
+*   *Example:* If you plot traffic speeds throughout the day, speeds at 3:00 AM vary very little (small variance). But speeds during the 5:00 PM rush hour vary wildly from standstills to open-lane speeding (large variance). 
+
+::: {.callout-warning}
+## The Danger of Heteroscedasticity
+When variance is not constant (Heteroscedasticity), OLS is still unbiased, but its standard errors become biased. Because standard errors are central to calculating $p$-values and confidence intervals, this leads to incorrect conclusions about whether a variable is statistically significant.
+:::
+
+### Assumption 4: Multicollinearity
+Multicollinearity happens when two or more independent variables are highly correlated with each other. For example, trying to predict university coffee shop sales using both "Number of high school students visiting" and "Number of parents visiting" on an Open Day. Because parents usually accompany students, these two inputs move together, making it impossible for the model to isolate which one is actually driving the coffee sales.
+
+We detect this using the **Variance Inflation Factor (VIF)**:
+$$ VIF_i = \frac{1}{1 - R_i^2} $$
+
+*   VIF = 1: No multicollinearity
+*   VIF > 5: High multicollinearity (consider removing or combining variables, or using Principal Component Analysis)
+
+### Detecting Influential Observations: Cook's Distance
+Sometimes, a single severe outlier can pull the entire regression line toward it. We measure this "pull" using **Cook’s Distance ($D_i$)**. 
+
+::: {.callout-note}
+## The Teamwork Analogy for Cook's Distance
+Suppose 8 students work on a group assignment and receive 72/100 points. How do you measure Student 1's true contribution? 
+A reliable way is to remove Student 1, let the remaining 7 students do the assignment, and check the score. If the new score is 68, Student 1's contribution is $72 - 68 = 4$. 
+
+Cook's distance applies this exact "leave-one-out" logic. It removes a data point, refits the entire regression model, and quantifies how much all the model predictions change. If $D_i$ is substantially larger than the rest (a common rule of thumb is $D_i > \frac{4}{n}$), that data point is an influential outlier.
+:::
+
+## Model Interpretation and Performance
+
+### Interpreting Coefficients and $p$-values
+*   **Coefficient Sign (+/-):** Indicates a positive or negative correlation.
+*   **Coefficient Magnitude:** Tells you how much the mean of the dependent variable changes given a one-unit shift in the independent variable, **while holding all other variables constant**. This isolation is the most powerful feature of multiple regression.
+*   **$p$-value:** Tests the null hypothesis that a specific variable has no correlation with the dependent variable. If $p < 0.05$ (your significance level), you reject the null hypothesis and conclude the variable is a statistically significant predictor.
+
+### Global Performance: R-Squared and F-Test
+To evaluate the model as a whole, we use:
+
+*   **R-Squared ($R^2$):** The fraction of total variance in $Y$ that is successfully explained by the model. It compares the Explained Sum of Squares (ESS) to the Total Sum of Squares (TSS).
+*   **Adjusted R-Squared:** $R^2$ naturally inflates whenever you add more variables, even if they are garbage. Adjusted $R^2$ penalises you for adding variables that do not genuinely improve the model, providing a fairer comparison between models.
+*   **Overall F-test:** Tests the null hypothesis that *all* regression coefficients are equal to zero. It tells you if your model, as a whole, performs better than just guessing the average of $Y$.
+
+## Best Practices and Pitfalls
+
+### The Danger of Pattern Hunting
+If you repeatedly carry out significance tests on random data, you will eventually find something that looks "significant" purely by chance. For example, if you run 10 trials of a completely useless drug at a $p=0.05$ threshold, the chance of getting at least one false-positive "significant" result jumps to 40% ($1 - 0.95^{10}$). If you must test multiple hypotheses simultaneously, apply a **Bonferroni correction** (dividing your threshold by $n$ tests).
+
+### The Scientific Sequence
+Always ensure you follow a desirable statistical modelling sequence:
+
+1.  Postulate relationships based on underlying theory.
+2.  Develop a hypothesis.
+3.  Collect appropriate data.
+4.  Apply statistical methods to test the hypothesis.
+
+**Never** do the reverse: collect random data, apply statistical methods blindly to see what variables correlate, and *then* invent a theory to explain the results. As Benjamin Disraeli famously warned: *"There are three types of lies: lies, damn lies, and statistics."* Use your models responsibly!

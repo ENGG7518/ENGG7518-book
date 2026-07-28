@@ -1,0 +1,158 @@
+---
+title: "Linear Regression Diagnostics, Interpretation & Selection"
+subtitle: "ENGG7518 Research Methods for Engineers: Week 7"
+author: "Prof. Zuduo Zheng"
+date: "Semester 2, 2026"
+---
+
+::: {.callout-note appearance="simple"}
+## Learning Objectives
+By the end of this part, you should be able to:
+
+1. Understand the three-task pipeline of statistical modelling.
+2. Perform comprehensive diagnostics for the six key assumptions of linear regression.
+3. Handle qualitative factors and avoid the dummy variable trap.
+4. Evaluate and compare models using hypothesis tests ($t$-tests, $F$-tests, Likelihood Ratio Tests), $R^2$, Adjusted $R^2$, and information criteria.
+5. Recognise the dangers of data mining, p-hacking, and pattern hunting.
+:::
+
+## The Three-Task Pipeline of Statistical Modelling
+
+When developing any statistical model (whether simple linear regression, discrete choice model, or advanced machine learning algorithm), the workflow follows a strict three-task pipeline:
+
+1.  **Task 1: Model Estimation:** Estimating the numerical values of the model parameters (e.g., using Ordinary Least Squares [OLS] or Maximum Likelihood Estimation [MLE], as covered in Part II).
+2.  **Task 2: Model Diagnostics & Assumptions Check:** Verifying whether the fundamental mathematical assumptions behind the estimator hold true for your specific empirical dataset.
+3.  **Task 3: Model Assessment & Selection:** Evaluating how well your model explains the data, interpreting the coefficients, conducting hypothesis tests, and selecting the final optimal model.
+
+If the underlying assumptions of OLS are violated by your data, your estimated parameters may become biased, standard errors will be miscalculated, and all subsequent hypothesis tests will be rendered invalid. Therefore, **Task 2 is non-negotiable** before you can interpret your results in Task 3. 
+
+## Task 2: Model Diagnostics (The Six Key Checks)
+
+For an OLS linear regression model to be valid, the random error term ($\epsilon$) must behave predictably. You must systematically check six fundamental assumptions. 
+
+### Assumption 1: Linearity in Parameters
+A common misconception is that "linear regression" requires the relationship between the independent variables ($X$) and the dependent variable ($Y$) to form a perfectly straight line. This is false. You are free to include non-linear transformations of variables, such as $X^2$, $\sqrt{X}$, or $\ln(X)$. 
+
+Linearity means the model must be **linear with respect to its parameters ($\beta$)**. 
+
+*   **Valid (Linear in Parameters):** 
+    $$ Y = \beta_0 + \beta_1 X_1 + \beta_2 (X_2^2) + \epsilon $$
+
+*   **Invalid (Non-Linear in Parameters):** 
+    $$ Y = \beta_0 + X_1^{\beta_1} + \epsilon $$
+
+We cannot estimate non-linear parameters using OLS because taking partial derivatives of such functions yields complex equations that cannot be solved via closed-form matrix algebra.
+
+*   **Diagnostic Check:** Plot the residuals ($e_i$) against predicted values ($\hat{Y}_i$). If they are randomly scattered around zero, linearity holds. If they display a systematic U-shape or curve, apply a non-linear variable transformation to $X$.
+
+### Assumption 2: Normality of Residuals
+The random error terms ($\epsilon_i$) must follow a normal distribution centred at zero: 
+$$ \epsilon \sim N(0, \sigma^2) $$
+While OLS point estimates remain unbiased without normality, normality is essential for valid statistical inference ($t$-tests, $F$-tests, and confidence intervals).
+
+*   **Diagnostic Check:** Use a **Histogram of Residuals** or a **Quantile-Quantile (Q-Q) Plot**. If the empirical data points fall tightly along the $45^\circ$ diagonal line in a Q-Q plot, the residuals are normally distributed.
+
+### Assumption 3: Homoscedasticity (Equal Variance)
+The variance of the error terms must remain **constant** across all levels of the independent variables:
+$$ \text{Var}(\epsilon_i) = \sigma^2 \quad \text{for all } i $$
+If the variance fluctuates, the condition is called **heteroscedasticity**. Because OLS treats every data point equally, it assumes all points are equally reliable. If some data points have massive error variance (noise) while others are precise, OLS becomes inefficient and standard errors become biased.
+
+::: {.callout-tip}
+## Case Study: Highway Speed Profile (Heteroscedasticity)
+Imagine observing vehicle speeds on a highway across 24 hours:
+
+*   **Off-Peak (Midnight):** Traffic is light. Cautious drivers go 80 km/h; fast drivers go 130 km/h. The observed speeds have **very high variance**.
+*   **Peak (Rush Hour):** Congestion forces everyone into bumper-to-bumper traffic at 25 km/h. The observed speeds have **very low variance**.
+
+Plotting this data reveals an expanding/contracting cone shape: a classic violation of homoscedasticity. To fix this, researchers often apply a logarithmic transformation $\ln(Y)$ to stabilise variance, or use Weighted Least Squares (WLS).
+:::
+
+### Assumption 4: Independence of Error Terms
+Error terms for different observations must be mutually independent (no autocorrelation):
+$$ \text{Cov}(\epsilon_i, \epsilon_j) = 0 \quad \text{for all } i \neq j $$
+Autocorrelation is highly common in time-series data (where an unobserved shock at minute 1 spills over into minute 2) or spatial data (adjacent neighbourhoods).
+
+*   **Diagnostic Check:** The **Durbin-Watson Test** ($D$). A value near $2.0$ indicates independent errors; values approaching $0$ or $4$ indicate severe positive or negative autocorrelation, respectively.
+
+### Assumption 5: No Severe Multicollinearity
+There must be no strong linear correlation among the independent variables. When predictors move together, the optimisation algorithm cannot isolate their individual effects, causing parameter estimates to become wildly unstable and $p$-values to artificially inflate.
+
+*   **Diagnostic Check:** Calculate the **Variance Inflation Factor (VIF)** for each predictor:
+    $$ \text{VIF}_k = \frac{1}{1 - R_k^2} $$
+    *(Where $R_k^2$ is the $R^2$ of predictor $X_k$ regressed on all other predictors).*
+    A VIF $< 5$ is generally acceptable. A VIF $> 5$ (or $> 10$) indicates **severe multicollinearity**.
+
+*   **Remedy:** Remove one of the correlated variables, combine them into a single ratio, or utilise Principal Component Analysis (PCA).
+
+### Assumption 6: Outliers and Influential Points
+An **influential point** is an observation that single-handedly exerts a disproportionate pull on the fitted regression line. 
+
+::: {.callout-note}
+## Conceptualising Cook's Distance ($D_i$)
+Suppose an 8-member student team scores 72/100 on an assignment. How do we measure Member 3's true contribution? We remove Member 3, let the remaining 7 students complete the work, and observe the new score. If the score collapses to 32/100, Member 3 single-handedly contributed 40 marks! Member 3 is an influential outlier. 
+
+**Cook's Distance ($D_i$)** uses this exact "leave-one-out" logic. It drops a data point, refits the model, and calculates how much the aggregate predictions change:
+$$ D_i = \frac{\sum_{j=1}^{n} (\hat{Y}_j - \hat{Y}_{j(i)})^2}{K \cdot s^2} $$
+**Rule of Thumb:** If an observation's Cook's distance is greater than $4/N$, it is flagged as an influential case and requires investigation.
+:::
+
+---
+
+## Task 3: Model Interpretation
+
+Once all diagnostics pass, you can safely interpret the coefficients of your model:
+$$ \hat{Y} = \beta_0 + \beta_1 X_1 + \beta_2 X_2 $$
+
+*   **Intercept ($\beta_0$):** The expected mean of $Y$ when all $X$ variables equal zero.
+*   **Continuous Slopes ($\beta_1$):** The expected change in $Y$ for a 1-unit increase in $X_1$, **holding all other variables constant** (*ceteris paribus*). 
+
+### Qualitative Factors and the Dummy Variable Trap
+To include qualitative factors (e.g., gender, weather, experience), we convert them into binary **dummy variables** ($0$ or $1$). 
+
+*   *Example:* Modelling Final Exam Marks = $0.2 + 1.5(\text{Study Hours}) + 2.0(\text{Experience})$. 
+    *   The dummy coefficient of $2.0$ means: *Holding study hours constant*, a student with previous experience (Dummy = 1) is likely to score 2 additional marks compared to a student with no experience (Dummy = 0, the baseline reference group).
+
+::: {.callout-warning}
+## The Dummy Variable Trap
+If a categorical variable has $K$ distinct categories, you must strictly include exactly **$K - 1$** dummy variables in your model. Including all $K$ variables creates perfect multicollinearity with the model's intercept, breaking the OLS estimator.
+:::
+
+## Model Assessment and Selection
+
+### Hypothesis Testing: $t$-Tests vs. $F$-Tests
+Software outputs two distinct types of $p$-values for linear regression:
+
+1.  **Individual Coefficient $p$-Values ($t$-Test):** Tests the null hypothesis ($H_0: \beta_k = 0$) that a *specific variable* has no effect. If $p < 0.05$, the variable is a statistically significant predictor.
+2.  **Global Model $p$-Value ($F$-Test):** Tests the null hypothesis ($H_0: \beta_1 = \beta_2 = \dots = \beta_k = 0$) that *all* slope parameters are zero. If $p < 0.05$, the model as a whole is statistically significant.
+
+### Evaluating Global Fit: $R^2$ vs. Adjusted $R^2$
+The Coefficient of Determination ($R^2$) measures the percentage of variance in $Y$ explained by your model. However, raw $R^2$ has a fatal mathematical flaw: **it will always increase when you add a new variable, even if that variable is complete random noise.** 
+
+To prevent researchers from artificially inflating their model fit by "bloat-fitting" meaningless variables, you must evaluate the **Adjusted $R^2$**. It applies a mathematical penalty for every additional parameter ($K$) added:
+
+$$ R^2_{adj} = 1 - \left[ \frac{(1 - R^2)(N - 1)}{N - K - 1} \right] $$
+
+If a newly added variable does not genuinely improve the model's explanatory power, the degrees-of-freedom penalty outweighs the minor $R^2$ gain, causing Adjusted $R^2$ to decrease. *(Note: Always report Adjusted $R^2$ in your engineering reports and assessments).*
+
+### Model Comparison: The Likelihood Ratio Test (LRT)
+In practice, you will generate multiple candidate models. To choose the best one statistically, we use the **Likelihood Ratio Test (LRT)**. The LRT compares two **nested models** (where the simpler Model 1's variables are a strict subset of the complex Model 2's variables).
+
+$$ \text{LRT} = -2 (\ln L_{simple} - \ln L_{complex}) \sim \chi^2(\Delta K) $$
+
+*   **Null Hypothesis ($H_0$):** There is no significant difference in performance between the simple and complex models.
+*   **Decision Rule:** If $p < 0.05$, reject $H_0$ and adopt the complex model (it provides a statistically significant improvement). If $p \ge 0.05$, the extra parameters are not justified; adopt the simpler, parsimonious model.
+
+## A Final Warning: The Danger of Pattern Hunting
+
+Never rely solely on automated statistical algorithms to select your variables. If you test enough random data at a $\alpha=0.05$ significance level, you will eventually find false-positive "significant" correlations purely by chance.
+
+Always ground your initial selection of independent variables in established literature and theory. 
+
+::: {.callout-important}
+## Spurious Correlations and the "Dead Grandmother" Syndrome
+If you omit literature reviews and blindly throw variables into software, you risk inventing absurd post-hoc theories for random statistical correlations. 
+
+A famous humorous paper noted that a student's grandmother is far more likely to "pass away suddenly" just before a midterm exam than at any other time of the year. A purely data-driven algorithm might conclude that *exams cause grandmothers to die*. A researcher grounded in theory understands that *exams cause students to invent excuses for extensions*. 
+
+As Benjamin Disraeli famously warned: *"There are three types of lies: lies, damn lies, and statistics."* Use your models responsibly!
+:::
