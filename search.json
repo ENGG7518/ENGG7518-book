@@ -45,7 +45,7 @@
     "href": "admin/course-overview.html#topics-by-week",
     "title": "2  Course Overview",
     "section": "",
-    "text": "Week\nTopic\nLecturer\n\n\n\n\n1–2\nHow to conduct research: principles\nProf. Zuduo Zheng\n\n\n3–4\nHow to conduct research: practical matters\nDr Weiming Zhao & Prof. Zheng\n\n\n5–6\nStatistics basics\nProf. Zuduo Zheng\n\n\n6\nReproducible research & data analysis (R & Quarto)\nProf. Zuduo Zheng\n\n\n7–8\nLinear regression models & diagnostics\nProf. Zuduo Zheng\n\n\n9\nData processing, quality control & noise\nProf. Zuduo Zheng\n\n\n10\nIntroduction to numerical optimisation\nDr Weiming Zhao\n\n\n11\nClassical optimisation methods\nDr Weiming Zhao\n\n\n12–13\nNewton’s method & multivariable algorithms\nDr Weiming Zhao",
+    "text": "Week\nTopic\nLecturer\n\n\n\n\n1–2\nHow to conduct research: principles\nProf. Zuduo Zheng\n\n\n3–4\nHow to conduct research: practical matters\nDr Weiming Zhao (Week 3) & Prof. Zheng (Week 4)\n\n\n5–6\nStatistics basics\nDr Weiming Zhao (Week 5) & Prof. Zheng (Week 6)\n\n\n6\nReproducible research & data analysis (R & Quarto)\nProf. Zuduo Zheng\n\n\n7–8\nLinear regression models & diagnostics\nProf. Zuduo Zheng\n\n\n9\nData processing, quality control & noise\nProf. Zuduo Zheng\n\n\n10\nIntroduction to numerical optimisation\nDr Weiming Zhao\n\n\n11\nClassical optimisation methods\nDr Weiming Zhao\n\n\n12–13\nNewton’s method & multivariable algorithms\nDr Weiming Zhao",
     "crumbs": [
       "Administration",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Course Overview</span>"
