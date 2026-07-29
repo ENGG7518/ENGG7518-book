@@ -9,8 +9,8 @@ This is the roadmap for the semester. We move from fundamental concepts to speci
 | Week | Topic | Lecturer |
 |------|-------|----------|
 | 1–2 | How to conduct research: principles | Prof. Zuduo Zheng |
-| 3–4 | How to conduct research: practical matters | Dr Weiming Zhao & Prof. Zheng |
-| 5–6 | Statistics basics | Prof. Zuduo Zheng |
+| 3–4 | How to conduct research: practical matters | Dr Weiming Zhao (Week 3) & Prof. Zheng (Week 4) |
+| 5–6 | Statistics basics | Dr Weiming Zhao (Week 5) & Prof. Zheng (Week 6) |
 | 6   | Reproducible research & data analysis (R & Quarto) | Prof. Zuduo Zheng |
 | 7–8 | Linear regression models & diagnostics | Prof. Zuduo Zheng |
 | 9   | Data processing, quality control & noise | Prof. Zuduo Zheng |
