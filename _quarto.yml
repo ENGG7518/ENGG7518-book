@@ -54,7 +54,7 @@ book:
     href: index.html
     search: true
 
-  repo-url: "https://github.com/your-org/engg7518-book"
+  repo-url: "https://github.com/ENGG7518/ENGG7518-book"
   repo-actions: [edit, issue]
 
 bibliography: references.bib
@@ -100,3 +100,4 @@ execute:
   warning: false
   echo: true
   eval: true
+  freeze: auto

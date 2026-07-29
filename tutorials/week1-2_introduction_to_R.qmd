@@ -101,6 +101,7 @@ trans_mode_fct <- factor(c("Car", "Bus", "Bus", "Car", "Bike"),
 *Note on Packages:* To handle factors flexibly, the `forcats` package is highly recommended:
 
 ```r
+#| eval: false
 if(!require(forcats)) { install.packages("forcats"); require(forcats) }
 ```
 
@@ -184,9 +185,12 @@ While base R has built-in functions like `read.csv()`, modern data scientists us
 The `rio` package uses `import()` and `export()` to automatically determine the correct data structure from the file extension (e.g., `.csv`, `.xlsx`, `.sav`, `.dta`).
 
 ```r
+#| eval: false
 # Install and load rio
 if(!require(rio)) { install.packages("rio"); require(rio) }
+```
 
+```r
 # Exporting data from R to your computer
 export(mtcars, "mtcars.csv")    # Saves as Comma-Separated Values
 export(mtcars, "mtcars.sav")    # Saves as SPSS format
