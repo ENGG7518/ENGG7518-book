@@ -2,7 +2,7 @@
 title: "Introduction to Linear Regression Models"
 subtitle: "ENGG7518 Research Methods for Engineers: Week 6 (Part II)"
 author: "Prof. Zuduo Zheng"
-date: "Semester 2, 2026"
+date: "29 July 2026"
 ---
 
 ::: {.callout-note appearance="simple"}

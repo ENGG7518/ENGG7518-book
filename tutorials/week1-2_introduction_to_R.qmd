@@ -2,7 +2,7 @@
 title: "Practical Lab 1: Introduction to R, Data Structures, and Data Import"
 subtitle: "ENGG7518 Research Methods for Engineers: Tutorial 1"
 author: "Prof. Zuduo Zheng"
-date: "Semester 2, 2026"
+date: "29 July 2026"
 ---
 
 ::: {.callout-note appearance="simple"}

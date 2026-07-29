@@ -2,7 +2,7 @@
 title: "Mathematical Foundations of Optimisation"
 subtitle: "ENGG7518 Research Methods for Engineers: Week 11"
 author: "Prof. Zuduo Zheng"
-date: "Semester 2, 2026"
+date: "29 July 2026"
 ---
 
 

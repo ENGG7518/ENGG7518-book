@@ -2,7 +2,7 @@
 title: "What is Science?"
 subtitle: "ENGG7518 Research Methods for Engineers: Week 1"
 author: "Prof. Zuduo Zheng"
-date: "Semester 2, 2026"
+date: "29 July 2026"
 ---
 
 ## What is Science? {#sec-science}

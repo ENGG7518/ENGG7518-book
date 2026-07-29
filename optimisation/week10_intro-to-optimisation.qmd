@@ -2,7 +2,7 @@
 title: "Introduction to Engineering Optimisation Methods"
 subtitle: "ENGG7518 Research Methods for Engineers: Week 10"
 author: "Prof. Zuduo Zheng"
-date: "Semester 2, 2026"
+date: "29 July 2026"
 ---
 
 

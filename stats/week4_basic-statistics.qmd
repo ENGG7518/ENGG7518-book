@@ -2,7 +2,7 @@
 title: "Statistics Basics: From Description to Inference"
 subtitle: "ENGG7518 Research Methods for Engineers: Week 5"
 author: "Prof. Zuduo Zheng"
-date: "Semester 2, 2026"
+date: "29 July 2026"
 ---
 
 > *“Shoot for the moon, even if you miss you’ll land among the stars.”*  
