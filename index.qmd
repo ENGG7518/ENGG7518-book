@@ -17,9 +17,9 @@ The course is structured into four main modules:
 3. **Statistics & Reproducibility**: Descriptive and inferential statistics, reproducible analysis with R and Quarto, and regression modelling.
 4. **Data & Optimisation**: Data processing, quality control, classical optimisation methods, and Newton's method.
 
-::: {.callout-note}
-## Note for Students
-Chapters will be published and updated progressively throughout the semester. The navigation menu on the left allows you to access all released course materials.
+::: {.callout-warning}
+## Work in Progress & Draft Notice
+This online book is a **work in progress** and is being updated progressively throughout the semester. If there are any problems or inconsistencies, please [report an issue on GitHub](https://github.com/ENGG7518/ENGG7518-book/issues), email Dr. Weiming Zhao ([weiming.zhao@uq.edu.au](mailto:weiming.zhao@uq.edu.au)), or refer to the official [UQ Course Profile](https://course-profiles.uq.edu.au/course-profiles/ENGG7518-62269-7660) and primary course materials on Blackboard.
 :::
 
 ## Teaching Team

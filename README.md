@@ -5,6 +5,9 @@
 
 Welcome to the source repository for the **ENGG7518: Research Methods for Engineers** course book at The University of Queensland.
 
+> [!IMPORTANT]
+> **Work in Progress Notice**: This course book is currently a draft and work in progress. If you spot any problems or inconsistencies, please [report an issue on GitHub](https://github.com/ENGG7518/ENGG7518-book/issues), email Dr. Weiming Zhao ([weiming.zhao@uq.edu.au](mailto:weiming.zhao@uq.edu.au)), or refer to the official [UQ Course Profile](https://course-profiles.uq.edu.au/course-profiles/ENGG7518-62269-7660) and primary course materials on Blackboard.
+
 This repository contains the source code for the open course book, built using [Quarto](https://quarto.org/). It provides lecture notes, reading materials, and practical R tutorials covering research methodology, applied statistics, and numerical optimisation.
 
 ## Course Structure
