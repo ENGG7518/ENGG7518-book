@@ -1,10 +1,11 @@
 # ENGG7518: Research Methods for Engineers
 
-📖 **Read the online book:** [https://engg7518.github.io/ENGG7518-book/](https://engg7518.github.io/ENGG7518-book/)
+📖 **Read the online book:** [https://engg7518.github.io/ENGG7518-book/](https://engg7518.github.io/ENGG7518-book/)  
+🎓 **Official UQ Course Profile:** [ENGG7518 Course Profile](https://course-profiles.uq.edu.au/course-profiles/ENGG7518-62269-7660)
 
 Welcome to the source repository for the **ENGG7518: Research Methods for Engineers** course book at The University of Queensland.
 
-This repository contains the source code for the online course book, which is built using [Quarto](https://quarto.org/). It serves as the central hub for course notes, lecture materials, research principles, statistical foundations, data processing methods, and numerical optimisation techniques.
+This repository contains the source code for the open course book, built using [Quarto](https://quarto.org/). It provides lecture notes, reading materials, and practical R tutorials covering research methodology, applied statistics, and numerical optimisation.
 
 ## Course Structure
 
@@ -17,9 +18,9 @@ The course materials are divided into four main modules:
 
 ## Teaching Team
 
-- **Course Coordinator & Lecturer**: Prof. Zuduo Zheng
-- **Lecturer**: Dr Weiming Zhao
-- **Tutor**: Dr Saeed Mohammadian
+- **Course Coordinator & Lecturer**: Prof. Zuduo Zheng ([zuduo.zheng@uq.edu.au](mailto:zuduo.zheng@uq.edu.au))
+- **Lecturer**: Dr Weiming Zhao ([weiming.zhao@uq.edu.au](mailto:weiming.zhao@uq.edu.au))
+- **Tutor**: Dr Saeed Mohammadian ([s.mohammadian@uq.edu.au](mailto:s.mohammadian@uq.edu.au))
 
 ## Repository Structure
 
@@ -48,10 +49,19 @@ To build and preview the book on your local machine, you will need to have [Quar
    ```bash
    quarto preview
    ```
-4. Render the book completely (outputs to the `_book/` directory by default):
-   ```bash
-   quarto render
-   ```
+4. Render the book (outputs to the `_book/` directory by default):
+   - **Render all formats** (both HTML and Typst PDF):
+     ```bash
+     quarto render
+     ```
+   - **Render HTML format only**:
+     ```bash
+     quarto render --to html
+     ```
+   - **Render Typst PDF format only**:
+     ```bash
+     quarto render --to typst
+     ```
 
 ## License and Copyright
 
