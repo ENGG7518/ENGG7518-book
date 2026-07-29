@@ -6,17 +6,17 @@ title: "Course Overview"
 
 This is the roadmap for the semester. We move from fundamental concepts to specific techniques, always linking back to real engineering problems.
 
-| Week | Topic |
-|------|-------|
-| 1-2 | How to conduct research: principles |
-| 3-4 | How to conduct research: practical matters |
-| 5   | Statistics basics |
-| 6   | Reproducible research and data analysis |
-| 7-8 | Linear regression |
-| 9-10| Data processing and quality |
-| 11  | Introduction to numerical optimisation |
-| 12  | Classical optimisation methods |
-| 13  | Newton’s method |
+| Week | Topic | Lecturer |
+|------|-------|----------|
+| 1–2 | How to conduct research: principles | Prof. Zuduo Zheng |
+| 3–4 | How to conduct research: practical matters | Dr Weiming Zhao & Prof. Zheng |
+| 5–6 | Statistics basics | Prof. Zuduo Zheng |
+| 6   | Reproducible research & data analysis (R & Quarto) | Prof. Zuduo Zheng |
+| 7–8 | Linear regression models & diagnostics | Prof. Zuduo Zheng |
+| 9   | Data processing, quality control & noise | Prof. Zuduo Zheng |
+| 10  | Introduction to numerical optimisation | Dr Weiming Zhao |
+| 11  | Classical optimisation methods | Dr Weiming Zhao |
+| 12–13 | Newton’s method & multivariable algorithms | Dr Weiming Zhao |
 
 ## Course Description
 

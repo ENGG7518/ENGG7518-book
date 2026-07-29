@@ -13,12 +13,14 @@ title: "Communication & Support"
 
 ### Email Policy
 
-My email address is: **zuduo.zheng@uq.edu.au**  
+Teaching team email addresses:
+- **Prof. Zuduo Zheng**: [zuduo.zheng@uq.edu.au](mailto:zuduo.zheng@uq.edu.au)
+- **Dr Weiming Zhao**: [weiming.zhao@uq.edu.au](mailto:weiming.zhao@uq.edu.au)
 
 Please note:
 
 - I (and the teaching team) check emails only between **12:00 pm and 5:00 pm** on working days (Monday to Friday, excluding public holidays).
-- I aim to reply within **48 business hours**. If you email on a Saturday, do not expect a reply before Tuesday.
+- We aim to reply within **48 business hours**. If you email on a Saturday, do not expect a reply before Tuesday.
 - For technical coding questions, the tutorial is almost always faster and more effective.
 
 ## Before You Email
