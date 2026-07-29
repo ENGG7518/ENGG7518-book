@@ -45,7 +45,7 @@
     "href": "admin/course-overview.html#topics-by-week",
     "title": "2  Course Overview",
     "section": "",
-    "text": "Week\nTopic\n\n\n\n\n1-2\nHow to conduct research: principles\n\n\n3-4\nHow to conduct research: practical matters\n\n\n5\nStatistics basics\n\n\n6\nReproducible research and data analysis\n\n\n7-8\nLinear regression\n\n\n9-10\nData processing and quality\n\n\n11\nIntroduction to numerical optimisation\n\n\n12\nClassical optimisation methods\n\n\n13\nNewton’s method",
+    "text": "Week\nTopic\nLecturer\n\n\n\n\n1–2\nHow to conduct research: principles\nProf. Zuduo Zheng\n\n\n3–4\nHow to conduct research: practical matters\nDr Weiming Zhao & Prof. Zheng\n\n\n5–6\nStatistics basics\nProf. Zuduo Zheng\n\n\n6\nReproducible research & data analysis (R & Quarto)\nProf. Zuduo Zheng\n\n\n7–8\nLinear regression models & diagnostics\nProf. Zuduo Zheng\n\n\n9\nData processing, quality control & noise\nProf. Zuduo Zheng\n\n\n10\nIntroduction to numerical optimisation\nDr Weiming Zhao\n\n\n11\nClassical optimisation methods\nDr Weiming Zhao\n\n\n12–13\nNewton’s method & multivariable algorithms\nDr Weiming Zhao",
     "crumbs": [
       "Administration",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Course Overview</span>"
@@ -188,7 +188,7 @@
     "href": "admin/communication.html#how-to-reach-us",
     "title": "4  Communication & Support",
     "section": "",
-    "text": "Channel\nWhen to use\nResponse time\n\n\n\n\nBlackboard\nPreferred: check for announcements, readings, and submission links\nN/A\n\n\nTutorials\nBest for detailed questions about content, coding, or assignments\nInstant help from Dr Mohammadian\n\n\nAfter lectures\nQuick clarifications\nRight after class\n\n\nEmail\nOnly for personal matters not suitable for the public forum\nWithin 48 business hours\n\n\n\n\nEmail Policy\nMy email address is: zuduo.zheng@uq.edu.au\nPlease note:\n\nI (and the teaching team) check emails only between 12:00 pm and 5:00 pm on working days (Monday to Friday, excluding public holidays).\nI aim to reply within 48 business hours. If you email on a Saturday, do not expect a reply before Tuesday.\nFor technical coding questions, the tutorial is almost always faster and more effective.",
+    "text": "Channel\nWhen to use\nResponse time\n\n\n\n\nBlackboard\nPreferred: check for announcements, readings, and submission links\nN/A\n\n\nTutorials\nBest for detailed questions about content, coding, or assignments\nInstant help from Dr Mohammadian\n\n\nAfter lectures\nQuick clarifications\nRight after class\n\n\nEmail\nOnly for personal matters not suitable for the public forum\nWithin 48 business hours\n\n\n\n\nEmail Policy\nTeaching team email addresses: - Prof. Zuduo Zheng: zuduo.zheng@uq.edu.au - Dr Weiming Zhao: weiming.zhao@uq.edu.au\nPlease note:\n\nI (and the teaching team) check emails only between 12:00 pm and 5:00 pm on working days (Monday to Friday, excluding public holidays).\nWe aim to reply within 48 business hours. If you email on a Saturday, do not expect a reply before Tuesday.\nFor technical coding questions, the tutorial is almost always faster and more effective.",
     "crumbs": [
       "Administration",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Communication & Support</span>"
