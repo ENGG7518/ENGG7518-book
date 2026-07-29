@@ -2,7 +2,7 @@
 title: "Statistics Basics: From Description to Inference and Hypothesis Testing"
 subtitle: "ENGG7518 Research Methods for Engineers: Week 5"
 author: "Prof. Zuduo Zheng"
-date: "Semester 2, 2026"
+date: "29 July 2026"
 ---
 
 > *“We are what we repeatedly do. Excellence, therefore, is not an act but a habit.”*  

@@ -3,7 +3,7 @@
 title: "Constrained Classical Optimisation (Lagrange Multipliers)"
 subtitle: "ENGG7518 Research Methods for Engineers: Week 12"
 author: "Prof. Zuduo Zheng"
-date: "Semester 2, 2026"
+date: "29 July 2026"
 ---
 
 ::: {.callout-note appearance="simple"}

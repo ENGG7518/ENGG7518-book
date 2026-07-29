@@ -5,7 +5,7 @@ book:
   title: "ENGG7518: Research Methods for Engineers"
   subtitle: "Semester 2, 2026 - The University of Queensland"
   author: "Prof. Zuduo Zheng, School of Civil Engineering"
-  date: "2026"
+  date: "29 July 2026"
   chapters:
     - index.qmd
     - part: "Administration"

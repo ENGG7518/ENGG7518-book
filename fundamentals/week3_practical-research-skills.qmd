@@ -2,7 +2,7 @@
 title: "Practical Research Skills"
 subtitle: "ENGG7518 Research Methods for Engineers: Week 3"
 author: "Prof. Zuduo Zheng"
-date: "Semester 2, 2026"
+date: "29 July 2026"
 ---
 
 > *“Passion and obsession, even talent, are only useful tools if you have the work ethic to back them up.”*  
