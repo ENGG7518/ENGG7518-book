@@ -1,0 +1,1958 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Prof.&nbsp;Zuduo Zheng">
+
+<title>19&nbsp; Multivariable Numerical Algorithms (Gradient &amp; Newton Methods) – ENGG7518: Research Methods for Engineers</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../references.html" rel="next">
+<link href="../optimisation/week12_1d_iterative_search.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-be0fa7996514c9577e88cc86b2fc19af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-a1d348fa29c6608567c8b83a5a18fa86.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-be0fa7996514c9577e88cc86b2fc19af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">ENGG7518 Research Methods for Engineers</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+    <a href="https://github.com/ENGG7518/ENGG7518-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../optimisation/week10_intro-to-optimisation.html">Engineering Optimisation</a></li><li class="breadcrumb-item"><a href="../optimisation/week12_multivariable_numerical_methods.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Multivariable Numerical Algorithms (Gradient &amp; Newton Methods)</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Welcome &amp; Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Administration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../admin/course-overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Course Overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../admin/assessments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessments</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../admin/communication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Communication &amp; Support</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Research Fundamentals</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fundamentals/week1_what-is-science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">What is Science?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fundamentals/week2_norms-and-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reason, Logic &amp; Common Pitfalls</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fundamentals/week3_practical-research-skills.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Practical Research Skills</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Tutorial Labs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tutorials/week1-2_introduction_to_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Practical Lab 1: Introduction to R, Data Structures, and Data Import</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistics, Data Quality &amp; Reproducibility</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week4_basic-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Statistics Basics: From Description to Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week5_basic-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Statistics Basics: From Description to Inference and Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week6_reproducible-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Reproducible Data Analysis &amp; Research</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week6_intro-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to Linear Regression Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week7_linear-regression-diagnostics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Linear Regression Diagnostics, Interpretation &amp; Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week8_data-cleaning-and-quality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Data Quality &amp; Cleansing: Outliers, Missing Data &amp; Noise</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Engineering Optimisation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week10_intro-to-optimisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Introduction to Engineering Optimisation Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week11_optimisation-part2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mathematical Foundations of Optimisation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week12_constrained_classic_optimisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Constrained Classical Optimisation (Lagrange Multipliers)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week12_1d_iterative_search.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Numerical Optimisation &amp; 1D Iterative Search</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week12_multivariable_numerical_methods.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Multivariable Numerical Algorithms (Gradient &amp; Newton Methods)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#the-general-iterative-search-procedure" id="toc-the-general-iterative-search-procedure" class="nav-link active" data-scroll-target="#the-general-iterative-search-procedure"><span class="header-section-number">19.1</span> The General Iterative Search Procedure</a></li>
+  <li><a href="#the-steepest-descent-method" id="toc-the-steepest-descent-method" class="nav-link" data-scroll-target="#the-steepest-descent-method"><span class="header-section-number">19.2</span> The Steepest Descent Method</a></li>
+  <li><a href="#newtons-method" id="toc-newtons-method" class="nav-link" data-scroll-target="#newtons-method"><span class="header-section-number">19.3</span> Newton’s Method</a></li>
+  <li><a href="#quasi-newton-methods-sr1-and-bfgs" id="toc-quasi-newton-methods-sr1-and-bfgs" class="nav-link" data-scroll-target="#quasi-newton-methods-sr1-and-bfgs"><span class="header-section-number">19.4</span> Quasi-Newton Methods (SR1 and BFGS)</a></li>
+  <li><a href="#the-conjugate-gradient-cg-method" id="toc-the-conjugate-gradient-cg-method" class="nav-link" data-scroll-target="#the-conjugate-gradient-cg-method"><span class="header-section-number">19.5</span> The Conjugate Gradient (CG) Method</a></li>
+  </ul>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/ENGG7518/ENGG7518-book/edit/main/optimisation/week12_multivariable_numerical_methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ENGG7518/ENGG7518-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../optimisation/week10_intro-to-optimisation.html">Engineering Optimisation</a></li><li class="breadcrumb-item"><a href="../optimisation/week12_multivariable_numerical_methods.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Multivariable Numerical Algorithms (Gradient &amp; Newton Methods)</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Multivariable Numerical Algorithms (Gradient &amp; Newton Methods)</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<p class="subtitle lead">ENGG7518 Research Methods for Engineers: Week 12 &amp; 13</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Prof.&nbsp;Zuduo Zheng </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end of this chapter, you should be able to:</p>
+<ol type="1">
+<li>Formulate the general iterative search procedure in multivariable optimisation, including the roles of Search Direction and Line Search.</li>
+<li>Execute the <strong>Steepest Descent Method</strong> computationally and explain its zigzagging limitation.</li>
+<li>Connect Newton’s Method for root-finding (tangent lines) to minimisation (Taylor series quadratic approximation).</li>
+<li>Formulate and trace <strong>Newton’s Method</strong> using the Hessian matrix, establishing its quadratic convergence speed and descent guarantee.</li>
+<li>Explain the mechanics of <strong>Quasi-Newton Methods</strong>, applying the Secant Equation and comparing <strong>SR1</strong> and <strong>BFGS</strong> rank-update formulas.</li>
+<li>Define mathematical conjugacy and explain the memory efficiency of the <strong>Conjugate Gradient (CG) Method</strong>.</li>
+</ol>
+</div>
+</div>
+<section id="the-general-iterative-search-procedure" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="the-general-iterative-search-procedure"><span class="header-section-number">19.1</span> The General Iterative Search Procedure</h2>
+<p>Analytical optimisation techniques (such as setting the gradient vector to zero, <span class="math inline">\(\nabla f = \mathbf{0}\)</span>) often fail in real-world engineering. In practical applications, objective functions are rarely clean analytical polynomials; they frequently depend on complex finite-element simulations, noisy black-box systems, or massive datasets where explicit derivatives are impossible to derive algebraically.</p>
+<p>To optimise such systems, we rely on <strong>Numerical Optimisation (Iterative Search Procedures)</strong>.</p>
+<p>Starting from an initial guess vector <span class="math inline">\(\mathbf{x}_0 \in \mathbb{R}^n\)</span>, numerical algorithms generate a sequence of iterates (<span class="math inline">\(\mathbf{x}_0, \mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_k\)</span>) that progressively move downhill toward the optimal solution <span class="math inline">\(\mathbf{x}^*\)</span>.</p>
+<p>At each iteration <span class="math inline">\(k\)</span>, the update process relies on a strategy called <strong>Line Search</strong>, which decomposes the multi-dimensional move into two distinct mathematical components:</p>
+<ol type="1">
+<li><strong>The Search Direction (<span class="math inline">\(\mathbf{d}_k \in \mathbb{R}^n\)</span>):</strong> A directional vector pointing “downhill” in the multi-dimensional decision space.</li>
+<li><strong>The Step Length (<span class="math inline">\(\alpha_k \in \mathbb{R}^+\)</span>):</strong> A positive scalar determining how far to step along the chosen direction <span class="math inline">\(\mathbf{d}_k\)</span>.</li>
+</ol>
+<p>The generalised update equation is: <span class="math display">\[ \mathbf{x}_{k+1} = \mathbf{x}_k + \alpha_k \mathbf{d}_k \]</span></p>
+<p>To find the optimal step length <span class="math inline">\(\alpha_k\)</span>, the algorithm solves a single-variable (1D) minimisation sub-problem along the chosen ray: <span class="math display">\[ \min_{\alpha_k &gt; 0} \phi(\alpha_k) = f(\mathbf{x}_k + \alpha_k \mathbf{d}_k) \]</span></p>
+<div class="cell" data-layout-align="default">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>flowchart TD</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    A["Initial Guess x₀, Tolerance ε"] --&gt; B["Evaluate Gradient ∇f(x_k)"]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    B --&gt; C{"||∇f(x_k)|| ≤ ε?"}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    C -- Yes --&gt; D["Stop: Optimal Solution x*"]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    C -- No --&gt; E["Select Search Direction dₖ"]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    E --&gt; F["Perform Line Search for Step Length αₖ"]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    F --&gt; G["Update Iterate: xₖ₊₁ = xₖ + αₖ dₖ"]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    G --&gt; B</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-iterative-framework" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-iterative-framework-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-iterative-framework">flowchart TD
+    A["Initial Guess x₀, Tolerance ε"] --&gt; B["Evaluate Gradient ∇f(x_k)"]
+    B --&gt; C{"||∇f(x_k)|| ≤ ε?"}
+    C -- Yes --&gt; D["Stop: Optimal Solution x*"]
+    C -- No --&gt; E["Select Search Direction dₖ"]
+    E --&gt; F["Perform Line Search for Step Length αₖ"]
+    F --&gt; G["Update Iterate: xₖ₊₁ = xₖ + αₖ dₖ"]
+    G --&gt; B
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-iterative-framework-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;19.1: General iterative framework for multivariable numerical search algorithms.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="termination-criteria" class="level3">
+<h3 class="anchored" data-anchor-id="termination-criteria">Termination Criteria</h3>
+<p>Numerical algorithms terminate when one of the following criteria is met:</p>
+<ol type="1">
+<li><strong>Convergence Tolerance:</strong> The norm of the gradient falls below a specified tolerance error: <span class="math inline">\(\|\nabla f(\mathbf{x}_k)\| \le \epsilon\)</span>, or the relative change in iterates satisfies <span class="math inline">\(\|\mathbf{x}_{k+1} - \mathbf{x}_k\| \le \epsilon\)</span>.</li>
+<li><strong>Iteration Cap (Backup):</strong> The number of iterations reaches a maximum limit (<span class="math inline">\(k_{\max} = 500\)</span>) to prevent infinite loops if the algorithm fails to converge.</li>
+</ol>
+<p>Different multivariable algorithms are defined fundamentally by <strong>how they choose the search direction <span class="math inline">\(\mathbf{d}_k\)</span></strong>.</p>
+<hr>
+</section>
+</section>
+<section id="the-steepest-descent-method" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="the-steepest-descent-method"><span class="header-section-number">19.2</span> The Steepest Descent Method</h2>
+<p>The most intuitive choice for a search direction is based on the <strong>Gradient Vector (<span class="math inline">\(\nabla f\)</span>)</strong>.</p>
+<p>Because the gradient vector <span class="math inline">\(\nabla f(\mathbf{x}_k)\)</span> points in the direction of steepest <em>ascent</em> (the fastest local rate of increase), taking its exact opposite (the negative gradient), yielding the direction of steepest <em>descent</em>.</p>
+<p><span class="math display">\[\mathbf{d}_k = -\nabla f(\mathbf{x}_k)\]</span></p>
+<section id="the-steepest-descent-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="the-steepest-descent-algorithm">The Steepest Descent Algorithm</h3>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Algorithm: Steepest Descent (Gradient Descent)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Step 1: Initialisation</strong><br>
+Choose an initial point <span class="math inline">\(\mathbf{x}_0 \in \mathbb{R}^n\)</span> and a tolerance error <span class="math inline">\(\epsilon &gt; 0\)</span>. Set iteration counter <span class="math inline">\(k = 0\)</span>.</p>
+<p><strong>Step 2: Gradient Evaluation &amp; Termination Check</strong><br>
+Compute the gradient <span class="math inline">\(\nabla f(\mathbf{x}_k)\)</span>.<br>
+If <span class="math inline">\(\|\nabla f(\mathbf{x}_k)\| \le \epsilon\)</span>, <strong>STOP</strong>. Output <span class="math inline">\(\mathbf{x}^* = \mathbf{x}_k\)</span> as the stationary point.</p>
+<p><strong>Step 3: Search Direction &amp; Line Search</strong></p>
+<ol type="1">
+<li><p>Set search direction: <span class="math inline">\(\mathbf{d}_k = -\nabla f(\mathbf{x}_k)\)</span>.</p></li>
+<li><p>Determine step length <span class="math inline">\(\alpha_k &gt; 0\)</span> by solving the 1D line search: <span class="math display">\[ \min_{\alpha_k &gt; 0} f(\mathbf{x}_k - \alpha_k \nabla f(\mathbf{x}_k)) \]</span></p></li>
+<li><p>Update iterate: <span class="math inline">\(\mathbf{x}_{k+1} = \mathbf{x}_k + \alpha_k \mathbf{d}_k\)</span>.</p></li>
+<li><p>Increment <span class="math inline">\(k \leftarrow k + 1\)</span> and return to Step 2.</p></li>
+</ol>
+</div>
+</div>
+</section>
+<section id="worked-example-steepest-descent-with-line-search" class="level3">
+<h3 class="anchored" data-anchor-id="worked-example-steepest-descent-with-line-search">Worked Example: Steepest Descent with Line Search</h3>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Worked Example: 2D Minimisation via Steepest Descent
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Problem:</strong> Minimise <span class="math inline">\(f(x_1, x_2) = 0.5x_1^2 + 2.5x_2^2\)</span> starting from <span class="math inline">\(\mathbf{x}_0 = \begin{bmatrix} 5 \\ 1 \end{bmatrix}\)</span>.</p>
+<p><strong>Step 1: Compute Gradient Function</strong> <span class="math display">\[ \nabla f(\mathbf{x}) = \begin{bmatrix} \frac{\partial f}{\partial x_1} \\ \frac{\partial f}{\partial x_2} \end{bmatrix} = \begin{bmatrix} x_1 \\ 5x_2 \end{bmatrix} \]</span></p>
+<p><strong>Step 2: Evaluate Gradient &amp; Search Direction at <span class="math inline">\(\mathbf{x}_0\)</span></strong> <span class="math display">\[ \nabla f(\mathbf{x}_0) = \begin{bmatrix} 5 \\ 5(1) \end{bmatrix} = \begin{bmatrix} 5 \\ 5 \end{bmatrix} \implies \mathbf{d}_0 = -\nabla f(\mathbf{x}_0) = \begin{bmatrix} -5 \\ -5 \end{bmatrix} \]</span></p>
+<p><strong>Step 3: Formulate Line Search Sub-Problem</strong> Express the new iterate as a function of step length <span class="math inline">\(\alpha_0\)</span>: <span class="math display">\[ \mathbf{x}_1(\alpha_0) = \mathbf{x}_0 + \alpha_0 \mathbf{d}_0 = \begin{bmatrix} 5 \\ 1 \end{bmatrix} + \alpha_0 \begin{bmatrix} -5 \\ -5 \end{bmatrix} = \begin{bmatrix} 5 - 5\alpha_0 \\ 1 - 5\alpha_0 \end{bmatrix} \]</span></p>
+<p>Substitute into <span class="math inline">\(f(x_1, x_2)\)</span>: <span class="math display">\[ \phi(\alpha_0) = 0.5 (5 - 5\alpha_0)^2 + 2.5 (1 - 5\alpha_0)^2 \]</span></p>
+<p><strong>Step 4: Solve for Step Length <span class="math inline">\(\alpha_0\)</span></strong> Differentiate <span class="math inline">\(\phi(\alpha_0)\)</span> with respect to <span class="math inline">\(\alpha_0\)</span> and set to zero: <span class="math display">\[ \frac{d\phi}{d\alpha_0} = 0.5 \cdot 2(5 - 5\alpha_0)(-5) + 2.5 \cdot 2(1 - 5\alpha_0)(-5) = 0 \]</span> <span class="math display">\[ -5(5 - 5\alpha_0) - 25(1 - 5\alpha_0) = 0 \implies 150 \alpha_0 = 50 \implies \alpha_0 = \frac{1}{3} \]</span></p>
+<p><strong>Step 5: Compute Updated Iterate <span class="math inline">\(\mathbf{x}_1\)</span></strong> <span class="math display">\[ \mathbf{x}_1 = \begin{bmatrix} 5 - 5(1/3) \\ 1 - 5(1/3) \end{bmatrix} = \begin{bmatrix} 10/3 \\ -2/3 \end{bmatrix} \approx \begin{bmatrix} 3.333 \\ -0.667 \end{bmatrix} \]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Intuitive Metaphor: The Mountain Climber with a Water Bowl
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Imagine standing at the base of a fog-covered mountain with a full bowl of water balanced on your head. Your goal is to climb to the summit as fast as possible without spilling water.</p>
+<p>Because of thick fog, you cannot see the peak far away; you only have access to <strong>local information</strong>- the slope under your feet. At each step, you evaluate local slope to choose a direction and step distance.</p>
+<p>Looking back after 500 metres, a step chosen earlier might appear non-optimal in hindsight. However, based on the local information available at that time, it was a completely rational decision!</p>
+</div>
+</div>
+</section>
+<section id="limitations-the-zigzagging-problem" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-the-zigzagging-problem">Limitations: The “Zigzagging” Problem</h3>
+<p>While Steepest Descent is reliable and resilient (it will always make progress as long as <span class="math inline">\(\nabla f \ne \mathbf{0}\)</span>), it is mathematically <strong>myopic</strong> (shortsighted).</p>
+<p>Because it relies <em>only</em> on the local slope, it ignores the broader curvature of the surface. When navigating a narrow, elliptical valley, successive steepest descent directions are strictly orthogonal (<span class="math inline">\(\mathbf{d}_k^T \mathbf{d}_{k+1} = 0\)</span>). This forces the algorithm to bounce perpendicularly across steep valley walls rather than turning straight down the valley floor.</p>
+<p>Consequently, iterates <strong>zigzag</strong>, leading to a slow <strong>linear convergence rate</strong>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-steepest-descent-zigzag" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-steepest-descent-zigzag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="week12_multivariable_numerical_methods_files/figure-html/fig-steepest-descent-zigzag-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;19.2: The ‘zigzagging’ flaw of the Steepest Descent algorithm in a narrow elliptical valley f(x, y) = 0.5x² + 5y². Consecutive search directions are strictly orthogonal, causing inefficient side-to-side oscillation."><img src="week12_multivariable_numerical_methods_files/figure-html/fig-steepest-descent-zigzag-1.png" class="img-fluid figure-img" width="720"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-steepest-descent-zigzag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;19.2: The ‘zigzagging’ flaw of the Steepest Descent algorithm in a narrow elliptical valley f(x, y) = 0.5x² + 5y². Consecutive search directions are strictly orthogonal, causing inefficient side-to-side oscillation.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="newtons-method" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="newtons-method"><span class="header-section-number">19.3</span> Newton’s Method</h2>
+<p>To eliminate the zigzagging problem, an algorithm must account for surface curvature using the <strong>Hessian Matrix (<span class="math inline">\(H = \nabla^2 f\)</span>)</strong>.</p>
+<section id="the-two-perspectives-of-newtons-method" class="level3">
+<h3 class="anchored" data-anchor-id="the-two-perspectives-of-newtons-method">The Two Perspectives of Newton’s Method</h3>
+<p>Newton’s Method can be derived from two complementary mathematical perspectives:</p>
+<section id="the-geometric-root-finding-perspective" class="level4">
+<h4 class="anchored" data-anchor-id="the-geometric-root-finding-perspective">1. The Geometric Root-Finding Perspective</h4>
+<p>Originally, the Newton-Raphson method solved 1D root-finding problems (<span class="math inline">\(g(x) = 0\)</span>) by constructing a tangent line at current guess <span class="math inline">\(x_k\)</span> and finding its <span class="math inline">\(x\)</span>-intercept: <span class="math display">\[ x_{k+1} = x_k - \frac{g(x_k)}{g'(x_k)} \]</span></p>
+<p>Because finding a local minimum requires finding a root of the first derivative (<span class="math inline">\(\nabla f(\mathbf{x}) = \mathbf{0}\)</span>), we shift all derivatives up by one order: <span class="math display">\[ x_{k+1} = x_k - \frac{f'(x_k)}{f''(x_k)} \]</span></p>
+</section>
+<section id="the-minimisation-perspective-taylor-series-quadratic-model" class="level4">
+<h4 class="anchored" data-anchor-id="the-minimisation-perspective-taylor-series-quadratic-model">2. The Minimisation Perspective (Taylor Series Quadratic Model)</h4>
+<p>In multi-dimensional space, Newton’s Method approximates the objective function locally using a <strong>second-order Taylor series expansion</strong> around current iterate <span class="math inline">\(\mathbf{x}_k\)</span>: <span class="math display">\[ f(\mathbf{x}_k + \mathbf{p}) \approx m_k(\mathbf{p}) = f(\mathbf{x}_k) + \mathbf{p}^T \nabla f(\mathbf{x}_k) + \frac{1}{2} \mathbf{p}^T \nabla^2 f(\mathbf{x}_k) \mathbf{p} \]</span></p>
+<p>where <span class="math inline">\(\mathbf{p}\)</span> represents the update step vector.</p>
+<p>To find the step <span class="math inline">\(\mathbf{p}_k\)</span> that minimises this quadratic model <span class="math inline">\(m_k(\mathbf{p})\)</span>, set its gradient with respect to <span class="math inline">\(\mathbf{p}\)</span> equal to zero: <span class="math display">\[ \nabla m_k(\mathbf{p}_k) = \nabla f(\mathbf{x}_k) + \nabla^2 f(\mathbf{x}_k) \mathbf{p}_k = \mathbf{0} \]</span> <span class="math display">\[ \mathbf{p}_k = -[\nabla^2 f(\mathbf{x}_k)]^{-1} \nabla f(\mathbf{x}_k) \]</span></p>
+<p>This yields the <strong>Newton Direction</strong>: <span class="math display">\[ \mathbf{d}_{N, k} = -[H_k]^{-1} \nabla f_k \]</span></p>
+<p><em>Automatic Step Length:</em> Because Newton’s Method solves for the exact minimum of the fitted quadratic model, the natural step length <span class="math inline">\(\alpha_k\)</span> is inherently <strong><span class="math inline">\(1.0\)</span></strong>. Line search is generally unnecessary.</p>
+<p><span class="math display">\[ \mathbf{x}_{k+1} = \mathbf{x}_k - [\nabla^2 f(\mathbf{x}_k)]^{-1} \nabla f(\mathbf{x}_k) \]</span></p>
+</section>
+</section>
+<section id="the-descent-guarantee" class="level3">
+<h3 class="anchored" data-anchor-id="the-descent-guarantee">The Descent Guarantee</h3>
+<p>For the Newton step <span class="math inline">\(\mathbf{p}_k\)</span> to genuinely be a <em>descent direction</em> (<span class="math inline">\(f(\mathbf{x}_k + \mathbf{p}_k) &lt; f(\mathbf{x}_k)\)</span>), the Hessian matrix <span class="math inline">\(\nabla^2 f_k\)</span> <strong>must be Positive Definite</strong> (<span class="math inline">\(\nabla^2 f_k \succ 0\)</span>).</p>
+<p>If <span class="math inline">\(\nabla^2 f_k \succ 0\)</span>, the inner product of the gradient and Newton direction is strictly negative: <span class="math display">\[ \nabla f_k^T \mathbf{p}_k = -\mathbf{p}_k^T \nabla^2 f_k \mathbf{p}_k \le -\sigma_{\min} \|\mathbf{p}_k\|^2 &lt; 0 \]</span></p>
+<p>This mathematically guarantees that the step moves downhill.</p>
+</section>
+<section id="worked-1d-example-newtons-method" class="level3">
+<h3 class="anchored" data-anchor-id="worked-1d-example-newtons-method">Worked 1D Example: Newton’s Method</h3>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Worked Example: 1D Minimisation via Newton’s Method
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Problem:</strong> Minimise <span class="math inline">\(f(x) = 2x^6 + 3x^4 - 12x\)</span> starting from <span class="math inline">\(x_0 = 1\)</span> with tolerance <span class="math inline">\(\epsilon = 0.0001\)</span>.</p>
+<p><strong>Derivatives:</strong></p>
+<ul>
+<li><span class="math inline">\(f'(x) = 12x^5 + 12x^3 - 12\)</span></li>
+<li><span class="math inline">\(f''(x) = 60x^4 + 36x^2\)</span></li>
+</ul>
+<p><strong>Iteration 1 (<span class="math inline">\(k = 0\)</span>):</strong>: Evaluate derivatives at <span class="math inline">\(x_0 = 1\)</span>: <span class="math inline">\(f'(1) = 12\)</span>, <span class="math inline">\(f''(1) = 96\)</span>. - Update step: <span class="math inline">\(p_0 = -\frac{12}{96} = -0.1250\)</span>. - New iterate: <span class="math inline">\(x_1 = 1 - 0.1250 = \mathbf{0.8750}\)</span>. - Error: <span class="math inline">\(|0.8750 - 1.0000| = 0.1250 &gt; 0.0001 \implies\)</span> Continue.</p>
+<p><strong>Iteration 2 (<span class="math inline">\(k = 1\)</span>):</strong>: Evaluate derivatives at <span class="math inline">\(x_1 = 0.8750\)</span>: <span class="math inline">\(f'(0.8750) = 2.1939\)</span>, <span class="math inline">\(f''(0.8750) = 62.7334\)</span>. - Update step: <span class="math inline">\(p_1 = -\frac{2.1939}{62.7334} = -0.03498\)</span>. - New iterate: <span class="math inline">\(x_2 = 0.8750 - 0.03498 = \mathbf{0.8400}\)</span>. - Error: <span class="math inline">\(|0.8400 - 0.8750| = 0.0350 &gt; 0.0001 \implies\)</span> Continue.</p>
+<p>By Iteration 4, the algorithm converges to <span class="math inline">\(x^* = \mathbf{0.8376}\)</span> with error <span class="math inline">\(&lt; 0.0001\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="strengths-and-limitations" class="level3">
+<h3 class="anchored" data-anchor-id="strengths-and-limitations">Strengths and Limitations</h3>
+<ul>
+<li><strong>Strength (Quadratic Convergence):</strong> Newton’s Method achieves a <strong>quadratic convergence rate</strong>. Once iterates enter the neighbourhood of the solution, high-precision estimates are obtained in very few steps.</li>
+<li><strong>Weakness 1 (Sensitivity to Initial Guess):</strong> If <span class="math inline">\(\mathbf{x}_0\)</span> is far from the minimum, parabolic approximations can be inaccurate, causing the method to diverge or oscillate.</li>
+<li><strong>Weakness 2 (Positive Definite Requirement):</strong> If the Hessian is non-positive definite (e.g., in concave or saddle regions), the Newton direction may point uphill.</li>
+<li><strong>Weakness 3 (Computational Cost):</strong> Calculating the exact Hessian and solving the linear system <span class="math inline">\([H]\mathbf{p} = -\nabla f\)</span> requires <span class="math inline">\(\mathcal{O}(n^3)\)</span> floating-point operations. For large-scale problems with thousands of variables, this is computationally prohibitive.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-newton-vs-steepest" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-newton-vs-steepest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="week12_multivariable_numerical_methods_files/figure-html/fig-newton-vs-steepest-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;19.3: Comparison between Steepest Descent (zigzagging path in orange) and Newton’s Method (direct one-step convergence in teal) on quadratic surface f(x, y) = 0.5x² + 5y²."><img src="week12_multivariable_numerical_methods_files/figure-html/fig-newton-vs-steepest-1.png" class="img-fluid figure-img" width="768"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-newton-vs-steepest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;19.3: Comparison between Steepest Descent (zigzagging path in orange) and Newton’s Method (direct one-step convergence in teal) on quadratic surface f(x, y) = 0.5x² + 5y².
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="quasi-newton-methods-sr1-and-bfgs" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="quasi-newton-methods-sr1-and-bfgs"><span class="header-section-number">19.4</span> Quasi-Newton Methods (SR1 and BFGS)</h2>
+<p>To bypass the <span class="math inline">\(\mathcal{O}(n^3)\)</span> computational bottleneck of computing and inverting exact Hessians while maintaining super-linear convergence, modern algorithms use <strong>Quasi-Newton Methods</strong>.</p>
+<section id="the-secant-equation" class="level3">
+<h3 class="anchored" data-anchor-id="the-secant-equation">The Secant Equation</h3>
+<p>Instead of computing the exact Hessian matrix from scratch at every step, Quasi-Newton algorithms build a symmetric positive-definite approximation <span class="math inline">\(B_k \approx \nabla^2 f(\mathbf{x}_k)\)</span> (or inverse approximation <span class="math inline">\(H_k \approx [\nabla^2 f(\mathbf{x}_k)]^{-1}\)</span>) by accumulating gradient changes over iterations.</p>
+<p>Let:</p>
+<ul>
+<li><span class="math inline">\(\mathbf{s}_k = \mathbf{x}_{k+1} - \mathbf{x}_k\)</span> (change in position)</li>
+<li><span class="math inline">\(\mathbf{y}_k = \nabla f_{k+1} - \nabla f_k\)</span> (change in gradient)</li>
+</ul>
+<p>We require the updated matrix <span class="math inline">\(B_{k+1}\)</span> to satisfy the <strong>Secant Equation</strong>: <span class="math display">\[ B_{k+1} \mathbf{s}_k = \mathbf{y}_k \]</span></p>
+<p>The Quasi-Newton search direction is then: <span class="math inline">\(\mathbf{d}_k = -B_k^{-1} \nabla f_k\)</span>.</p>
+</section>
+<section id="matrix-rank-update-formulas" class="level3">
+<h3 class="anchored" data-anchor-id="matrix-rank-update-formulas">Matrix Rank-Update Formulas</h3>
+<p>Two prominent update formulas are used to construct <span class="math inline">\(B_{k+1}\)</span> from <span class="math inline">\(B_k\)</span>:</p>
+<section id="sr1-symmetric-rank-one-formula" class="level4">
+<h4 class="anchored" data-anchor-id="sr1-symmetric-rank-one-formula">1. SR1 (Symmetric Rank-One) Formula</h4>
+<p>Updates the matrix using a rank-one adjustment: <span class="math display">\[ B_{k+1} = B_k + \frac{(\mathbf{y}_k - B_k \mathbf{s}_k)(\mathbf{y}_k - B_k \mathbf{s}_k)^T}{(\mathbf{y}_k - B_k \mathbf{s}_k)^T \mathbf{s}_k} \]</span></p>
+<p><em>Characteristics:</em> Simple and satisfies the Secant Equation, but does <strong>not</strong> guarantee that <span class="math inline">\(B_{k+1}\)</span> remains positive definite.</p>
+</section>
+<section id="bfgs-broyden-fletcher-goldfarb-shanno-formula" class="level4">
+<h4 class="anchored" data-anchor-id="bfgs-broyden-fletcher-goldfarb-shanno-formula">2. BFGS (Broyden-Fletcher-Goldfarb-Shanno) Formula</h4>
+<p>BFGS uses a rank-two update and is considered the <strong>gold standard</strong> for non-linear optimisation: <span class="math display">\[ B_{k+1} = B_k - \frac{B_k \mathbf{s}_k \mathbf{s}_k^T B_k}{\mathbf{s}_k^T B_k \mathbf{s}_k} + \frac{\mathbf{y}_k \mathbf{y}_k^T}{\mathbf{y}_k^T \mathbf{s}_k} \]</span></p>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>The BFGS Positive Definiteness Guarantee
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As long as the initial matrix <span class="math inline">\(B_0\)</span> is positive definite (commonly set to the Identity matrix <span class="math inline">\(I\)</span>), and curvature condition <span class="math inline">\(\mathbf{s}_k^T \mathbf{y}_k &gt; 0\)</span> holds, <strong>BFGS mathematically guarantees that every updated matrix <span class="math inline">\(B_{k+1}\)</span> remains Positive Definite</strong>. This ensures stable descent directions at every step.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+</section>
+<section id="the-conjugate-gradient-cg-method" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="the-conjugate-gradient-cg-method"><span class="header-section-number">19.5</span> The Conjugate Gradient (CG) Method</h2>
+<p>Even storing an <span class="math inline">\(n \times n\)</span> matrix for large-scale engineering problems (such as training deep neural networks or solving 3D PDE systems with millions of variables) exceeds available computer RAM.</p>
+<p>The <strong>Conjugate Gradient (CG)</strong> method avoids storing any matrix altogether. Instead, it computes search direction <span class="math inline">\(\mathbf{p}_k\)</span> by taking the negative gradient and adding a fraction of the <em>previous</em> search direction:</p>
+<p><span class="math display">\[ \mathbf{p}_k = -\nabla f(\mathbf{x}_k) + \beta_k \mathbf{p}_{k-1} \]</span></p>
+<p>where <span class="math inline">\(\beta_k\)</span> is a scalar parameter (e.g., computed via Fletcher-Reeves or Polak-Ribière formulas).</p>
+<section id="mathematical-conjugacy" class="level3">
+<h3 class="anchored" data-anchor-id="mathematical-conjugacy">Mathematical Conjugacy</h3>
+<p>The directions <span class="math inline">\(\{\mathbf{p}_0, \mathbf{p}_1, \dots, \mathbf{p}_k\}\)</span> are constructed to be <strong>mutually conjugate</strong> with respect to a symmetric positive-definite matrix <span class="math inline">\(A\)</span>:</p>
+<p><span class="math display">\[ \mathbf{p}_i^T A \mathbf{p}_j = 0 \quad \text{for all } i \neq j \]</span></p>
+<pre><code>Geometric Meaning of Conjugacy:
+Conjugate directions are orthogonal with respect to surface curvature, preventing search steps from interfering with progress made along previous directions.</code></pre>
+<p>Because CG implicitly captures curvature through conjugacy without storing matrices, it eliminates the zigzagging flaw of Steepest Descent and converges in at most <span class="math inline">\(n\)</span> iterations for <span class="math inline">\(n\)</span>-dimensional quadratic functions, using virtually zero memory overhead.</p>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+// Persistent bi-directional light/dark theme handler across chapter navigations
+(function() {
+  function getSavedTheme() {
+    try {
+      return sessionStorage.getItem("quarto-color-scheme-forced") || localStorage.getItem("quarto-color-scheme");
+    } catch(e) {
+      return null;
+    }
+  }
+
+  function saveTheme(themeValue) { // "alternate" for dark, "default" for light
+    try {
+      sessionStorage.setItem("quarto-color-scheme-forced", themeValue);
+      try { localStorage.setItem("quarto-color-scheme", themeValue); } catch(e) {}
+    } catch(e) {}
+  }
+
+  var saved = getSavedTheme();
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // 1. Apply saved theme state on initial page load
+    if (saved === "alternate" || saved === "dark") {
+      var alternateSheets = document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      alternateSheets.forEach(function(s) {
+        if (s.rel !== 'stylesheet') s.rel = 'stylesheet';
+      });
+      document.body.classList.add('quarto-dark');
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+      
+      var toggles = document.querySelectorAll('.quarto-color-scheme-toggle');
+      toggles.forEach(function(t) { t.classList.add('alternate'); });
+    } else if (saved === "default" || saved === "light") {
+      var alternateSheets = document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      alternateSheets.forEach(function(s) {
+        s.rel = 'disabled-stylesheet';
+      });
+      document.body.classList.remove('quarto-dark');
+      document.documentElement.setAttribute('data-bs-theme', 'light');
+      
+      var toggles = document.querySelectorAll('.quarto-color-scheme-toggle');
+      toggles.forEach(function(t) { t.classList.remove('alternate'); });
+    }
+
+    // 2. Listen for clicks on the theme toggle button to accurately save user preference
+    document.addEventListener("click", function(e) {
+      var toggle = e.target.closest('.quarto-color-scheme-toggle');
+      if (toggle) {
+        setTimeout(function() {
+          // Check if dark mode stylesheet is currently enabled
+          var darkSheet = document.querySelector('link.quarto-color-scheme.quarto-color-alternate');
+          var isDark = toggle.classList.contains('alternate') || (darkSheet && darkSheet.rel === 'stylesheet');
+          
+          if (isDark) {
+            saveTheme("alternate");
+            document.body.classList.add('quarto-dark');
+            document.documentElement.setAttribute('data-bs-theme', 'dark');
+          } else {
+            saveTheme("default");
+            document.body.classList.remove('quarto-dark');
+            document.documentElement.setAttribute('data-bs-theme', 'light');
+            // Ensure alternate stylesheets are disabled
+            var alternateSheets = document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+            alternateSheets.forEach(function(s) {
+              s.rel = 'disabled-stylesheet';
+            });
+          }
+        }, 100);
+      }
+    });
+  });
+})();
+
+document.addEventListener("DOMContentLoaded", function () {
+  const tocEl = document.querySelector('nav#TOC[role="doc-toc"]');
+  if (!tocEl) return;
+
+  const tocLinks = Array.from(tocEl.querySelectorAll("a[data-scroll-target]"));
+  if (!tocLinks.length) return;
+
+  const sections = tocLinks.map(link => {
+    const target = link.getAttribute("data-scroll-target");
+    if (!target) return null;
+    if (target.startsWith("#")) {
+      return document.getElementById(decodeURI(target.slice(1)));
+    } else {
+      return document.querySelector(decodeURI(target));
+    }
+  });
+
+  function getAbsoluteTop(elem) {
+    if (!elem) return 0;
+    return elem.getBoundingClientRect().top + window.pageYOffset;
+  }
+
+  let currentActive = -1;
+
+  function updateTOC() {
+    const pageY = window.pageYOffset;
+    const windowHeight = window.innerHeight;
+    const bodyHeight = document.body.offsetHeight;
+
+    let sectionIndex = -1;
+
+    // If scrolled at the very bottom of page, activate last section
+    if (pageY + windowHeight >= bodyHeight - 50) {
+      sectionIndex = sections.length - 1;
+    } else {
+      // Find section currently in view using absolute offset
+      for (let i = sections.length - 1; i >= 0; i--) {
+        if (sections[i]) {
+          const top = getAbsoluteTop(sections[i]);
+          if (pageY >= top - 140) {
+            sectionIndex = i;
+            break;
+          }
+        }
+      }
+    }
+
+    if (sectionIndex === -1 && sections.length > 0) {
+      sectionIndex = 0;
+    }
+
+    if (sectionIndex !== currentActive && sectionIndex >= 0) {
+      currentActive = sectionIndex;
+
+      tocLinks.forEach((link, idx) => {
+        if (idx === sectionIndex) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+    }
+  }
+
+  window.addEventListener("scroll", function() {
+    requestAnimationFrame(updateTOC);
+  }, { passive: true, capture: true });
+
+  window.addEventListener("resize", updateTOC, { passive: true });
+  setTimeout(updateTOC, 100);
+  setTimeout(updateTOC, 500);
+  setTimeout(updateTOC, 1000);
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../optimisation/week12_1d_iterative_search.html" class="pagination-link" aria-label="Numerical Optimisation &amp; 1D Iterative Search">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Numerical Optimisation &amp; 1D Iterative Search</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">References</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Multivariable Numerical Algorithms (Gradient &amp; Newton Methods)"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "ENGG7518 Research Methods for Engineers: Week 12 &amp; 13"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Prof. Zuduo Zheng"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "Semester 2, 2026"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Learning Objectives</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>By the end of this chapter, you should be able to:</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Formulate the general iterative search procedure in multivariable optimisation, including the roles of Search Direction and Line Search.</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Execute the **Steepest Descent Method** computationally and explain its zigzagging limitation.</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Connect Newton’s Method for root-finding (tangent lines) to minimisation (Taylor series quadratic approximation).</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Formulate and trace **Newton’s Method** using the Hessian matrix, establishing its quadratic convergence speed and descent guarantee.</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Explain the mechanics of **Quasi-Newton Methods**, applying the Secant Equation and comparing **SR1** and **BFGS** rank-update formulas.</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Define mathematical conjugacy and explain the memory efficiency of the **Conjugate Gradient (CG) Method**.</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## The General Iterative Search Procedure</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>Analytical optimisation techniques (such as setting the gradient vector to zero, $\nabla f = \mathbf{0}$) often fail in real-world engineering. In practical applications, objective functions are rarely clean analytical polynomials; they frequently depend on complex finite-element simulations, noisy black-box systems, or massive datasets where explicit derivatives are impossible to derive algebraically.</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>To optimise such systems, we rely on **Numerical Optimisation (Iterative Search Procedures)**.</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>Starting from an initial guess vector $\mathbf{x}_0 \in \mathbb{R}^n$, numerical algorithms generate a sequence of iterates ($\mathbf{x}_0, \mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_k$) that progressively move downhill toward the optimal solution $\mathbf{x}^*$.</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>At each iteration $k$, the update process relies on a strategy called **Line Search**, which decomposes the multi-dimensional move into two distinct mathematical components:</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**The Search Direction ($\mathbf{d}_k \in \mathbb{R}^n$):** A directional vector pointing "downhill" in the multi-dimensional decision space.</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**The Step Length ($\alpha_k \in \mathbb{R}^+$):** A positive scalar determining how far to step along the chosen direction $\mathbf{d}_k$.</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>The generalised update equation is:</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>$$ \mathbf{x}_{k+1} = \mathbf{x}_k + \alpha_k \mathbf{d}_k $$</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>To find the optimal step length $\alpha_k$, the algorithm solves a single-variable (1D) minimisation sub-problem along the chosen ray:</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>$$ \min_{\alpha_k &gt; 0} \phi(\alpha_k) = f(\mathbf{x}_k + \alpha_k \mathbf{d}_k) $$</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>%%| label: fig-iterative-framework</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>%%| fig-cap: <span class="ot">"</span><span class="st">General iterative framework for multivariable numerical search algorithms.</span><span class="ot">"</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>flowchart TD</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    A[<span class="ot">"</span><span class="st">Initial Guess x₀, Tolerance ε</span><span class="ot">"</span>] --&gt; B[<span class="ot">"</span><span class="st">Evaluate Gradient ∇f(x_k)</span><span class="ot">"</span>]</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    B --&gt; C{<span class="ot">"</span><span class="st">||∇f(x_k)|| ≤ ε?</span><span class="ot">"</span>}</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    C -- Yes --&gt; D[<span class="ot">"</span><span class="st">Stop: Optimal Solution x*</span><span class="ot">"</span>]</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    C -- No --&gt; E[<span class="ot">"</span><span class="st">Select Search Direction dₖ</span><span class="ot">"</span>]</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    E --&gt; F[<span class="ot">"</span><span class="st">Perform Line Search for Step Length αₖ</span><span class="ot">"</span>]</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    F --&gt; G[<span class="ot">"</span><span class="st">Update Iterate: xₖ₊₁ = xₖ + αₖ dₖ</span><span class="ot">"</span>]</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    G --&gt; B</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="fu">### Termination Criteria</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>Numerical algorithms terminate when one of the following criteria is met:</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Convergence Tolerance:** The norm of the gradient falls below a specified tolerance error: $<span class="sc">\|</span>\nabla f(\mathbf{x}_k)\| \le \epsilon$, or the relative change in iterates satisfies $\|\mathbf{x}_{k+1} - \mathbf{x}_k<span class="sc">\|</span> \le \epsilon$.</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Iteration Cap (Backup):** The number of iterations reaches a maximum limit ($k_{\max} = 500$) to prevent infinite loops if the algorithm fails to converge.</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>Different multivariable algorithms are defined fundamentally by **how they choose the search direction $\mathbf{d}_k$**.</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Steepest Descent Method</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>The most intuitive choice for a search direction is based on the **Gradient Vector ($\nabla f$)**. </span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>Because the gradient vector $\nabla f(\mathbf{x}_k)$ points in the direction of steepest *ascent* (the fastest local rate of increase), taking its exact opposite (the negative gradient), yielding the direction of steepest *descent*.</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>$$\mathbf{d}_k = -\nabla f(\mathbf{x}_k)$$</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Steepest Descent Algorithm</span></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="fu">## Algorithm: Steepest Descent (Gradient Descent)</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>**Step 1: Initialisation**  </span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>Choose an initial point $\mathbf{x}_0 \in \mathbb{R}^n$ and a tolerance error $\epsilon &gt; 0$. Set iteration counter $k = 0$.</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>**Step 2: Gradient Evaluation &amp; Termination Check**  </span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>Compute the gradient $\nabla f(\mathbf{x}_k)$.  </span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>If $<span class="sc">\|</span>\nabla f(\mathbf{x}_k)<span class="sc">\|</span> \le \epsilon$, **STOP**. Output $\mathbf{x}^* = \mathbf{x}_k$ as the stationary point.</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>**Step 3: Search Direction &amp; Line Search**  </span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Set search direction: $\mathbf{d}_k = -\nabla f(\mathbf{x}_k)$.</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Determine step length $\alpha_k &gt; 0$ by solving the 1D line search:</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>   $$ \min_{\alpha_k &gt; 0} f(\mathbf{x}_k - \alpha_k \nabla f(\mathbf{x}_k)) $$</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Update iterate: $\mathbf{x}_{k+1} = \mathbf{x}_k + \alpha_k \mathbf{d}_k$.</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Increment $k \leftarrow k + 1$ and return to Step 2.</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a><span class="fu">### Worked Example: Steepest Descent with Line Search</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a><span class="fu">## Worked Example: 2D Minimisation via Steepest Descent</span></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>**Problem:** Minimise $f(x_1, x_2) = 0.5x_1^2 + 2.5x_2^2$ starting from $\mathbf{x}_0 = \begin{bmatrix} 5 <span class="sc">\\</span> 1 \end{bmatrix}$.</span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>**Step 1: Compute Gradient Function**</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>$$ \nabla f(\mathbf{x}) = \begin{bmatrix} \frac{\partial f}{\partial x_1} <span class="sc">\\</span> \frac{\partial f}{\partial x_2} \end{bmatrix} = \begin{bmatrix} x_1 <span class="sc">\\</span> 5x_2 \end{bmatrix} $$</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>**Step 2: Evaluate Gradient &amp; Search Direction at $\mathbf{x}_0$**</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>$$ \nabla f(\mathbf{x}_0) = \begin{bmatrix} 5 <span class="sc">\\</span> 5(1) \end{bmatrix} = \begin{bmatrix} 5 <span class="sc">\\</span> 5 \end{bmatrix} \implies \mathbf{d}_0 = -\nabla f(\mathbf{x}_0) = \begin{bmatrix} -5 <span class="sc">\\</span> -5 \end{bmatrix} $$</span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>**Step 3: Formulate Line Search Sub-Problem**</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>Express the new iterate as a function of step length $\alpha_0$:</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>$$ \mathbf{x}_1(\alpha_0) = \mathbf{x}_0 + \alpha_0 \mathbf{d}_0 = \begin{bmatrix} 5 <span class="sc">\\</span> 1 \end{bmatrix} + \alpha_0 \begin{bmatrix} -5 <span class="sc">\\</span> -5 \end{bmatrix} = \begin{bmatrix} 5 - 5\alpha_0 <span class="sc">\\</span> 1 - 5\alpha_0 \end{bmatrix} $$</span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>Substitute into $f(x_1, x_2)$:</span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>$$ \phi(\alpha_0) = 0.5 (5 - 5\alpha_0)^2 + 2.5 (1 - 5\alpha_0)^2 $$</span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>**Step 4: Solve for Step Length $\alpha_0$**</span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>Differentiate $\phi(\alpha_0)$ with respect to $\alpha_0$ and set to zero:</span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>$$ \frac{d\phi}{d\alpha_0} = 0.5 \cdot 2(5 - 5\alpha_0)(-5) + 2.5 \cdot 2(1 - 5\alpha_0)(-5) = 0 $$</span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>$$ -5(5 - 5\alpha_0) - 25(1 - 5\alpha_0) = 0 \implies 150 \alpha_0 = 50 \implies \alpha_0 = \frac{1}{3} $$</span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a>**Step 5: Compute Updated Iterate $\mathbf{x}_1$**</span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>$$ \mathbf{x}_1 = \begin{bmatrix} 5 - 5(1/3) <span class="sc">\\</span> 1 - 5(1/3) \end{bmatrix} = \begin{bmatrix} 10/3 <span class="sc">\\</span> -2/3 \end{bmatrix} \approx \begin{bmatrix} 3.333 <span class="sc">\\</span> -0.667 \end{bmatrix} $$</span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a><span class="fu">## Intuitive Metaphor: The Mountain Climber with a Water Bowl</span></span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>Imagine standing at the base of a fog-covered mountain with a full bowl of water balanced on your head. Your goal is to climb to the summit as fast as possible without spilling water. </span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a>Because of thick fog, you cannot see the peak far away; you only have access to **local information**- the slope under your feet. At each step, you evaluate local slope to choose a direction and step distance. </span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>Looking back after 500 metres, a step chosen earlier might appear non-optimal in hindsight. However, based on the local information available at that time, it was a completely rational decision!</span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a><span class="fu">### Limitations: The "Zigzagging" Problem</span></span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>While Steepest Descent is reliable and resilient (it will always make progress as long as $\nabla f \ne \mathbf{0}$), it is mathematically **myopic** (shortsighted).</span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>Because it relies *only* on the local slope, it ignores the broader curvature of the surface. When navigating a narrow, elliptical valley, successive steepest descent directions are strictly orthogonal ($\mathbf{d}_k^T \mathbf{d}_{k+1} = 0$). This forces the algorithm to bounce perpendicularly across steep valley walls rather than turning straight down the valley floor. </span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>Consequently, iterates **zigzag**, leading to a slow **linear convergence rate**.</span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-steepest-descent-zigzag</span></span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "The 'zigzagging' flaw of the Steepest Descent algorithm in a narrow elliptical valley f(x, y) = 0.5x² + 5y². Consecutive search directions are strictly orthogonal, causing inefficient side-to-side oscillation."</span></span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7.5</span></span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a><span class="co"># Grid for contour plot</span></span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a>grid_sd <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">4.5</span>, <span class="at">length.out =</span> <span class="dv">200</span>),</span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">1.2</span>, <span class="fl">1.2</span>, <span class="at">length.out =</span> <span class="dv">200</span>))</span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a>grid_sd<span class="sc">$</span>z <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="sc">*</span> grid_sd<span class="sc">$</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">5</span> <span class="sc">*</span> grid_sd<span class="sc">$</span>y<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute exact steepest descent trajectory for 6 steps</span></span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a>steepest_descent_path <span class="ot">&lt;-</span> <span class="cf">function</span>(x0, y0, <span class="at">steps =</span> <span class="dv">6</span>) {</span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a>  path <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">step =</span> <span class="dv">0</span><span class="sc">:</span>steps, <span class="at">x =</span> <span class="fu">numeric</span>(steps <span class="sc">+</span> <span class="dv">1</span>), <span class="at">y =</span> <span class="fu">numeric</span>(steps <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a>  path<span class="sc">$</span>x[<span class="dv">1</span>] <span class="ot">&lt;-</span> x0</span>
+<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a>  path<span class="sc">$</span>y[<span class="dv">1</span>] <span class="ot">&lt;-</span> y0</span>
+<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>steps) {</span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a>    cx <span class="ot">&lt;-</span> path<span class="sc">$</span>x[k]</span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a>    cy <span class="ot">&lt;-</span> path<span class="sc">$</span>y[k]</span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a>    gx <span class="ot">&lt;-</span> cx</span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a>    gy <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="sc">*</span> cy</span>
+<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a>    num <span class="ot">&lt;-</span> gx<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">10</span> <span class="sc">*</span> gy<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a>    den <span class="ot">&lt;-</span> gx<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">100</span> <span class="sc">*</span> gy<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a>    alpha <span class="ot">&lt;-</span> num <span class="sc">/</span> den</span>
+<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a>    path<span class="sc">$</span>x[k <span class="sc">+</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> cx <span class="sc">-</span> alpha <span class="sc">*</span> gx</span>
+<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a>    path<span class="sc">$</span>y[k <span class="sc">+</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> cy <span class="sc">-</span> alpha <span class="sc">*</span> gy</span>
+<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(path)</span>
+<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a>path_sd <span class="ot">&lt;-</span> <span class="fu">steepest_descent_path</span>(<span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">6</span>)</span>
+<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Contour lines of elliptical valley</span></span>
+<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_contour</span>(<span class="at">data =</span> grid_sd, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">z =</span> z),</span>
+<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a>               <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">11</span>),</span>
+<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"grey60"</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Zigzag path line and points</span></span>
+<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> path_sd, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> <span class="st">"#D95F02"</span>, <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> path_sd, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> <span class="st">"#D95F02"</span>, <span class="at">size =</span> <span class="fl">2.8</span>) <span class="sc">+</span></span>
+<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Annotate start and orthogonal steps</span></span>
+<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">4</span>, <span class="at">y =</span> <span class="fl">1.12</span>, <span class="at">label =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Start "</span>, <span class="fu">bold</span>(x)[<span class="dv">0</span>], <span class="st">" (4, 1)"</span>)), <span class="at">color =</span> <span class="st">"#D95F02"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Minimum "</span>, <span class="fu">bold</span>(x)<span class="sc">*</span><span class="st">"*"</span>, <span class="st">" (0, 0)"</span>)), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">3.5</span>, <span class="at">vjust =</span> <span class="fl">1.8</span>) <span class="sc">+</span></span>
+<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(x[<span class="dv">1</span>]), <span class="at">y =</span> <span class="fu">expression</span>(x[<span class="dv">2</span>])) <span class="sc">+</span></span>
+<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>, <span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a><span class="fu">## Newton's Method</span></span>
+<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a>To eliminate the zigzagging problem, an algorithm must account for surface curvature using the **Hessian Matrix ($H = \nabla^2 f$)**.</span>
+<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Two Perspectives of Newton's Method</span></span>
+<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a>Newton's Method can be derived from two complementary mathematical perspectives:</span>
+<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-209"><a href="#cb3-209" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 1. The Geometric Root-Finding Perspective</span></span>
+<span id="cb3-210"><a href="#cb3-210" aria-hidden="true" tabindex="-1"></a>Originally, the Newton-Raphson method solved 1D root-finding problems ($g(x) = 0$) by constructing a tangent line at current guess $x_k$ and finding its $x$-intercept:</span>
+<span id="cb3-211"><a href="#cb3-211" aria-hidden="true" tabindex="-1"></a>$$ x_{k+1} = x_k - \frac{g(x_k)}{g'(x_k)} $$</span>
+<span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a>Because finding a local minimum requires finding a root of the first derivative ($\nabla f(\mathbf{x}) = \mathbf{0}$), we shift all derivatives up by one order:</span>
+<span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a>$$ x_{k+1} = x_k - \frac{f'(x_k)}{f''(x_k)} $$</span>
+<span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 2. The Minimisation Perspective (Taylor Series Quadratic Model)</span></span>
+<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a>In multi-dimensional space, Newton's Method approximates the objective function locally using a **second-order Taylor series expansion** around current iterate $\mathbf{x}_k$:</span>
+<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a>$$ f(\mathbf{x}_k + \mathbf{p}) \approx m_k(\mathbf{p}) = f(\mathbf{x}_k) + \mathbf{p}^T \nabla f(\mathbf{x}_k) + \frac{1}{2} \mathbf{p}^T \nabla^2 f(\mathbf{x}_k) \mathbf{p} $$</span>
+<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a>where $\mathbf{p}$ represents the update step vector.</span>
+<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a>To find the step $\mathbf{p}_k$ that minimises this quadratic model $m_k(\mathbf{p})$, set its gradient with respect to $\mathbf{p}$ equal to zero:</span>
+<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a>$$ \nabla m_k(\mathbf{p}_k) = \nabla f(\mathbf{x}_k) + \nabla^2 f(\mathbf{x}_k) \mathbf{p}_k = \mathbf{0} $$</span>
+<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a>$$ \mathbf{p}_k = -<span class="co">[</span><span class="ot">\nabla^2 f(\mathbf{x}_k)</span><span class="co">]</span>^{-1} \nabla f(\mathbf{x}_k) $$</span>
+<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a>This yields the **Newton Direction**:</span>
+<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a>$$ \mathbf{d}_{N, k} = -<span class="co">[</span><span class="ot">H_k</span><span class="co">]</span>^{-1} \nabla f_k $$</span>
+<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a>*Automatic Step Length:* Because Newton's Method solves for the exact minimum of the fitted quadratic model, the natural step length $\alpha_k$ is inherently **$1.0$**. Line search is generally unnecessary.</span>
+<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-231"><a href="#cb3-231" aria-hidden="true" tabindex="-1"></a>$$ \mathbf{x}_{k+1} = \mathbf{x}_k - <span class="co">[</span><span class="ot">\nabla^2 f(\mathbf{x}_k)</span><span class="co">]</span>^{-1} \nabla f(\mathbf{x}_k) $$</span>
+<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Descent Guarantee</span></span>
+<span id="cb3-234"><a href="#cb3-234" aria-hidden="true" tabindex="-1"></a>For the Newton step $\mathbf{p}_k$ to genuinely be a *descent direction* ($f(\mathbf{x}_k + \mathbf{p}_k) &lt; f(\mathbf{x}_k)$), the Hessian matrix $\nabla^2 f_k$ **must be Positive Definite** ($\nabla^2 f_k \succ 0$).</span>
+<span id="cb3-235"><a href="#cb3-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-236"><a href="#cb3-236" aria-hidden="true" tabindex="-1"></a>If $\nabla^2 f_k \succ 0$, the inner product of the gradient and Newton direction is strictly negative:</span>
+<span id="cb3-237"><a href="#cb3-237" aria-hidden="true" tabindex="-1"></a>$$ \nabla f_k^T \mathbf{p}_k = -\mathbf{p}_k^T \nabla^2 f_k \mathbf{p}_k \le -\sigma_{\min} <span class="sc">\|</span>\mathbf{p}_k<span class="sc">\|</span>^2 &lt; 0 $$</span>
+<span id="cb3-238"><a href="#cb3-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-239"><a href="#cb3-239" aria-hidden="true" tabindex="-1"></a>This mathematically guarantees that the step moves downhill.</span>
+<span id="cb3-240"><a href="#cb3-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-241"><a href="#cb3-241" aria-hidden="true" tabindex="-1"></a><span class="fu">### Worked 1D Example: Newton's Method</span></span>
+<span id="cb3-242"><a href="#cb3-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-243"><a href="#cb3-243" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb3-244"><a href="#cb3-244" aria-hidden="true" tabindex="-1"></a><span class="fu">## Worked Example: 1D Minimisation via Newton's Method</span></span>
+<span id="cb3-245"><a href="#cb3-245" aria-hidden="true" tabindex="-1"></a>**Problem:** Minimise $f(x) = 2x^6 + 3x^4 - 12x$ starting from $x_0 = 1$ with tolerance $\epsilon = 0.0001$.</span>
+<span id="cb3-246"><a href="#cb3-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-247"><a href="#cb3-247" aria-hidden="true" tabindex="-1"></a>**Derivatives:**</span>
+<span id="cb3-248"><a href="#cb3-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-249"><a href="#cb3-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$f'(x) = 12x^5 + 12x^3 - 12$</span>
+<span id="cb3-250"><a href="#cb3-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$f''(x) = 60x^4 + 36x^2$</span>
+<span id="cb3-251"><a href="#cb3-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-252"><a href="#cb3-252" aria-hidden="true" tabindex="-1"></a>**Iteration 1 ($k = 0$):**: Evaluate derivatives at $x_0 = 1$: $f'(1) = 12$, $f''(1) = 96$.</span>
+<span id="cb3-253"><a href="#cb3-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Update step: $p_0 = -\frac{12}{96} = -0.1250$.</span>
+<span id="cb3-254"><a href="#cb3-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>New iterate: $x_1 = 1 - 0.1250 = \mathbf{0.8750}$.</span>
+<span id="cb3-255"><a href="#cb3-255" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Error: $|0.8750 - 1.0000| = 0.1250 &gt; 0.0001 \implies$ Continue.</span>
+<span id="cb3-256"><a href="#cb3-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-257"><a href="#cb3-257" aria-hidden="true" tabindex="-1"></a>**Iteration 2 ($k = 1$):**: Evaluate derivatives at $x_1 = 0.8750$: $f'(0.8750) = 2.1939$, $f''(0.8750) = 62.7334$.</span>
+<span id="cb3-258"><a href="#cb3-258" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Update step: $p_1 = -\frac{2.1939}{62.7334} = -0.03498$.</span>
+<span id="cb3-259"><a href="#cb3-259" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>New iterate: $x_2 = 0.8750 - 0.03498 = \mathbf{0.8400}$.</span>
+<span id="cb3-260"><a href="#cb3-260" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Error: $|0.8400 - 0.8750| = 0.0350 &gt; 0.0001 \implies$ Continue.</span>
+<span id="cb3-261"><a href="#cb3-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-262"><a href="#cb3-262" aria-hidden="true" tabindex="-1"></a>By Iteration 4, the algorithm converges to $x^* = \mathbf{0.8376}$ with error $&lt; 0.0001$.</span>
+<span id="cb3-263"><a href="#cb3-263" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-264"><a href="#cb3-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-265"><a href="#cb3-265" aria-hidden="true" tabindex="-1"></a><span class="fu">### Strengths and Limitations</span></span>
+<span id="cb3-266"><a href="#cb3-266" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Strength (Quadratic Convergence):** Newton's Method achieves a **quadratic convergence rate**. Once iterates enter the neighbourhood of the solution, high-precision estimates are obtained in very few steps.</span>
+<span id="cb3-267"><a href="#cb3-267" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Weakness 1 (Sensitivity to Initial Guess):** If $\mathbf{x}_0$ is far from the minimum, parabolic approximations can be inaccurate, causing the method to diverge or oscillate.</span>
+<span id="cb3-268"><a href="#cb3-268" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Weakness 2 (Positive Definite Requirement):** If the Hessian is non-positive definite (e.g., in concave or saddle regions), the Newton direction may point uphill.</span>
+<span id="cb3-269"><a href="#cb3-269" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Weakness 3 (Computational Cost):** Calculating the exact Hessian and solving the linear system $<span class="co">[</span><span class="ot">H</span><span class="co">]</span>\mathbf{p} = -\nabla f$ requires $\mathcal{O}(n^3)$ floating-point operations. For large-scale problems with thousands of variables, this is computationally prohibitive.</span>
+<span id="cb3-270"><a href="#cb3-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-273"><a href="#cb3-273" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-274"><a href="#cb3-274" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-newton-vs-steepest</span></span>
+<span id="cb3-275"><a href="#cb3-275" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Comparison between Steepest Descent (zigzagging path in orange) and Newton's Method (direct one-step convergence in teal) on quadratic surface f(x, y) = 0.5x² + 5y²."</span></span>
+<span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a>grid_comp <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">4.5</span>, <span class="at">length.out =</span> <span class="dv">200</span>),</span>
+<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">1.2</span>, <span class="fl">1.2</span>, <span class="at">length.out =</span> <span class="dv">200</span>))</span>
+<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a>grid_comp<span class="sc">$</span>z <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="sc">*</span> grid_comp<span class="sc">$</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">5</span> <span class="sc">*</span> grid_comp<span class="sc">$</span>y<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a><span class="co"># Steepest descent path</span></span>
+<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a>path_sd <span class="ot">&lt;-</span> <span class="fu">steepest_descent_path</span>(<span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">6</span>)</span>
+<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a>path_sd<span class="sc">$</span>Method <span class="ot">&lt;-</span> <span class="st">"Steepest Descent (Zigzagging)"</span></span>
+<span id="cb3-291"><a href="#cb3-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-292"><a href="#cb3-292" aria-hidden="true" tabindex="-1"></a><span class="co"># Newton path (from (4,1) to (0,0) in 1 step)</span></span>
+<span id="cb3-293"><a href="#cb3-293" aria-hidden="true" tabindex="-1"></a>path_newton <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-294"><a href="#cb3-294" aria-hidden="true" tabindex="-1"></a>  <span class="at">step =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>,</span>
+<span id="cb3-295"><a href="#cb3-295" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">0</span>),</span>
+<span id="cb3-296"><a href="#cb3-296" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-297"><a href="#cb3-297" aria-hidden="true" tabindex="-1"></a>  <span class="at">Method =</span> <span class="st">"Newton's Method (Direct Step)"</span></span>
+<span id="cb3-298"><a href="#cb3-298" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-299"><a href="#cb3-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-300"><a href="#cb3-300" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb3-301"><a href="#cb3-301" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Contour lines</span></span>
+<span id="cb3-302"><a href="#cb3-302" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_contour</span>(<span class="at">data =</span> grid_comp, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">z =</span> z),</span>
+<span id="cb3-303"><a href="#cb3-303" aria-hidden="true" tabindex="-1"></a>               <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">11</span>),</span>
+<span id="cb3-304"><a href="#cb3-304" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"grey60"</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb3-305"><a href="#cb3-305" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Steepest Descent Path</span></span>
+<span id="cb3-306"><a href="#cb3-306" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> path_sd, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> Method), <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb3-307"><a href="#cb3-307" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> path_sd, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> Method), <span class="at">size =</span> <span class="fl">2.8</span>) <span class="sc">+</span></span>
+<span id="cb3-308"><a href="#cb3-308" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Newton Path</span></span>
+<span id="cb3-309"><a href="#cb3-309" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> path_newton, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> Method), <span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb3-310"><a href="#cb3-310" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> path_newton, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> Method), <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb3-311"><a href="#cb3-311" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Highlights</span></span>
+<span id="cb3-312"><a href="#cb3-312" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Steepest Descent (Zigzagging)"</span> <span class="ot">=</span> <span class="st">"#D95F02"</span>, </span>
+<span id="cb3-313"><a href="#cb3-313" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"Newton's Method (Direct Step)"</span> <span class="ot">=</span> <span class="st">"#1B9E77"</span>)) <span class="sc">+</span></span>
+<span id="cb3-314"><a href="#cb3-314" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">4</span>, <span class="at">y =</span> <span class="fl">1.12</span>, <span class="at">label =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Start "</span>, <span class="fu">bold</span>(x)[<span class="dv">0</span>], <span class="st">" (4, 1)"</span>)), <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb3-315"><a href="#cb3-315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="sc">-</span><span class="fl">0.15</span>, <span class="at">label =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Minimum "</span>, <span class="fu">bold</span>(x)<span class="sc">*</span><span class="st">"*"</span>, <span class="st">" (0, 0)"</span>)), <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb3-316"><a href="#cb3-316" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(x[<span class="dv">1</span>]), <span class="at">y =</span> <span class="fu">expression</span>(x[<span class="dv">2</span>])) <span class="sc">+</span></span>
+<span id="cb3-317"><a href="#cb3-317" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-318"><a href="#cb3-318" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb3-319"><a href="#cb3-319" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb3-320"><a href="#cb3-320" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb3-321"><a href="#cb3-321" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb3-322"><a href="#cb3-322" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb3-323"><a href="#cb3-323" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>, <span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb3-324"><a href="#cb3-324" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-325"><a href="#cb3-325" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-326"><a href="#cb3-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-327"><a href="#cb3-327" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb3-328"><a href="#cb3-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-329"><a href="#cb3-329" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quasi-Newton Methods (SR1 and BFGS)</span></span>
+<span id="cb3-330"><a href="#cb3-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-331"><a href="#cb3-331" aria-hidden="true" tabindex="-1"></a>To bypass the $\mathcal{O}(n^3)$ computational bottleneck of computing and inverting exact Hessians while maintaining super-linear convergence, modern algorithms use **Quasi-Newton Methods**.</span>
+<span id="cb3-332"><a href="#cb3-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-333"><a href="#cb3-333" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Secant Equation</span></span>
+<span id="cb3-334"><a href="#cb3-334" aria-hidden="true" tabindex="-1"></a>Instead of computing the exact Hessian matrix from scratch at every step, Quasi-Newton algorithms build a symmetric positive-definite approximation $B_k \approx \nabla^2 f(\mathbf{x}_k)$ (or inverse approximation $H_k \approx <span class="co">[</span><span class="ot">\nabla^2 f(\mathbf{x}_k)</span><span class="co">]</span>^{-1}$) by accumulating gradient changes over iterations.</span>
+<span id="cb3-335"><a href="#cb3-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-336"><a href="#cb3-336" aria-hidden="true" tabindex="-1"></a>Let:</span>
+<span id="cb3-337"><a href="#cb3-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-338"><a href="#cb3-338" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\mathbf{s}_k = \mathbf{x}_{k+1} - \mathbf{x}_k$ (change in position)</span>
+<span id="cb3-339"><a href="#cb3-339" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\mathbf{y}_k = \nabla f_{k+1} - \nabla f_k$ (change in gradient)</span>
+<span id="cb3-340"><a href="#cb3-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-341"><a href="#cb3-341" aria-hidden="true" tabindex="-1"></a>We require the updated matrix $B_{k+1}$ to satisfy the **Secant Equation**:</span>
+<span id="cb3-342"><a href="#cb3-342" aria-hidden="true" tabindex="-1"></a>$$ B_{k+1} \mathbf{s}_k = \mathbf{y}_k $$</span>
+<span id="cb3-343"><a href="#cb3-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-344"><a href="#cb3-344" aria-hidden="true" tabindex="-1"></a>The Quasi-Newton search direction is then: $\mathbf{d}_k = -B_k^{-1} \nabla f_k$.</span>
+<span id="cb3-345"><a href="#cb3-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-346"><a href="#cb3-346" aria-hidden="true" tabindex="-1"></a><span class="fu">### Matrix Rank-Update Formulas</span></span>
+<span id="cb3-347"><a href="#cb3-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-348"><a href="#cb3-348" aria-hidden="true" tabindex="-1"></a>Two prominent update formulas are used to construct $B_{k+1}$ from $B_k$:</span>
+<span id="cb3-349"><a href="#cb3-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-350"><a href="#cb3-350" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 1. SR1 (Symmetric Rank-One) Formula</span></span>
+<span id="cb3-351"><a href="#cb3-351" aria-hidden="true" tabindex="-1"></a>Updates the matrix using a rank-one adjustment:</span>
+<span id="cb3-352"><a href="#cb3-352" aria-hidden="true" tabindex="-1"></a>$$ B_{k+1} = B_k + \frac{(\mathbf{y}_k - B_k \mathbf{s}_k)(\mathbf{y}_k - B_k \mathbf{s}_k)^T}{(\mathbf{y}_k - B_k \mathbf{s}_k)^T \mathbf{s}_k} $$</span>
+<span id="cb3-353"><a href="#cb3-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-354"><a href="#cb3-354" aria-hidden="true" tabindex="-1"></a>*Characteristics:* Simple and satisfies the Secant Equation, but does **not** guarantee that $B_{k+1}$ remains positive definite.</span>
+<span id="cb3-355"><a href="#cb3-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-356"><a href="#cb3-356" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 2. BFGS (Broyden-Fletcher-Goldfarb-Shanno) Formula</span></span>
+<span id="cb3-357"><a href="#cb3-357" aria-hidden="true" tabindex="-1"></a>BFGS uses a rank-two update and is considered the **gold standard** for non-linear optimisation:</span>
+<span id="cb3-358"><a href="#cb3-358" aria-hidden="true" tabindex="-1"></a>$$ B_{k+1} = B_k - \frac{B_k \mathbf{s}_k \mathbf{s}_k^T B_k}{\mathbf{s}_k^T B_k \mathbf{s}_k} + \frac{\mathbf{y}_k \mathbf{y}_k^T}{\mathbf{y}_k^T \mathbf{s}_k} $$</span>
+<span id="cb3-359"><a href="#cb3-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-360"><a href="#cb3-360" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb3-361"><a href="#cb3-361" aria-hidden="true" tabindex="-1"></a><span class="fu">## The BFGS Positive Definiteness Guarantee</span></span>
+<span id="cb3-362"><a href="#cb3-362" aria-hidden="true" tabindex="-1"></a>As long as the initial matrix $B_0$ is positive definite (commonly set to the Identity matrix $I$), and curvature condition $\mathbf{s}_k^T \mathbf{y}_k &gt; 0$ holds, **BFGS mathematically guarantees that every updated matrix $B_{k+1}$ remains Positive Definite**. This ensures stable descent directions at every step.</span>
+<span id="cb3-363"><a href="#cb3-363" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-364"><a href="#cb3-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-365"><a href="#cb3-365" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb3-366"><a href="#cb3-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-367"><a href="#cb3-367" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Conjugate Gradient (CG) Method</span></span>
+<span id="cb3-368"><a href="#cb3-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-369"><a href="#cb3-369" aria-hidden="true" tabindex="-1"></a>Even storing an $n \times n$ matrix for large-scale engineering problems (such as training deep neural networks or solving 3D PDE systems with millions of variables) exceeds available computer RAM.</span>
+<span id="cb3-370"><a href="#cb3-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-371"><a href="#cb3-371" aria-hidden="true" tabindex="-1"></a>The **Conjugate Gradient (CG)** method avoids storing any matrix altogether. Instead, it computes search direction $\mathbf{p}_k$ by taking the negative gradient and adding a fraction of the *previous* search direction:</span>
+<span id="cb3-372"><a href="#cb3-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-373"><a href="#cb3-373" aria-hidden="true" tabindex="-1"></a>$$ \mathbf{p}_k = -\nabla f(\mathbf{x}_k) + \beta_k \mathbf{p}_{k-1} $$</span>
+<span id="cb3-374"><a href="#cb3-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-375"><a href="#cb3-375" aria-hidden="true" tabindex="-1"></a>where $\beta_k$ is a scalar parameter (e.g., computed via Fletcher-Reeves or Polak-Ribière formulas).</span>
+<span id="cb3-376"><a href="#cb3-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-377"><a href="#cb3-377" aria-hidden="true" tabindex="-1"></a><span class="fu">### Mathematical Conjugacy</span></span>
+<span id="cb3-378"><a href="#cb3-378" aria-hidden="true" tabindex="-1"></a>The directions $<span class="sc">\{</span>\mathbf{p}_0, \mathbf{p}_1, \dots, \mathbf{p}_k<span class="sc">\}</span>$ are constructed to be **mutually conjugate** with respect to a symmetric positive-definite matrix $A$:</span>
+<span id="cb3-379"><a href="#cb3-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-380"><a href="#cb3-380" aria-hidden="true" tabindex="-1"></a>$$ \mathbf{p}_i^T A \mathbf{p}_j = 0 \quad \text{for all } i \neq j $$</span>
+<span id="cb3-381"><a href="#cb3-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-382"><a href="#cb3-382" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-383"><a href="#cb3-383" aria-hidden="true" tabindex="-1"></a><span class="in">Geometric Meaning of Conjugacy:</span></span>
+<span id="cb3-384"><a href="#cb3-384" aria-hidden="true" tabindex="-1"></a><span class="in">Conjugate directions are orthogonal with respect to surface curvature, preventing search steps from interfering with progress made along previous directions.</span></span>
+<span id="cb3-385"><a href="#cb3-385" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-386"><a href="#cb3-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-387"><a href="#cb3-387" aria-hidden="true" tabindex="-1"></a>Because CG implicitly captures curvature through conjugacy without storing matrices, it eliminates the zigzagging flaw of Steepest Descent and converges in at most $n$ iterations for $n$-dimensional quadratic functions, using virtually zero memory overhead.</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 The University of Queensland | School of Civil Engineering</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ENGG7518/ENGG7518-book/edit/main/optimisation/week12_multivariable_numerical_methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ENGG7518/ENGG7518-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>ENGG7518 Course Book</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

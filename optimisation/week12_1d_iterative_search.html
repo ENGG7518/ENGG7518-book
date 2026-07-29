@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Prof.&nbsp;Zuduo Zheng">
+
+<title>18&nbsp; Numerical Optimisation &amp; 1D Iterative Search – ENGG7518: Research Methods for Engineers</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../optimisation/week12_multivariable_numerical_methods.html" rel="next">
+<link href="../optimisation/week12_constrained_classic_optimisation.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-be0fa7996514c9577e88cc86b2fc19af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-a1d348fa29c6608567c8b83a5a18fa86.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-be0fa7996514c9577e88cc86b2fc19af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">ENGG7518 Research Methods for Engineers</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+    <a href="https://github.com/ENGG7518/ENGG7518-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../optimisation/week10_intro-to-optimisation.html">Engineering Optimisation</a></li><li class="breadcrumb-item"><a href="../optimisation/week12_1d_iterative_search.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Numerical Optimisation &amp; 1D Iterative Search</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Welcome &amp; Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Administration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../admin/course-overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Course Overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../admin/assessments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessments</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../admin/communication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Communication &amp; Support</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Research Fundamentals</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fundamentals/week1_what-is-science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">What is Science?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fundamentals/week2_norms-and-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reason, Logic &amp; Common Pitfalls</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fundamentals/week3_practical-research-skills.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Practical Research Skills</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Tutorial Labs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tutorials/week1-2_introduction_to_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Practical Lab 1: Introduction to R, Data Structures, and Data Import</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistics, Data Quality &amp; Reproducibility</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week4_basic-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Statistics Basics: From Description to Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week5_basic-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Statistics Basics: From Description to Inference and Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week6_reproducible-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Reproducible Data Analysis &amp; Research</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week6_intro-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to Linear Regression Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week7_linear-regression-diagnostics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Linear Regression Diagnostics, Interpretation &amp; Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week8_data-cleaning-and-quality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Data Quality &amp; Cleansing: Outliers, Missing Data &amp; Noise</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Engineering Optimisation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week10_intro-to-optimisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Introduction to Engineering Optimisation Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week11_optimisation-part2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mathematical Foundations of Optimisation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week12_constrained_classic_optimisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Constrained Classical Optimisation (Lagrange Multipliers)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week12_1d_iterative_search.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Numerical Optimisation &amp; 1D Iterative Search</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week12_multivariable_numerical_methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Multivariable Numerical Algorithms (Gradient &amp; Newton Methods)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#the-shift-to-numerical-optimisation" id="toc-the-shift-to-numerical-optimisation" class="nav-link active" data-scroll-target="#the-shift-to-numerical-optimisation"><span class="header-section-number">18.1</span> The Shift to Numerical Optimisation</a></li>
+  <li><a href="#fundamentals-of-1d-search-the-uncertainty-interval" id="toc-fundamentals-of-1d-search-the-uncertainty-interval" class="nav-link" data-scroll-target="#fundamentals-of-1d-search-the-uncertainty-interval"><span class="header-section-number">18.2</span> Fundamentals of 1D Search: The Uncertainty Interval</a></li>
+  <li><a href="#derivative-free-the-dichotomous-search-method" id="toc-derivative-free-the-dichotomous-search-method" class="nav-link" data-scroll-target="#derivative-free-the-dichotomous-search-method"><span class="header-section-number">18.3</span> Derivative-Free: The Dichotomous Search Method</a></li>
+  <li><a href="#derivative-based-the-bisection-method" id="toc-derivative-based-the-bisection-method" class="nav-link" data-scroll-target="#derivative-based-the-bisection-method"><span class="header-section-number">18.4</span> Derivative-Based: The Bisection Method</a></li>
+  <li><a href="#worked-example-tracing-the-bisection-method" id="toc-worked-example-tracing-the-bisection-method" class="nav-link" data-scroll-target="#worked-example-tracing-the-bisection-method"><span class="header-section-number">18.5</span> Worked Example: Tracing the Bisection Method</a></li>
+  </ul>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/ENGG7518/ENGG7518-book/edit/main/optimisation/week12_1d_iterative_search.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ENGG7518/ENGG7518-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../optimisation/week10_intro-to-optimisation.html">Engineering Optimisation</a></li><li class="breadcrumb-item"><a href="../optimisation/week12_1d_iterative_search.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Numerical Optimisation &amp; 1D Iterative Search</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Numerical Optimisation &amp; 1D Iterative Search</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<p class="subtitle lead">ENGG7518 Research Methods for Engineers: Week 12</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Prof.&nbsp;Zuduo Zheng </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end of this chapter, you should be able to:</p>
+<ol type="1">
+<li>Explain the necessity of numerical optimisation and iterative search in complex engineering problems.</li>
+<li>Differentiate between derivative-free and derivative-based search methods.</li>
+<li>Understand the unimodality assumption and the concept of the uncertainty interval.</li>
+<li>Execute the derivative-free <strong>Dichotomous Search Algorithm</strong> and explain the geometric necessity of four evaluation points.</li>
+<li>Execute the <strong>Bisection Method</strong> using first-order derivatives and trace its convergence via iteration tables.</li>
+</ol>
+</div>
+</div>
+<section id="the-shift-to-numerical-optimisation" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="the-shift-to-numerical-optimisation"><span class="header-section-number">18.1</span> The Shift to Numerical Optimisation</h2>
+<p>In the previous chapters, we focused on <strong>classical (analytical) optimisation techniques</strong>. These methods are highly rigorous: if you can write down the explicit mathematical equations for the first and second derivatives, you can solve for the exact optimal solution algebraically by setting gradients to zero (<span class="math inline">\(\nabla f = \mathbf{0}\)</span>).</p>
+<p>However, in modern engineering practice, analytical solutions are often impossible. Why?</p>
+<ol type="1">
+<li><strong>Mathematical Complexity:</strong> Objective functions are rarely neat polynomials. They frequently involve complex simulations, “black-box” systems, or massive datasets where explicit analytical forms of derivatives cannot be derived.</li>
+<li><strong>Computational Scale:</strong> Solving massive, non-linear systems of equations algebraically is often computationally prohibitive.</li>
+</ol>
+<p>To overcome this, we transition to <strong>Numerical Optimisation (Iterative Search Procedures)</strong>.</p>
+<p>Instead of solving for the answer in one step, a numerical algorithm starts with a rough initial guess (<span class="math inline">\(x_0\)</span>) and applies mathematical rules to generate a sequence of progressively better approximations (<span class="math inline">\(x_1, x_2, \dots, x_k\)</span>). Over successive iterations, the objective function value decreases, and the sequence mathematically converges toward the optimal solution.</p>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>The Philosophy of Iterative Search
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>“There is no need to fear any problem you are working on. If you work on it, then you are influencing the outcome. It’s the problems you don’t address that should concern you.”</em> (James Clear)</p>
+<p>Numerical optimisation embodies this philosophy. Algorithms do not solve complex problems instantly; they take calculated, iterative steps, constantly influencing and improving the outcome until the target is successfully reached.</p>
+</div>
+</div>
+<section id="classification-of-numerical-methods" class="level3">
+<h3 class="anchored" data-anchor-id="classification-of-numerical-methods">Classification of Numerical Methods</h3>
+<p>We categorise numerical search methods into two broad families:</p>
+<ul>
+<li><strong>Derivative-Free Methods (Direct Search):</strong> These algorithms only evaluate the objective function <span class="math inline">\(f(x)\)</span> itself. They never calculate gradients or Hessians. They are highly robust and easy to program, though generally slower to converge. <em>(Example: Dichotomous Search)</em>.</li>
+<li><strong>Derivative-Based Methods:</strong> These algorithms require the calculation of first derivatives (gradients) and sometimes second derivatives (Hessians). They converge much faster and are highly accurate, but require the objective function to be smooth and differentiable. <em>(Examples: Bisection Method, Steepest Descent, Newton’s Method)</em>.</li>
+</ul>
+</section>
+</section>
+<section id="fundamentals-of-1d-search-the-uncertainty-interval" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="fundamentals-of-1d-search-the-uncertainty-interval"><span class="header-section-number">18.2</span> Fundamentals of 1D Search: The Uncertainty Interval</h2>
+<p>Before tackling multi-variable problems, we must master single-variable (1D) search algorithms. <em>(Note: 1D search methods are the backbone of advanced multi-variable algorithms, which rely on 1D “Line Searches” at every step!)</em></p>
+<p>For 1D optimisation, algorithms rely on continuously shrinking an <strong>Interval of Uncertainty</strong>, denoted as <span class="math inline">\([a, b]\)</span>. We know the optimal solution lies somewhere between <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, but we are uncertain of its exact location.</p>
+<section id="the-unimodality-assumption" class="level3">
+<h3 class="anchored" data-anchor-id="the-unimodality-assumption">The Unimodality Assumption</h3>
+<p>For basic 1D search methods to work, we assume the objective function <span class="math inline">\(f(x)\)</span> is <strong>unimodal</strong> within the interval <span class="math inline">\([a, b]\)</span>.</p>
+<ul>
+<li>A <strong>unimodal</strong> function has exactly <em>one</em> local minimum in that interval. It smoothly drops down to the minimum and goes back up, without any secondary peaks or valleys.</li>
+</ul>
+<p>If an engineering problem has multiple local minima (multi-modal), the standard practice is to perform a rough initial scan to divide the function’s domain into multiple unimodal sub-intervals, applying the search algorithm independently to each.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-unimodality" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-unimodality-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="week12_1d_iterative_search_files/figure-html/fig-unimodality-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;18.1: Comparison of a unimodal function (having a single unique minimum in [a, b]) versus a multi-modal function (having multiple local minima)."><img src="week12_1d_iterative_search_files/figure-html/fig-unimodality-1.png" class="img-fluid figure-img" width="816"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-unimodality-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.1: Comparison of a unimodal function (having a single unique minimum in [a, b]) versus a multi-modal function (having multiple local minima).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="derivative-free-the-dichotomous-search-method" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="derivative-free-the-dichotomous-search-method"><span class="header-section-number">18.3</span> Derivative-Free: The Dichotomous Search Method</h2>
+<p>The basic concept of Dichotomous Search is to evaluate the objective function at interior points to determine which half of the interval contains the minimum, and then discard the other half.</p>
+<section id="why-three-points-are-not-enough" class="level3">
+<h3 class="anchored" data-anchor-id="why-three-points-are-not-enough">Why Three Points are Not Enough</h3>
+<p>A common question arises: <em>Can we just evaluate the function at the two boundaries (<span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>) and the exact midpoint (<span class="math inline">\(M\)</span>), giving us 3 points?</em></p>
+<p><strong>No, three points are insufficient.</strong> If you only evaluate <span class="math inline">\(f(a)\)</span>, <span class="math inline">\(f(b)\)</span>, and <span class="math inline">\(f(M)\)</span>, you cannot definitively ascertain whether the true minimum lies in the left half <span class="math inline">\([a, M]\)</span> or the right half <span class="math inline">\([M, b]\)</span>. The curve could be steeply asymmetric, hiding the true minimum in the unselected half.</p>
+</section>
+<section id="the-four-point-strategy" class="level3">
+<h3 class="anchored" data-anchor-id="the-four-point-strategy">The Four-Point Strategy</h3>
+<p>To safely reduce the uncertainty interval, we MUST evaluate <strong>four points</strong> by inserting <em>two</em> new interior points symmetrically around the midpoint.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dichotomous-elimination" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dichotomous-elimination-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="week12_1d_iterative_search_files/figure-html/fig-dichotomous-elimination-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;18.2: Dichotomous search four-point strategy and interval reduction. Evaluating f(λ) and f(μ) around the midpoint allows discarding half of the uncertainty interval at each step."><img src="week12_1d_iterative_search_files/figure-html/fig-dichotomous-elimination-1.png" class="img-fluid figure-img" width="768"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dichotomous-elimination-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.2: Dichotomous search four-point strategy and interval reduction. Evaluating f(λ) and f(μ) around the midpoint allows discarding half of the uncertainty interval at each step.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Algorithm 1: Dichotomous Search Procedure
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Inputs:</strong></p>
+<ul>
+<li>Initial interval of uncertainty: <span class="math inline">\([a, b]\)</span></li>
+<li>Tolerance limit for stopping: <span class="math inline">\(L &gt; 0\)</span></li>
+<li>A very small shift parameter: <span class="math inline">\(\epsilon &gt; 0\)</span></li>
+</ul>
+<p><strong>Initialisation:</strong> Set iteration index <span class="math inline">\(k = 0\)</span>. Let <span class="math inline">\(a_k = a\)</span> and <span class="math inline">\(b_k = b\)</span>.</p>
+<p><strong>Step 1: Uncertainty Check</strong> While the interval width <span class="math inline">\((b_k - a_k) &gt; L\)</span>:</p>
+<p><strong>Step 2: Generate Interior Points</strong> Calculate the two symmetric test points:</p>
+<ul>
+<li><span class="math inline">\(\lambda_k = \frac{a_k + b_k}{2} - \epsilon\)</span></li>
+<li><span class="math inline">\(\mu_k = \frac{a_k + b_k}{2} + \epsilon\)</span></li>
+</ul>
+<p><strong>Step 3: Evaluate and Update Boundaries</strong> Evaluate <span class="math inline">\(f(\lambda_k)\)</span> and <span class="math inline">\(f(\mu_k)\)</span>.</p>
+<ul>
+<li><strong>If <span class="math inline">\(f(\lambda_k) \ge f(\mu_k)\)</span>:</strong> The curve is trending downward to the right.
+<ul>
+<li>Set <span class="math inline">\(a_{k+1} = \lambda_k\)</span> and <span class="math inline">\(b_{k+1} = b_k\)</span>.</li>
+</ul></li>
+<li><strong>If <span class="math inline">\(f(\lambda_k) &lt; f(\mu_k)\)</span>:</strong> The curve is trending upward to the right.
+<ul>
+<li>Set <span class="math inline">\(a_{k+1} = a_k\)</span> and <span class="math inline">\(b_{k+1} = \mu_k\)</span>.</li>
+</ul></li>
+</ul>
+<p>Increment <span class="math inline">\(k = k + 1\)</span> and return to Step 1.</p>
+<p><strong>Output:</strong> Once <span class="math inline">\((b_k - a_k) \le L\)</span>, terminate. The approximate minimum is the midpoint: <span class="math inline">\(x^* \approx \frac{a_k + b_k}{2}\)</span>.</p>
+</div>
+</div>
+<p>Each iteration effectively halves the uncertainty interval, closing in on the minimum without ever calculating a derivative.</p>
+</section>
+</section>
+<section id="derivative-based-the-bisection-method" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="derivative-based-the-bisection-method"><span class="header-section-number">18.4</span> Derivative-Based: The Bisection Method</h2>
+<p>If your objective function is continuous and differentiable (<span class="math inline">\(f \in C^1\)</span>), we can drastically improve our search efficiency using the <strong>Bisection Method</strong>.</p>
+<p>Because we have access to the first derivative <span class="math inline">\(f'(x)\)</span>, which reveals the exact slope of the curve, we <strong>no longer need four points</strong>. We only need to generate <strong>one</strong> additional interior point: the exact midpoint.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Algorithm 2: Bisection Method Procedure
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Inputs:</strong> Initial interval <span class="math inline">\([a, b]\)</span>, stopping tolerance <span class="math inline">\(L &gt; 0\)</span>. <strong>Initialisation:</strong> Set <span class="math inline">\(k = 1\)</span>, <span class="math inline">\(a_k = a\)</span>, <span class="math inline">\(b_k = b\)</span>.</p>
+<p><strong>Step 1: Midpoint Evaluation</strong> While <span class="math inline">\((b_k - a_k) &gt; L\)</span>: Calculate the midpoint: <span class="math inline">\(c_k = \frac{a_k + b_k}{2}\)</span>. Evaluate the derivative at the midpoint: <span class="math inline">\(f'(c_k)\)</span>.</p>
+<p><strong>Step 2: Update Boundaries via Slope</strong></p>
+<ul>
+<li><strong>If <span class="math inline">\(f'(c_k) = 0\)</span>:</strong> The exact minimum is found! <strong>Stop.</strong> Output <span class="math inline">\(x^* = c_k\)</span>.</li>
+<li><strong>If <span class="math inline">\(f'(c_k) &gt; 0\)</span>:</strong> The slope is positive (heading upward). The minimum must lie to the left.
+<ul>
+<li>Set <span class="math inline">\(a_{k+1} = a_k\)</span> and <span class="math inline">\(b_{k+1} = c_k\)</span>.</li>
+</ul></li>
+<li><strong>If <span class="math inline">\(f'(c_k) &lt; 0\)</span>:</strong> The slope is negative (heading downward). The minimum must lie to the right.
+<ul>
+<li>Set <span class="math inline">\(a_{k+1} = c_k\)</span> and <span class="math inline">\(b_{k+1} = b_k\)</span>.</li>
+</ul></li>
+</ul>
+<p>Increment <span class="math inline">\(k = k + 1\)</span> and return to Step 1.</p>
+</div>
+</div>
+</section>
+<section id="worked-example-tracing-the-bisection-method" class="level2" data-number="18.5">
+<h2 data-number="18.5" class="anchored" data-anchor-id="worked-example-tracing-the-bisection-method"><span class="header-section-number">18.5</span> Worked Example: Tracing the Bisection Method</h2>
+<p>Let us trace the Bisection Method on a concrete polynomial function to see exactly how the computational convergence works step-by-step.</p>
+<p><strong>Problem:</strong> Find the numerical minimum point of <span class="math inline">\(f(x) = 2x^6 + 3x^4 - 12x\)</span>.<br>
+<strong>Given Parameters:</strong> Initial interval <span class="math inline">\([a, b] = [0, 2]\)</span>, and a tolerance limit <span class="math inline">\(L = 0.02\)</span>.</p>
+<p><strong>Step 1: Determine the Derivative</strong><br>
+Before starting the iterations, we must derive the first-order derivative: <span class="math display">\[ f'(x) = 12x^5 + 12x^3 - 12 \]</span></p>
+<p><strong>Step 2: Iterative Execution</strong></p>
+<ul>
+<li><strong>Iteration 1:</strong>
+<ul>
+<li><p><strong>Current Interval:</strong> <span class="math inline">\([a_1, b_1] = [0, 2]\)</span>. Interval width <span class="math inline">\(\Delta x = 2\)</span>.</p></li>
+<li><p><strong>Midpoint:</strong> <span class="math inline">\(c_1 = \frac{0 + 2}{2} = 1\)</span>.</p></li>
+<li><p><strong>Evaluate slope:</strong> Plug <span class="math inline">\(c_1\)</span> into the derivative: <span class="math display">\[ f'(1) = 12(1)^5 + 12(1)^3 - 12 = 12 \]</span></p></li>
+<li><p><strong>Decision:</strong> Since <span class="math inline">\(f'(1) = 12 &gt; 0\)</span>, the slope is positive (heading upward). Because the function is unimodal, the minimum must have already occurred to the <em>left</em>. We replace the right boundary <span class="math inline">\(b\)</span> with <span class="math inline">\(c_1\)</span>.</p></li>
+<li><p><strong>New Interval:</strong> <span class="math inline">\([0, 1]\)</span>.</p></li>
+</ul></li>
+<li><strong>Iteration 2:</strong>
+<ul>
+<li><p><strong>Current Interval:</strong> <span class="math inline">\([a_2, b_2] = [0, 1]\)</span>. Interval width <span class="math inline">\(\Delta x = 1\)</span>.</p></li>
+<li><p><strong>Midpoint:</strong> <span class="math inline">\(c_2 = \frac{0 + 1}{2} = 0.5\)</span>.</p></li>
+<li><p><strong>Evaluate slope:</strong> <span class="math display">\[ f'(0.5) = 12(0.5)^5 + 12(0.5)^3 - 12 = -10.125 \]</span></p></li>
+<li><p><strong>Decision:</strong> Since <span class="math inline">\(f'(0.5) = -10.125 &lt; 0\)</span>, the slope is negative (heading downward). The minimum must lie further to the <em>right</em>. We replace the left boundary <span class="math inline">\(a\)</span> with <span class="math inline">\(c_2\)</span>.</p></li>
+<li><p><strong>New Interval:</strong> <span class="math inline">\([0.5, 1]\)</span>.</p></li>
+</ul></li>
+<li><strong>Iteration 3:</strong>
+<ul>
+<li><p><strong>Current Interval:</strong> <span class="math inline">\([a_3, b_3] = [0.5, 1]\)</span>. Interval width <span class="math inline">\(\Delta x = 0.5\)</span>.</p></li>
+<li><p><strong>Midpoint:</strong> <span class="math inline">\(c_3 = \frac{0.5 + 1}{2} = 0.75\)</span>.</p></li>
+<li><p><strong>Evaluate slope:</strong> <span class="math display">\[ f'(0.75) = 12(0.75)^5 + 12(0.75)^3 - 12 \approx -4.0898 \]</span></p></li>
+<li><p><strong>Decision:</strong> Since <span class="math inline">\(f'(0.75) &lt; 0\)</span>, the slope is still downward. The minimum lies to the <em>right</em>. We replace the left boundary again.</p></li>
+<li><p><strong>New Interval:</strong> <span class="math inline">\([0.75, 1]\)</span>.</p></li>
+</ul></li>
+</ul>
+<p><strong>Step 3: Summary of the Algorithm Run</strong></p>
+<p>If we let a computer continue this exact logical loop, it generates the following iteration table. Notice how the interval width (<span class="math inline">\(\Delta x\)</span>) halves at each iteration, rapidly zeroing in on the true minimum.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Iteration (<span class="math inline">\(k\)</span>)</th>
+<th style="text-align: center;">Lower Bound (<span class="math inline">\(a_k\)</span>)</th>
+<th style="text-align: center;">Upper Bound (<span class="math inline">\(b_k\)</span>)</th>
+<th style="text-align: center;">Midpoint (<span class="math inline">\(c_k\)</span>)</th>
+<th style="text-align: center;">Derivative <span class="math inline">\(f'(c_k)\)</span></th>
+<th style="text-align: center;">Function <span class="math inline">\(f(c_k)\)</span></th>
+<th style="text-align: center;">Width <span class="math inline">\(\Delta x\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.0000</td>
+<td style="text-align: center;">2.0000</td>
+<td style="text-align: center;"><strong>1.0000</strong></td>
+<td style="text-align: center;">12.0000</td>
+<td style="text-align: center;">-7.0000</td>
+<td style="text-align: center;">2.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0.0000</td>
+<td style="text-align: center;">1.0000</td>
+<td style="text-align: center;"><strong>0.5000</strong></td>
+<td style="text-align: center;">-10.1250</td>
+<td style="text-align: center;">-5.7812</td>
+<td style="text-align: center;">1.0000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0.5000</td>
+<td style="text-align: center;">1.0000</td>
+<td style="text-align: center;"><strong>0.7500</strong></td>
+<td style="text-align: center;">-4.0898</td>
+<td style="text-align: center;">-7.6948</td>
+<td style="text-align: center;">0.5000</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0.7500</td>
+<td style="text-align: center;">1.0000</td>
+<td style="text-align: center;"><strong>0.8750</strong></td>
+<td style="text-align: center;">2.1939</td>
+<td style="text-align: center;">-7.8438</td>
+<td style="text-align: center;">0.2500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.7500</td>
+<td style="text-align: center;">0.8750</td>
+<td style="text-align: center;"><strong>0.8125</strong></td>
+<td style="text-align: center;">-1.3143</td>
+<td style="text-align: center;">-7.8671</td>
+<td style="text-align: center;">0.1250</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">0.8125</td>
+<td style="text-align: center;">0.8750</td>
+<td style="text-align: center;"><strong>0.8437</strong></td>
+<td style="text-align: center;">0.3396</td>
+<td style="text-align: center;">-7.8829</td>
+<td style="text-align: center;">0.0625</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">0.8125</td>
+<td style="text-align: center;">0.8437</td>
+<td style="text-align: center;"><strong>0.8281</strong></td>
+<td style="text-align: center;">-0.5112</td>
+<td style="text-align: center;">-7.8815</td>
+<td style="text-align: center;">0.0312</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">0.8281</td>
+<td style="text-align: center;">0.8437</td>
+<td style="text-align: center;"><strong>0.8359</strong></td>
+<td style="text-align: center;">-0.0918</td>
+<td style="text-align: center;">-7.8838</td>
+<td style="text-align: center;"><strong>0.0156</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conclusion:</strong> By <strong>Iteration 8</strong>, the interval width <span class="math inline">\(\Delta x = 0.0156\)</span> drops below our tolerance limit <span class="math inline">\(L = 0.02\)</span>. The algorithm successfully terminates.</p>
+<p>The derivative at the final midpoint (<span class="math inline">\(f'(0.8359) \approx -0.09\)</span>) is extremely close to zero, mathematically proving we are practically at the bottom of the curve. The highly accurate numerical approximation for the optimal solution is <strong><span class="math inline">\(x^* \approx 0.8359\)</span></strong>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-bisection-trajectory" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bisection-trajectory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="week12_1d_iterative_search_files/figure-html/fig-bisection-trajectory-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;18.3: Bisection method convergence on f(x) = 2x⁶ + 3x⁴ - 12x. Vertical dashed lines show how midpoints c₁, c₂, c₃ systematically halve the search space toward x* ≈ 0.8359."><img src="week12_1d_iterative_search_files/figure-html/fig-bisection-trajectory-1.png" class="img-fluid figure-img" width="768"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bisection-trajectory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.3: Bisection method convergence on f(x) = 2x⁶ + 3x⁴ - 12x. Vertical dashed lines show how midpoints c₁, c₂, c₃ systematically halve the search space toward x* ≈ 0.8359.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script>
+// Persistent bi-directional light/dark theme handler across chapter navigations
+(function() {
+  function getSavedTheme() {
+    try {
+      return sessionStorage.getItem("quarto-color-scheme-forced") || localStorage.getItem("quarto-color-scheme");
+    } catch(e) {
+      return null;
+    }
+  }
+
+  function saveTheme(themeValue) { // "alternate" for dark, "default" for light
+    try {
+      sessionStorage.setItem("quarto-color-scheme-forced", themeValue);
+      try { localStorage.setItem("quarto-color-scheme", themeValue); } catch(e) {}
+    } catch(e) {}
+  }
+
+  var saved = getSavedTheme();
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // 1. Apply saved theme state on initial page load
+    if (saved === "alternate" || saved === "dark") {
+      var alternateSheets = document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      alternateSheets.forEach(function(s) {
+        if (s.rel !== 'stylesheet') s.rel = 'stylesheet';
+      });
+      document.body.classList.add('quarto-dark');
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+      
+      var toggles = document.querySelectorAll('.quarto-color-scheme-toggle');
+      toggles.forEach(function(t) { t.classList.add('alternate'); });
+    } else if (saved === "default" || saved === "light") {
+      var alternateSheets = document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      alternateSheets.forEach(function(s) {
+        s.rel = 'disabled-stylesheet';
+      });
+      document.body.classList.remove('quarto-dark');
+      document.documentElement.setAttribute('data-bs-theme', 'light');
+      
+      var toggles = document.querySelectorAll('.quarto-color-scheme-toggle');
+      toggles.forEach(function(t) { t.classList.remove('alternate'); });
+    }
+
+    // 2. Listen for clicks on the theme toggle button to accurately save user preference
+    document.addEventListener("click", function(e) {
+      var toggle = e.target.closest('.quarto-color-scheme-toggle');
+      if (toggle) {
+        setTimeout(function() {
+          // Check if dark mode stylesheet is currently enabled
+          var darkSheet = document.querySelector('link.quarto-color-scheme.quarto-color-alternate');
+          var isDark = toggle.classList.contains('alternate') || (darkSheet && darkSheet.rel === 'stylesheet');
+          
+          if (isDark) {
+            saveTheme("alternate");
+            document.body.classList.add('quarto-dark');
+            document.documentElement.setAttribute('data-bs-theme', 'dark');
+          } else {
+            saveTheme("default");
+            document.body.classList.remove('quarto-dark');
+            document.documentElement.setAttribute('data-bs-theme', 'light');
+            // Ensure alternate stylesheets are disabled
+            var alternateSheets = document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+            alternateSheets.forEach(function(s) {
+              s.rel = 'disabled-stylesheet';
+            });
+          }
+        }, 100);
+      }
+    });
+  });
+})();
+
+document.addEventListener("DOMContentLoaded", function () {
+  const tocEl = document.querySelector('nav#TOC[role="doc-toc"]');
+  if (!tocEl) return;
+
+  const tocLinks = Array.from(tocEl.querySelectorAll("a[data-scroll-target]"));
+  if (!tocLinks.length) return;
+
+  const sections = tocLinks.map(link => {
+    const target = link.getAttribute("data-scroll-target");
+    if (!target) return null;
+    if (target.startsWith("#")) {
+      return document.getElementById(decodeURI(target.slice(1)));
+    } else {
+      return document.querySelector(decodeURI(target));
+    }
+  });
+
+  function getAbsoluteTop(elem) {
+    if (!elem) return 0;
+    return elem.getBoundingClientRect().top + window.pageYOffset;
+  }
+
+  let currentActive = -1;
+
+  function updateTOC() {
+    const pageY = window.pageYOffset;
+    const windowHeight = window.innerHeight;
+    const bodyHeight = document.body.offsetHeight;
+
+    let sectionIndex = -1;
+
+    // If scrolled at the very bottom of page, activate last section
+    if (pageY + windowHeight >= bodyHeight - 50) {
+      sectionIndex = sections.length - 1;
+    } else {
+      // Find section currently in view using absolute offset
+      for (let i = sections.length - 1; i >= 0; i--) {
+        if (sections[i]) {
+          const top = getAbsoluteTop(sections[i]);
+          if (pageY >= top - 140) {
+            sectionIndex = i;
+            break;
+          }
+        }
+      }
+    }
+
+    if (sectionIndex === -1 && sections.length > 0) {
+      sectionIndex = 0;
+    }
+
+    if (sectionIndex !== currentActive && sectionIndex >= 0) {
+      currentActive = sectionIndex;
+
+      tocLinks.forEach((link, idx) => {
+        if (idx === sectionIndex) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+    }
+  }
+
+  window.addEventListener("scroll", function() {
+    requestAnimationFrame(updateTOC);
+  }, { passive: true, capture: true });
+
+  window.addEventListener("resize", updateTOC, { passive: true });
+  setTimeout(updateTOC, 100);
+  setTimeout(updateTOC, 500);
+  setTimeout(updateTOC, 1000);
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../optimisation/week12_constrained_classic_optimisation.html" class="pagination-link" aria-label="Constrained Classical Optimisation (Lagrange Multipliers)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Constrained Classical Optimisation (Lagrange Multipliers)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../optimisation/week12_multivariable_numerical_methods.html" class="pagination-link" aria-label="Multivariable Numerical Algorithms (Gradient &amp; Newton Methods)">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Multivariable Numerical Algorithms (Gradient &amp; Newton Methods)</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Numerical Optimisation &amp; 1D Iterative Search"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "ENGG7518 Research Methods for Engineers: Week 12"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Prof. Zuduo Zheng"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "Semester 2, 2026"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Learning Objectives</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>By the end of this chapter, you should be able to:</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Explain the necessity of numerical optimisation and iterative search in complex engineering problems.</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Differentiate between derivative-free and derivative-based search methods.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Understand the unimodality assumption and the concept of the uncertainty interval.</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Execute the derivative-free **Dichotomous Search Algorithm** and explain the geometric necessity of four evaluation points.</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Execute the **Bisection Method** using first-order derivatives and trace its convergence via iteration tables.</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Shift to Numerical Optimisation</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>In the previous chapters, we focused on **classical (analytical) optimisation techniques**. These methods are highly rigorous: if you can write down the explicit mathematical equations for the first and second derivatives, you can solve for the exact optimal solution algebraically by setting gradients to zero ($\nabla f = \mathbf{0}$). </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>However, in modern engineering practice, analytical solutions are often impossible. Why?</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Mathematical Complexity:** Objective functions are rarely neat polynomials. They frequently involve complex simulations, "black-box" systems, or massive datasets where explicit analytical forms of derivatives cannot be derived.</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Computational Scale:** Solving massive, non-linear systems of equations algebraically is often computationally prohibitive. </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>To overcome this, we transition to **Numerical Optimisation (Iterative Search Procedures)**. </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>Instead of solving for the answer in one step, a numerical algorithm starts with a rough initial guess ($x_0$) and applies mathematical rules to generate a sequence of progressively better approximations ($x_1, x_2, \dots, x_k$). Over successive iterations, the objective function value decreases, and the sequence mathematically converges toward the optimal solution.</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Philosophy of Iterative Search</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>*"There is no need to fear any problem you are working on. If you work on it, then you are influencing the outcome. It's the problems you don't address that should concern you."* (James Clear)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>Numerical optimisation embodies this philosophy. Algorithms do not solve complex problems instantly; they take calculated, iterative steps, constantly influencing and improving the outcome until the target is successfully reached.</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="fu">### Classification of Numerical Methods</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>We categorise numerical search methods into two broad families:</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Derivative-Free Methods (Direct Search):** These algorithms only evaluate the objective function $f(x)$ itself. They never calculate gradients or Hessians. They are highly robust and easy to program, though generally slower to converge. *(Example: Dichotomous Search)*.</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Derivative-Based Methods:** These algorithms require the calculation of first derivatives (gradients) and sometimes second derivatives (Hessians). They converge much faster and are highly accurate, but require the objective function to be smooth and differentiable. *(Examples: Bisection Method, Steepest Descent, Newton's Method)*.</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fundamentals of 1D Search: The Uncertainty Interval</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>Before tackling multi-variable problems, we must master single-variable (1D) search algorithms. *(Note: 1D search methods are the backbone of advanced multi-variable algorithms, which rely on 1D "Line Searches" at every step!)*</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>For 1D optimisation, algorithms rely on continuously shrinking an **Interval of Uncertainty**, denoted as $<span class="co">[</span><span class="ot">a, b</span><span class="co">]</span>$. We know the optimal solution lies somewhere between $a$ and $b$, but we are uncertain of its exact location.</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Unimodality Assumption</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>For basic 1D search methods to work, we assume the objective function $f(x)$ is **unimodal** within the interval $<span class="co">[</span><span class="ot">a, b</span><span class="co">]</span>$. </span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>A **unimodal** function has exactly *one* local minimum in that interval. It smoothly drops down to the minimum and goes back up, without any secondary peaks or valleys.</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>If an engineering problem has multiple local minima (multi-modal), the standard practice is to perform a rough initial scan to divide the function's domain into multiple unimodal sub-intervals, applying the search algorithm independently to each.</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-unimodality</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Comparison of a unimodal function (having a single unique minimum in [a, b]) versus a multi-modal function (having multiple local minima)."</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8.5</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>df_uni <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> x_vals,</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> (x_vals <span class="sc">-</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span>,</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"Unimodal (Single Minimum)"</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>df_multi <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> x_vals,</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">sin</span>(<span class="dv">3</span> <span class="sc">*</span> x_vals) <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> (x_vals <span class="sc">-</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span>,</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"Multi-Modal (Multiple Minima)"</span></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>df_all <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df_uni, df_multi)</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>df_all<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="fu">factor</span>(df_all<span class="sc">$</span>type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Unimodal (Single Minimum)"</span>, <span class="st">"Multi-Modal (Multiple Minima)"</span>))</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_all, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color =</span> type), <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"grey40"</span>) <span class="sc">+</span></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>type, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Unimodal (Single Minimum)"</span> <span class="ot">=</span> <span class="st">"#1B9E77"</span>, <span class="st">"Multi-Modal (Multiple Minima)"</span> <span class="ot">=</span> <span class="st">"#E7298A"</span>)) <span class="sc">+</span></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"x"</span>, <span class="at">y =</span> <span class="st">"f(x)"</span>) <span class="sc">+</span></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="fu">## Derivative-Free: The Dichotomous Search Method</span></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>The basic concept of Dichotomous Search is to evaluate the objective function at interior points to determine which half of the interval contains the minimum, and then discard the other half. </span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a><span class="fu">### Why Three Points are Not Enough</span></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>A common question arises: *Can we just evaluate the function at the two boundaries ($a$ and $b$) and the exact midpoint ($M$), giving us 3 points?*</span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>**No, three points are insufficient.** If you only evaluate $f(a)$, $f(b)$, and $f(M)$, you cannot definitively ascertain whether the true minimum lies in the left half $<span class="co">[</span><span class="ot">a, M</span><span class="co">]</span>$ or the right half $<span class="co">[</span><span class="ot">M, b</span><span class="co">]</span>$. The curve could be steeply asymmetric, hiding the true minimum in the unselected half.</span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Four-Point Strategy</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>To safely reduce the uncertainty interval, we MUST evaluate **four points** by inserting *two* new interior points symmetrically around the midpoint. </span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-dichotomous-elimination</span></span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Dichotomous search four-point strategy and interval reduction. Evaluating f(λ) and f(μ) around the midpoint allows discarding half of the uncertainty interval at each step."</span></span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4.5</span></span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a><span class="co"># Unimodal curve</span></span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>x_curve <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a>f_curve <span class="ot">&lt;-</span> <span class="cf">function</span>(x) (x <span class="sc">-</span> <span class="fl">2.6</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fl">1.5</span></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>df_curve <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x_curve, <span class="at">y =</span> <span class="fu">f_curve</span>(x_curve))</span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a><span class="co"># Points</span></span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>a_val <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>b_val <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>mid_val <span class="ot">&lt;-</span> (a_val <span class="sc">+</span> b_val) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>eps <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>lam_val <span class="ot">&lt;-</span> mid_val <span class="sc">-</span> eps</span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>mu_val <span class="ot">&lt;-</span> mid_val <span class="sc">+</span> eps</span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>pts_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"λ"</span>, <span class="st">"μ"</span>, <span class="st">"b"</span>),</span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(a_val, lam_val, mu_val, b_val),</span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">f_curve</span>(<span class="fu">c</span>(a_val, lam_val, mu_val, b_val)),</span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>  <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"grey30"</span>, <span class="st">"#D95F02"</span>, <span class="st">"#1B9E77"</span>, <span class="st">"grey30"</span>)</span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Main unimodal curve</span></span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> df_curve, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> <span class="st">"grey40"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Shaded discarded region [a, lambda] because f(lambda) &gt; f(mu)</span></span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">xmin =</span> a_val, <span class="at">xmax =</span> lam_val, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="cn">Inf</span>, <span class="at">fill =</span> <span class="st">"#D95F02"</span>, <span class="at">alpha =</span> <span class="fl">0.15</span>) <span class="sc">+</span></span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> (a_val <span class="sc">+</span> lam_val)<span class="sc">/</span><span class="dv">2</span>, <span class="at">y =</span> <span class="dv">7</span>, <span class="at">label =</span> <span class="st">"Discarded Region</span><span class="sc">\n</span><span class="st">[a, λ]"</span>, <span class="at">color =</span> <span class="st">"#D95F02"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remaining interval [lambda, b]</span></span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> (lam_val <span class="sc">+</span> b_val)<span class="sc">/</span><span class="dv">2</span>, <span class="at">y =</span> <span class="fl">1.2</span>, <span class="at">label =</span> <span class="st">"New Uncertainty Interval [λ, b]"</span>, <span class="at">color =</span> <span class="st">"#1B9E77"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Vertical dashed lines for points</span></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">data =</span> pts_df, <span class="fu">aes</span>(<span class="at">xintercept =</span> x, <span class="at">color =</span> color), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> pts_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> color), <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Point labels</span></span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> a_val <span class="sc">+</span> <span class="fl">0.1</span>, <span class="at">y =</span> <span class="fl">8.3</span>, <span class="at">label =</span> <span class="st">"a"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">4.5</span>) <span class="sc">+</span></span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> lam_val, <span class="at">y =</span> <span class="fu">f_curve</span>(lam_val) <span class="sc">+</span> <span class="fl">0.5</span>, <span class="at">label =</span> <span class="fu">expression</span>(lambda <span class="sc">==</span> <span class="fu">frac</span>(a<span class="sc">+</span>b, <span class="dv">2</span>) <span class="sc">-</span> epsilon), <span class="at">color =</span> <span class="st">"#D95F02"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> mu_val, <span class="at">y =</span> <span class="fu">f_curve</span>(mu_val) <span class="sc">-</span> <span class="fl">0.5</span>, <span class="at">label =</span> <span class="fu">expression</span>(mu <span class="sc">==</span> <span class="fu">frac</span>(a<span class="sc">+</span>b, <span class="dv">2</span>) <span class="sc">+</span> epsilon), <span class="at">color =</span> <span class="st">"#1B9E77"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> b_val <span class="sc">-</span> <span class="fl">0.1</span>, <span class="at">y =</span> <span class="fl">3.7</span>, <span class="at">label =</span> <span class="st">"b"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">4.5</span>) <span class="sc">+</span></span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_identity</span>() <span class="sc">+</span></span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"x"</span>, <span class="at">y =</span> <span class="st">"f(x)"</span>) <span class="sc">+</span></span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a><span class="fu">## Algorithm 1: Dichotomous Search Procedure</span></span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>**Inputs:** </span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>Initial interval of uncertainty: $<span class="co">[</span><span class="ot">a, b</span><span class="co">]</span>$</span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>Tolerance limit for stopping: $L &gt; 0$</span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>A very small shift parameter: $\epsilon &gt; 0$</span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>**Initialisation:** </span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>Set iteration index $k = 0$. Let $a_k = a$ and $b_k = b$.</span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>**Step 1: Uncertainty Check**</span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>While the interval width $(b_k - a_k) &gt; L$:</span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>**Step 2: Generate Interior Points**</span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>Calculate the two symmetric test points:</span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$\lambda_k = \frac{a_k + b_k}{2} - \epsilon$</span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$\mu_k = \frac{a_k + b_k}{2} + \epsilon$</span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>**Step 3: Evaluate and Update Boundaries**</span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>Evaluate $f(\lambda_k)$ and $f(\mu_k)$.</span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**If $f(\lambda_k) \ge f(\mu_k)$:** The curve is trending downward to the right. </span>
+<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>Set $a_{k+1} = \lambda_k$ and $b_{k+1} = b_k$.</span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**If $f(\lambda_k) &lt; f(\mu_k)$:** The curve is trending upward to the right. </span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>Set $a_{k+1} = a_k$ and $b_{k+1} = \mu_k$.</span>
+<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a>Increment $k = k + 1$ and return to Step 1.</span>
+<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a>**Output:** </span>
+<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a>Once $(b_k - a_k) \le L$, terminate. The approximate minimum is the midpoint: $x^* \approx \frac{a_k + b_k}{2}$.</span>
+<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a>Each iteration effectively halves the uncertainty interval, closing in on the minimum without ever calculating a derivative.</span>
+<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a><span class="fu">## Derivative-Based: The Bisection Method</span></span>
+<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a>If your objective function is continuous and differentiable ($f \in C^1$), we can drastically improve our search efficiency using the **Bisection Method**. </span>
+<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a>Because we have access to the first derivative $f'(x)$, which reveals the exact slope of the curve, we **no longer need four points**. We only need to generate **one** additional interior point: the exact midpoint.</span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a><span class="fu">## Algorithm 2: Bisection Method Procedure</span></span>
+<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a>**Inputs:** Initial interval $<span class="co">[</span><span class="ot">a, b</span><span class="co">]</span>$, stopping tolerance $L &gt; 0$.</span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a>**Initialisation:** Set $k = 1$, $a_k = a$, $b_k = b$.</span>
+<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a>**Step 1: Midpoint Evaluation**</span>
+<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a>While $(b_k - a_k) &gt; L$:</span>
+<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a>Calculate the midpoint: $c_k = \frac{a_k + b_k}{2}$.</span>
+<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a>Evaluate the derivative at the midpoint: $f'(c_k)$.</span>
+<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a>**Step 2: Update Boundaries via Slope**</span>
+<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**If $f'(c_k) = 0$:** The exact minimum is found! **Stop.** Output $x^* = c_k$.</span>
+<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**If $f'(c_k) &gt; 0$:** The slope is positive (heading upward). The minimum must lie to the left. </span>
+<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>Set $a_{k+1} = a_k$ and $b_{k+1} = c_k$.</span>
+<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**If $f'(c_k) &lt; 0$:** The slope is negative (heading downward). The minimum must lie to the right.</span>
+<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>Set $a_{k+1} = c_k$ and $b_{k+1} = b_k$.</span>
+<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a>Increment $k = k + 1$ and return to Step 1.</span>
+<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a><span class="fu">## Worked Example: Tracing the Bisection Method</span></span>
+<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a>Let us trace the Bisection Method on a concrete polynomial function to see exactly how the computational convergence works step-by-step.</span>
+<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a>**Problem:** Find the numerical minimum point of $f(x) = 2x^6 + 3x^4 - 12x$.  </span>
+<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a>**Given Parameters:** Initial interval $<span class="co">[</span><span class="ot">a, b</span><span class="co">]</span> = <span class="co">[</span><span class="ot">0, 2</span><span class="co">]</span>$, and a tolerance limit $L = 0.02$.</span>
+<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a>**Step 1: Determine the Derivative**  </span>
+<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a>Before starting the iterations, we must derive the first-order derivative:</span>
+<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a>$$ f'(x) = 12x^5 + 12x^3 - 12 $$</span>
+<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a>**Step 2: Iterative Execution**</span>
+<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Iteration 1:**</span>
+<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>**Current Interval:** $<span class="co">[</span><span class="ot">a_1, b_1</span><span class="co">]</span> = <span class="co">[</span><span class="ot">0, 2</span><span class="co">]</span>$. Interval width $\Delta x = 2$.</span>
+<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>**Midpoint:** $c_1 = \frac{0 + 2}{2} = 1$.</span>
+<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>**Evaluate slope:** Plug $c_1$ into the derivative: </span>
+<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a>        $$ f'(1) = 12(1)^5 + 12(1)^3 - 12 = 12 $$</span>
+<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>**Decision:** Since $f'(1) = 12 &gt; 0$, the slope is positive (heading upward). Because the function is unimodal, the minimum must have already occurred to the *left*. We replace the right boundary $b$ with $c_1$.</span>
+<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>**New Interval:** $<span class="co">[</span><span class="ot">0, 1</span><span class="co">]</span>$.</span>
+<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Iteration 2:**</span>
+<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>**Current Interval:** $<span class="co">[</span><span class="ot">a_2, b_2</span><span class="co">]</span> = <span class="co">[</span><span class="ot">0, 1</span><span class="co">]</span>$. Interval width $\Delta x = 1$.</span>
+<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>**Midpoint:** $c_2 = \frac{0 + 1}{2} = 0.5$.</span>
+<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>**Evaluate slope:** </span>
+<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a>        $$ f'(0.5) = 12(0.5)^5 + 12(0.5)^3 - 12 = -10.125 $$</span>
+<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>**Decision:** Since $f'(0.5) = -10.125 &lt; 0$, the slope is negative (heading downward). The minimum must lie further to the *right*. We replace the left boundary $a$ with $c_2$.</span>
+<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>**New Interval:** $<span class="co">[</span><span class="ot">0.5, 1</span><span class="co">]</span>$.</span>
+<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Iteration 3:**</span>
+<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>**Current Interval:** $<span class="co">[</span><span class="ot">a_3, b_3</span><span class="co">]</span> = <span class="co">[</span><span class="ot">0.5, 1</span><span class="co">]</span>$. Interval width $\Delta x = 0.5$.</span>
+<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>**Midpoint:** $c_3 = \frac{0.5 + 1}{2} = 0.75$.</span>
+<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>**Evaluate slope:** </span>
+<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a>        $$ f'(0.75) = 12(0.75)^5 + 12(0.75)^3 - 12 \approx -4.0898 $$</span>
+<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>**Decision:** Since $f'(0.75) &lt; 0$, the slope is still downward. The minimum lies to the *right*. We replace the left boundary again.</span>
+<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a><span class="ss">    *   </span>**New Interval:** $<span class="co">[</span><span class="ot">0.75, 1</span><span class="co">]</span>$.</span>
+<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a>**Step 3: Summary of the Algorithm Run**</span>
+<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a>If we let a computer continue this exact logical loop, it generates the following iteration table. Notice how the interval width ($\Delta x$) halves at each iteration, rapidly zeroing in on the true minimum.</span>
+<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Iteration ($k$) <span class="pp">|</span> Lower Bound ($a_k$) <span class="pp">|</span> Upper Bound ($b_k$) <span class="pp">|</span> Midpoint ($c_k$) <span class="pp">|</span> Derivative $f'(c_k)$ <span class="pp">|</span> Function $f(c_k)$ <span class="pp">|</span> Width $\Delta x$ <span class="pp">|</span></span>
+<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a><span class="pp">| :---:</span> <span class="pp">| :---:</span> <span class="pp">| :---:</span> <span class="pp">| :---:</span> <span class="pp">| :---:</span> <span class="pp">| :---:</span> <span class="pp">| :---:</span> <span class="pp">|</span></span>
+<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> 0.0000 <span class="pp">|</span> 2.0000 <span class="pp">|</span> **1.0000** <span class="pp">|</span> 12.0000 <span class="pp">|</span> -7.0000 <span class="pp">|</span> 2.0000 <span class="pp">|</span></span>
+<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> 0.0000 <span class="pp">|</span> 1.0000 <span class="pp">|</span> **0.5000** <span class="pp">|</span> -10.1250 <span class="pp">|</span> -5.7812 <span class="pp">|</span> 1.0000 <span class="pp">|</span></span>
+<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 3 <span class="pp">|</span> 0.5000 <span class="pp">|</span> 1.0000 <span class="pp">|</span> **0.7500** <span class="pp">|</span> -4.0898 <span class="pp">|</span> -7.6948 <span class="pp">|</span> 0.5000 <span class="pp">|</span></span>
+<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 4 <span class="pp">|</span> 0.7500 <span class="pp">|</span> 1.0000 <span class="pp">|</span> **0.8750** <span class="pp">|</span> 2.1939 <span class="pp">|</span> -7.8438 <span class="pp">|</span> 0.2500 <span class="pp">|</span></span>
+<span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5 <span class="pp">|</span> 0.7500 <span class="pp">|</span> 0.8750 <span class="pp">|</span> **0.8125** <span class="pp">|</span> -1.3143 <span class="pp">|</span> -7.8671 <span class="pp">|</span> 0.1250 <span class="pp">|</span></span>
+<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 6 <span class="pp">|</span> 0.8125 <span class="pp">|</span> 0.8750 <span class="pp">|</span> **0.8437** <span class="pp">|</span> 0.3396 <span class="pp">|</span> -7.8829 <span class="pp">|</span> 0.0625 <span class="pp">|</span></span>
+<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 7 <span class="pp">|</span> 0.8125 <span class="pp">|</span> 0.8437 <span class="pp">|</span> **0.8281** <span class="pp">|</span> -0.5112 <span class="pp">|</span> -7.8815 <span class="pp">|</span> 0.0312 <span class="pp">|</span></span>
+<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 8 <span class="pp">|</span> 0.8281 <span class="pp">|</span> 0.8437 <span class="pp">|</span> **0.8359** | -0.0918 | -7.8838 | **0.0156** <span class="pp">|</span></span>
+<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a>**Conclusion:**</span>
+<span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a>By **Iteration 8**, the interval width $\Delta x = 0.0156$ drops below our tolerance limit $L = 0.02$. The algorithm successfully terminates. </span>
+<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a>The derivative at the final midpoint ($f'(0.8359) \approx -0.09$) is extremely close to zero, mathematically proving we are practically at the bottom of the curve. The highly accurate numerical approximation for the optimal solution is **$x^* \approx 0.8359$**.</span>
+<span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-297"><a href="#cb1-297" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-bisection-trajectory</span></span>
+<span id="cb1-299"><a href="#cb1-299" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Bisection method convergence on f(x) = 2x⁶ + 3x⁴ - 12x. Vertical dashed lines show how midpoints c₁, c₂, c₃ systematically halve the search space toward x* ≈ 0.8359."</span></span>
+<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-301"><a href="#cb1-301" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb1-303"><a href="#cb1-303" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb1-304"><a href="#cb1-304" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb1-305"><a href="#cb1-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-306"><a href="#cb1-306" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-307"><a href="#cb1-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="sc">*</span>x<span class="sc">^</span><span class="dv">6</span> <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>x<span class="sc">^</span><span class="dv">4</span> <span class="sc">-</span> <span class="dv">12</span><span class="sc">*</span>x</span>
+<span id="cb1-309"><a href="#cb1-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-310"><a href="#cb1-310" aria-hidden="true" tabindex="-1"></a>x_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">1.8</span>, <span class="at">length.out =</span> <span class="dv">300</span>)</span>
+<span id="cb1-311"><a href="#cb1-311" aria-hidden="true" tabindex="-1"></a>df_f <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x_grid, <span class="at">y =</span> <span class="fu">f</span>(x_grid))</span>
+<span id="cb1-312"><a href="#cb1-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-313"><a href="#cb1-313" aria-hidden="true" tabindex="-1"></a><span class="co"># Midpoints from iterations 1, 2, 3 and final optimal</span></span>
+<span id="cb1-314"><a href="#cb1-314" aria-hidden="true" tabindex="-1"></a>mids <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-315"><a href="#cb1-315" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="fl">1.0</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.8359</span>),</span>
+<span id="cb1-316"><a href="#cb1-316" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">f</span>(<span class="fu">c</span>(<span class="fl">1.0</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.8359</span>)),</span>
+<span id="cb1-317"><a href="#cb1-317" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"#E7298A"</span>, <span class="st">"#D95F02"</span>, <span class="st">"#7570B3"</span>, <span class="st">"#1B9E77"</span>)</span>
+<span id="cb1-318"><a href="#cb1-318" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-319"><a href="#cb1-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-320"><a href="#cb1-320" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_f, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb1-321"><a href="#cb1-321" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"grey30"</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb1-322"><a href="#cb1-322" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">data =</span> mids, <span class="fu">aes</span>(<span class="at">xintercept =</span> x, <span class="at">color =</span> col), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb1-323"><a href="#cb1-323" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> mids, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> col), <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb1-324"><a href="#cb1-324" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Label the midpoints</span></span>
+<span id="cb1-325"><a href="#cb1-325" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">1.0</span> <span class="sc">+</span> <span class="fl">0.16</span>, <span class="at">y =</span> <span class="fu">f</span>(<span class="fl">1.0</span>) <span class="sc">+</span> <span class="fl">1.0</span>, <span class="at">label =</span> <span class="st">"c[1] == 1.0 ~ (f*minute &gt; 0)"</span>, <span class="at">parse =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"#E7298A"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb1-326"><a href="#cb1-326" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.5</span> <span class="sc">-</span> <span class="fl">0.16</span>, <span class="at">y =</span> <span class="fu">f</span>(<span class="fl">0.5</span>) <span class="sc">-</span> <span class="fl">0.8</span>, <span class="at">label =</span> <span class="st">"c[2] == 0.5 ~ (f*minute &lt; 0)"</span>, <span class="at">parse =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"#D95F02"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb1-327"><a href="#cb1-327" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.75</span> <span class="sc">-</span> <span class="fl">0.18</span>, <span class="at">y =</span> <span class="fu">f</span>(<span class="fl">0.75</span>) <span class="sc">-</span> <span class="fl">0.8</span>, <span class="at">label =</span> <span class="st">"c[3] == 0.75 ~ (f*minute &lt; 0)"</span>, <span class="at">parse =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"#7570B3"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.8359</span> <span class="sc">+</span> <span class="fl">0.18</span>, <span class="at">y =</span> <span class="fu">f</span>(<span class="fl">0.8359</span>) <span class="sc">-</span> <span class="fl">0.3</span>, <span class="at">label =</span> <span class="st">"x* (Optimal Minimum)"</span>, <span class="at">color =</span> <span class="st">"#1B9E77"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">3.8</span>) <span class="sc">+</span></span>
+<span id="cb1-329"><a href="#cb1-329" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_identity</span>() <span class="sc">+</span></span>
+<span id="cb1-330"><a href="#cb1-330" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.6</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb1-331"><a href="#cb1-331" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"x"</span>, <span class="at">y =</span> <span class="st">"f(x) = 2x⁶ + 3x⁴ - 12x"</span>) <span class="sc">+</span></span>
+<span id="cb1-332"><a href="#cb1-332" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1-333"><a href="#cb1-333" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-334"><a href="#cb1-334" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-335"><a href="#cb1-335" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb1-336"><a href="#cb1-336" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-337"><a href="#cb1-337" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 The University of Queensland | School of Civil Engineering</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ENGG7518/ENGG7518-book/edit/main/optimisation/week12_1d_iterative_search.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ENGG7518/ENGG7518-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>ENGG7518 Course Book</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

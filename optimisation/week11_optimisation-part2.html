@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Prof.&nbsp;Zuduo Zheng">
+
+<title>16&nbsp; Mathematical Foundations of Optimisation – ENGG7518: Research Methods for Engineers</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../optimisation/week12_constrained_classic_optimisation.html" rel="next">
+<link href="../optimisation/week10_intro-to-optimisation.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-be0fa7996514c9577e88cc86b2fc19af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-a1d348fa29c6608567c8b83a5a18fa86.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-be0fa7996514c9577e88cc86b2fc19af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<link href="../site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
+<script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="../site_libs/plotly-binding-4.12.1/plotly.js"></script>
+<script src="../site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="../site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="../site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+<script src="../site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+<link href="../site_libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="../site_libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">ENGG7518 Research Methods for Engineers</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+    <a href="https://github.com/ENGG7518/ENGG7518-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../optimisation/week10_intro-to-optimisation.html">Engineering Optimisation</a></li><li class="breadcrumb-item"><a href="../optimisation/week11_optimisation-part2.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mathematical Foundations of Optimisation</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Welcome &amp; Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Administration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../admin/course-overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Course Overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../admin/assessments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessments</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../admin/communication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Communication &amp; Support</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Research Fundamentals</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fundamentals/week1_what-is-science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">What is Science?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fundamentals/week2_norms-and-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reason, Logic &amp; Common Pitfalls</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fundamentals/week3_practical-research-skills.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Practical Research Skills</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Tutorial Labs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tutorials/week1-2_introduction_to_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Practical Lab 1: Introduction to R, Data Structures, and Data Import</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistics, Data Quality &amp; Reproducibility</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week4_basic-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Statistics Basics: From Description to Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week5_basic-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Statistics Basics: From Description to Inference and Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week6_reproducible-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Reproducible Data Analysis &amp; Research</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week6_intro-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to Linear Regression Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week7_linear-regression-diagnostics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Linear Regression Diagnostics, Interpretation &amp; Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week8_data-cleaning-and-quality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Data Quality &amp; Cleansing: Outliers, Missing Data &amp; Noise</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Engineering Optimisation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week10_intro-to-optimisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Introduction to Engineering Optimisation Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week11_optimisation-part2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mathematical Foundations of Optimisation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week12_constrained_classic_optimisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Constrained Classical Optimisation (Lagrange Multipliers)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week12_1d_iterative_search.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Numerical Optimisation &amp; 1D Iterative Search</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week12_multivariable_numerical_methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Multivariable Numerical Algorithms (Gradient &amp; Newton Methods)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#linear-algebra-fundamentals" id="toc-linear-algebra-fundamentals" class="nav-link active" data-scroll-target="#linear-algebra-fundamentals"><span class="header-section-number">16.1</span> Linear Algebra Fundamentals</a></li>
+  <li><a href="#rates-of-change-and-curvature-gradients-and-hessians" id="toc-rates-of-change-and-curvature-gradients-and-hessians" class="nav-link" data-scroll-target="#rates-of-change-and-curvature-gradients-and-hessians"><span class="header-section-number">16.2</span> Rates of Change and Curvature: Gradients and Hessians</a></li>
+  <li><a href="#convex-sets-and-convexity" id="toc-convex-sets-and-convexity" class="nav-link" data-scroll-target="#convex-sets-and-convexity"><span class="header-section-number">16.3</span> Convex Sets and Convexity</a></li>
+  <li><a href="#matrix-definiteness-and-sylvesters-criterion" id="toc-matrix-definiteness-and-sylvesters-criterion" class="nav-link" data-scroll-target="#matrix-definiteness-and-sylvesters-criterion"><span class="header-section-number">16.4</span> Matrix Definiteness and Sylvester’s Criterion</a></li>
+  <li><a href="#categorising-critical-points" id="toc-categorising-critical-points" class="nav-link" data-scroll-target="#categorising-critical-points"><span class="header-section-number">16.5</span> Categorising Critical Points</a></li>
+  </ul>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/ENGG7518/ENGG7518-book/edit/main/optimisation/week11_optimisation-part2.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ENGG7518/ENGG7518-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../optimisation/week10_intro-to-optimisation.html">Engineering Optimisation</a></li><li class="breadcrumb-item"><a href="../optimisation/week11_optimisation-part2.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mathematical Foundations of Optimisation</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mathematical Foundations of Optimisation</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<p class="subtitle lead">ENGG7518 Research Methods for Engineers: Week 11</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Prof.&nbsp;Zuduo Zheng </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end of this chapter, you should be able to:</p>
+<ol type="1">
+<li>Understand vector operations, inner products, and matrix transformations.</li>
+<li>Calculate gradient vectors (<span class="math inline">\(\nabla f\)</span>) and Hessian matrices (<span class="math inline">\(\mathbf{H}\)</span>) for multivariable functions.</li>
+<li>Test sets and functions for convexity using first- and second-order conditions.</li>
+<li>Classify matrix definiteness (positive definite, negative definite, indefinite) using Sylvester’s Criterion and leading principal minor determinants.</li>
+<li>Categorise critical points into local minima, local maxima, saddle points, and inflection points.</li>
+</ol>
+</div>
+</div>
+<section id="linear-algebra-fundamentals" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="linear-algebra-fundamentals"><span class="header-section-number">16.1</span> Linear Algebra Fundamentals</h2>
+<p>Before diving into multivariate optimisation, we must establish the basic mathematical vocabulary used to describe multi-dimensional space.</p>
+<ul>
+<li><strong>Vector:</strong> A one-dimensional matrix representing the solution of a system of linear equations. In numerical optimisation, unless otherwise stated, a vector refers to a <strong>column vector</strong>. (The transpose of a column vector becomes a row vector).</li>
+<li><strong>Matrix:</strong> A rectangular array of numbers. A vector is simply a special type of matrix with only one column or one row. Matrices are essential for storing the higher-order derivatives of complex functions.</li>
+</ul>
+</section>
+<section id="rates-of-change-and-curvature-gradients-and-hessians" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="rates-of-change-and-curvature-gradients-and-hessians"><span class="header-section-number">16.2</span> Rates of Change and Curvature: Gradients and Hessians</h2>
+<p>To find optimal points mathematically, optimisation algorithms must evaluate how functions change in multiple dimensions simultaneously.</p>
+<section id="the-gradient-first-derivative" class="level3">
+<h3 class="anchored" data-anchor-id="the-gradient-first-derivative">1. The Gradient (First Derivative)</h3>
+<p>For a function of several variables, the standard derivative is replaced by the <strong>Gradient (<span class="math inline">\(\nabla f\)</span>)</strong>, which is a vector of its first-order partial derivatives.</p>
+<p><strong>Geometric Interpretation:</strong> The gradient always points in the direction of the <strong>greatest rate of increase</strong> of the function. Intuitively, this means that the <em>negative</em> gradient (<span class="math inline">\(-\nabla f\)</span>) points in the direction where the function value decreases at the fastest rate.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">100</span>), <span class="at">y =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">100</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>grid<span class="sc">$</span>z <span class="ot">&lt;-</span> grid<span class="sc">$</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> grid<span class="sc">$</span>y<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Current location and gradient vector</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>py <span class="ot">&lt;-</span> <span class="fl">1.5</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>gx <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> px <span class="co"># 2</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>gy <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> py <span class="co"># 3</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>arrow_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> px, <span class="at">y =</span> py,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">xend =</span> px <span class="sc">+</span> <span class="fl">0.4</span> <span class="sc">*</span> gx, <span class="at">yend =</span> py <span class="sc">+</span> <span class="fl">0.4</span> <span class="sc">*</span> gy</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(grid, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_contour</span>(<span class="fu">aes</span>(<span class="at">z =</span> z, <span class="at">color =</span> <span class="fu">after_stat</span>(level)), <span class="at">bins =</span> <span class="dv">10</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> px, <span class="at">y =</span> py), <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrow_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">"cm"</span>)), <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> px <span class="sc">-</span> <span class="fl">0.35</span>, <span class="at">y =</span> py <span class="sc">-</span> <span class="fl">0.15</span>, <span class="at">label =</span> <span class="st">"Current Point (1, 1.5)"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> px <span class="sc">+</span> <span class="fl">0.6</span>, <span class="at">y =</span> py <span class="sc">+</span> <span class="fl">0.8</span>, <span class="at">label =</span> <span class="st">"Gradient Vector \u2207f"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">size =</span> <span class="fl">3.8</span>) <span class="sc">+</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">name =</span> <span class="st">"f(x,y)"</span>) <span class="sc">+</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"x"</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"y"</span>,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Gradient Vector Points in Direction of Steepest Ascent"</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-gradient-contour" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gradient-contour-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="week11_optimisation-part2_files/figure-html/fig-gradient-contour-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;16.1: Contour plot of f(x,y) = x^2 + y^2 showing the gradient vector \nabla f(1, 1.5) = [2, 3]^T pointing in the direction of steepest ascent, perpendicular to the contour line."><img src="week11_optimisation-part2_files/figure-html/fig-gradient-contour-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="624"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gradient-contour-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.1: Contour plot of <span class="math inline">\(f(x,y) = x^2 + y^2\)</span> showing the gradient vector <span class="math inline">\(\nabla f(1, 1.5) = [2, 3]^T\)</span> pointing in the direction of steepest ascent, perpendicular to the contour line.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Example: Evaluating a Gradient Direction
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose you are at a current location <span class="math inline">\((x=2, y=3, z=4)\)</span> in a 3D space, and the general gradient vector of your objective function is given as <span class="math inline">\(\nabla f = (1, 2y, z^2)^T\)</span>. To find the direction that increases the function’s value the fastest from your current location, substitute your coordinates into the gradient: <span class="math display">\[ \nabla f(2,3,4) = (1, 2(3), 4^2)^T = \begin{bmatrix} 1 \\ 6 \\ 16 \end{bmatrix} \]</span> You must move in the direction of vector <span class="math inline">\([1, 6, 16]\)</span> to ascend as efficiently as possible.</p>
+</div>
+</div>
+<p><em>Note on Terminology:</em> The <strong>Jacobian Matrix (<span class="math inline">\(J\)</span>)</strong> is the generalisation of the gradient for vector-valued functions. It is the matrix of all first-order partial derivatives.</p>
+</section>
+<section id="the-hessian-matrix-second-derivative" class="level3">
+<h3 class="anchored" data-anchor-id="the-hessian-matrix-second-derivative">2. The Hessian Matrix (Second Derivative)</h3>
+<p>While the gradient tells us the slope, the <strong>Hessian Matrix (<span class="math inline">\(\mathbf{H}\)</span>)</strong> tells us the <em>curvature</em>. The Hessian is a square matrix of second-order partial derivatives of a scalar-valued function.</p>
+<p><span class="math display">\[ \mathbf{H} = \begin{bmatrix}
+\frac{\partial^2 f}{\partial x_1^2} &amp; \frac{\partial^2 f}{\partial x_1 \partial x_2} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x_1 \partial x_n} \\
+\frac{\partial^2 f}{\partial x_2 \partial x_1} &amp; \frac{\partial^2 f}{\partial x_2^2} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x_2 \partial x_n} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\frac{\partial^2 f}{\partial x_n \partial x_1} &amp; \frac{\partial^2 f}{\partial x_n \partial x_2} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x_n^2}
+\end{bmatrix} \]</span></p>
+<p>For most real-life continuous functions, the Hessian matrix is <strong>symmetric</strong>. It is a critical component in Newton-type optimisation algorithms, acting as the coefficient of the quadratic term in a local Taylor expansion.</p>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>In-Class Exercise: Calculating the Hessian
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Problem:</strong> Obtain the Hessian for the function <span class="math inline">\(f(x,y) = -x^4 + 4(x^2 - y^2) - 3\)</span>.</p>
+<p><strong>Step 1: First Derivatives (The Gradient)</strong></p>
+<ul>
+<li><span class="math inline">\(\frac{\partial f}{\partial x} = -4x^3 + 8x\)</span></li>
+<li><span class="math inline">\(\frac{\partial f}{\partial y} = -8y\)</span> <span class="math display">\[ \nabla f = \begin{bmatrix} -4x^3 + 8x \\ -8y \end{bmatrix} \]</span></li>
+</ul>
+<p><strong>Step 2: Second Derivatives (The Hessian)</strong></p>
+<ul>
+<li><span class="math inline">\(\frac{\partial^2 f}{\partial x^2} = -12x^2 + 8\)</span></li>
+<li><span class="math inline">\(\frac{\partial^2 f}{\partial y^2} = -8\)</span></li>
+<li><span class="math inline">\(\frac{\partial^2 f}{\partial x \partial y} = \frac{\partial^2 f}{\partial y \partial x} = 0\)</span> <span class="math display">\[ \mathbf{H} = \begin{bmatrix} -12x^2 + 8 &amp; 0 \\ 0 &amp; -8 \end{bmatrix} \]</span></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="convex-sets-and-convexity" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="convex-sets-and-convexity"><span class="header-section-number">16.3</span> Convex Sets and Convexity</h2>
+<section id="convex-sets" class="level3">
+<h3 class="anchored" data-anchor-id="convex-sets">Convex Sets</h3>
+<p>A set <span class="math inline">\(C\)</span> is <strong>convex</strong> if, for any two points <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> inside the set, the line segment joining them lies entirely within the set. Mathematically: <span class="math display">\[ \forall x_1 \in C, \forall x_2 \in C \text{ and } \forall \lambda \in [0,1], \quad \lambda x_1 + (1 - \lambda)x_2 \in C \]</span></p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Circle (Convex Set)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2</span><span class="sc">*</span>pi, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>convex_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">cos</span>(t),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">sin</span>(t),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Type =</span> <span class="st">"Convex Set</span><span class="sc">\n</span><span class="st">(Line stays inside)"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># C-Shape / Ring Notch (Non-convex Set)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>t_outer <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.7</span>, <span class="dv">2</span><span class="sc">*</span>pi <span class="sc">-</span> <span class="fl">0.7</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>t_inner <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">2</span><span class="sc">*</span>pi <span class="sc">-</span> <span class="fl">0.7</span>, <span class="fl">0.7</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>nonconvex_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">cos</span>(t_outer), <span class="fl">0.45</span> <span class="sc">*</span> <span class="fu">cos</span>(t_inner)),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="fu">sin</span>(t_outer), <span class="fl">0.45</span> <span class="sc">*</span> <span class="fu">sin</span>(t_inner)),</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">Type =</span> <span class="st">"Non-Convex Set</span><span class="sc">\n</span><span class="st">(Line leaves set)"</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>all_sets <span class="ot">&lt;-</span> <span class="fu">rbind</span>(convex_df, nonconvex_df)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Points for Convex Set (both inside circle)</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>pts_convex <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.4</span>, <span class="fl">0.5</span>),</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">Type =</span> <span class="st">"Convex Set</span><span class="sc">\n</span><span class="st">(Line stays inside)"</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Points for Non-Convex Set (both inside top/bottom arms of C-shape, segment crosses central hole)</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>pts_nonconvex <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fl">1.0</span>), <span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="sc">-</span><span class="fl">1.0</span>)),</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fl">1.0</span>), <span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="sc">-</span><span class="fl">1.0</span>)),</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">Type =</span> <span class="st">"Non-Convex Set</span><span class="sc">\n</span><span class="st">(Line leaves set)"</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_sets, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_polygon</span>(<span class="at">fill =</span> <span class="st">"#2b5c8f22"</span>, <span class="at">color =</span> <span class="st">"#2b5c8f"</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Type) <span class="sc">+</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">rbind</span>(pts_convex, pts_nonconvex), <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">rbind</span>(pts_convex, pts_nonconvex), <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-convex-sets" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-convex-sets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="week11_optimisation-part2_files/figure-html/fig-convex-sets-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;16.2: Visual comparison of a convex set (left) where any line segment connecting two points stays entirely inside the set, versus a non-convex set (right) where the connecting line segment leaves the set."><img src="week11_optimisation-part2_files/figure-html/fig-convex-sets-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-convex-sets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.2: Visual comparison of a convex set (left) where any line segment connecting two points stays entirely inside the set, versus a non-convex set (right) where the connecting line segment leaves the set.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="convex-vs.-concave-functions" class="level3">
+<h3 class="anchored" data-anchor-id="convex-vs.-concave-functions">Convex vs.&nbsp;Concave Functions</h3>
+<ul>
+<li><p><strong>Linearity:</strong> A property of a function graphically represented as a straight line.</p></li>
+<li><p><strong>Convexity:</strong> A function is strictly “bowl-shaped”. Any line segment drawn between two points on the graph lies <em>above or on</em> the graph. <span class="math display">\[ f(\alpha x + \beta y) \le \alpha f(x) + \beta f(y) \quad \text{where } \alpha + \beta = 1, \; \alpha \ge 0, \; \beta \ge 0 \]</span></p></li>
+<li><p><strong>Concavity:</strong> A function is “dome-shaped” or “concave downward”. The line segment between two points lies <em>below or on</em> the graph.</p></li>
+</ul>
+</section>
+<section id="the-second-derivative-test-for-convexity" class="level3">
+<h3 class="anchored" data-anchor-id="the-second-derivative-test-for-convexity">The Second Derivative Test for Convexity</h3>
+<p>To prove a function is convex without graphing it, we look at its second derivative: &gt; <strong>Rule:</strong> If the Hessian matrix of a function <span class="math inline">\(f\)</span> is <strong>positive semi-definite</strong>, the function <span class="math inline">\(f\)</span> is convex.</p>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>In-Class Exercise: Testing Convexity
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Determine whether the following single-variable functions are convex:</p>
+<ol type="1">
+<li><span class="math inline">\(f(x) = x^2 \implies f''(x) = 2\)</span>. Since <span class="math inline">\(2 &gt; 0\)</span> globally, it is <strong>convex</strong>.</li>
+<li><span class="math inline">\(f(x) = e^x \implies f''(x) = e^x\)</span>. Since <span class="math inline">\(e^x &gt; 0\)</span> globally, it is <strong>convex</strong>.</li>
+<li><span class="math inline">\(f(x) = \frac{1}{x} \text{ for } x &gt; 0 \implies f'(x) = -x^{-2} \implies f''(x) = 2x^{-3}\)</span>. For <span class="math inline">\(x &gt; 0\)</span>, <span class="math inline">\(2/x^3 &gt; 0\)</span>, so it is <strong>convex</strong> in this domain.</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="matrix-definiteness-and-sylvesters-criterion" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="matrix-definiteness-and-sylvesters-criterion"><span class="header-section-number">16.4</span> Matrix Definiteness and Sylvester’s Criterion</h2>
+<p>To classify stationary points and test for convexity, we must determine the <strong>definiteness</strong> of the Hessian matrix. For an <span class="math inline">\(n \times n\)</span> symmetric matrix <span class="math inline">\(A\)</span>:</p>
+<ol type="1">
+<li><strong>Positive Definite:</strong> <span class="math inline">\(x^T A x &gt; 0\)</span> for all non-zero vectors <span class="math inline">\(x\)</span>. (<span class="math inline">\(x=0\)</span> is a unique global minimum).</li>
+<li><strong>Positive Semidefinite:</strong> <span class="math inline">\(x^T A x \ge 0\)</span>. (<span class="math inline">\(x=0\)</span> is a global minimum, but not necessarily unique).</li>
+<li><strong>Negative Definite:</strong> <span class="math inline">\(x^T A x &lt; 0\)</span>. (<span class="math inline">\(x=0\)</span> is a unique global maximum).</li>
+<li><strong>Negative Semidefinite:</strong> <span class="math inline">\(x^T A x \le 0\)</span>. (<span class="math inline">\(x=0\)</span> is a global maximum, but not necessarily unique).</li>
+<li><strong>Indefinite:</strong> The quadratic form is positive in some directions and negative in others. (<span class="math inline">\(x=0\)</span> is a saddle point).</li>
+</ol>
+<section id="testing-definiteness-leading-principal-minors" class="level3">
+<h3 class="anchored" data-anchor-id="testing-definiteness-leading-principal-minors">Testing Definiteness: Leading Principal Minors</h3>
+<p>To test definiteness without calculating eigenvalues, we evaluate the <strong>Leading Principal Minors</strong>. A leading principal minor is the determinant of the top-left submatrix.</p>
+<p>For a <span class="math inline">\(3 \times 3\)</span> matrix, the minors are:</p>
+<ul>
+<li><span class="math inline">\(|A_1| = a_{11}\)</span></li>
+<li><span class="math inline">\(|A_2| = (a_{11}a_{22}) - (a_{12}a_{21})\)</span></li>
+<li><span class="math inline">\(|A_3| = \det(A)\)</span></li>
+</ul>
+<p><strong>The Rules:</strong></p>
+<ul>
+<li><span class="math inline">\(A\)</span> is <strong>Positive Definite</strong> if and only if ALL leading principal minors are strictly positive (<span class="math inline">\(|A_1|&gt;0, |A_2|&gt;0, |A_3|&gt;0\)</span>).</li>
+<li><span class="math inline">\(A\)</span> is <strong>Negative Definite</strong> if and only if the minors <em>alternate in sign</em>, starting with negative (<span class="math inline">\(|A_1|&lt;0, |A_2|&gt;0, |A_3|&lt;0\)</span>).</li>
+<li>If a minor is non-zero but does not fit either sign pattern, the matrix is <strong>Indefinite</strong>.</li>
+</ul>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>In-Class Exercise: Matrix Definiteness
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Determine the definiteness of the following matrices:</p>
+<p><strong>Matrix 1:</strong> <span class="math inline">\(A = \begin{pmatrix} 2 &amp; 4 \\ 4 &amp; 8 \end{pmatrix}\)</span></p>
+<ul>
+<li><span class="math inline">\(|A_1| = 2 &gt; 0\)</span></li>
+<li><span class="math inline">\(|A_2| = (2 \times 8) - (4 \times 4) = 16 - 16 = 0\)</span></li>
+<li><em>Result:</em> Because <span class="math inline">\(|A_1| &gt; 0\)</span> and <span class="math inline">\(|A_2| \ge 0\)</span>, the matrix is <strong>Positive Semidefinite</strong>.</li>
+</ul>
+<p><strong>Matrix 2:</strong> <span class="math inline">\(B = \begin{pmatrix} 1 &amp; 2 &amp; 0 \\ 2 &amp; 4 &amp; 5 \\ 0 &amp; 5 &amp; 6 \end{pmatrix}\)</span></p>
+<ul>
+<li><span class="math inline">\(|B_1| = 1 &gt; 0\)</span></li>
+<li><span class="math inline">\(|B_2| = (1 \times 4) - (2 \times 2) = 0\)</span></li>
+<li><span class="math inline">\(|B_3| = 1(24 - 25) - 2(12 - 0) + 0 = -1 - 24 = -25\)</span></li>
+<li><em>Result:</em> The minors are <span class="math inline">\(1\)</span>, <span class="math inline">\(0\)</span>, and <span class="math inline">\(-25\)</span>. This fits neither the purely positive nor the alternating sign pattern. The matrix is <strong>Indefinite</strong>.</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="categorising-critical-points" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="categorising-critical-points"><span class="header-section-number">16.5</span> Categorising Critical Points</h2>
+<p>With gradients and Hessians understood, we can definitively categorise the critical points of any objective function.</p>
+<section id="stationary-point" class="level3">
+<h3 class="anchored" data-anchor-id="stationary-point">1. Stationary Point</h3>
+<p>For a continuous, differentiable function, a <strong>stationary point</strong> is a point where the gradient is exactly zero (<span class="math inline">\(\nabla f = \mathbf{0}\)</span>). The function stops changing at this point. It can be a relative minimum, a relative maximum, or a saddle point.</p>
+</section>
+<section id="saddle-point-minimax" class="level3">
+<h3 class="anchored" data-anchor-id="saddle-point-minimax">2. Saddle Point (Minimax)</h3>
+<p>A <strong>saddle point</strong> is a stationary point where the function curves <em>up</em> in one direction and <em>down</em> in another. It is a relative minimum along one axis (between peaks) and a relative maximum along the crossing axis.</p>
+<ul>
+<li><em>Geometric view:</em> Resembles a horse riding saddle or a mountain pass.</li>
+<li><em>Mathematical condition:</em> Occurs when the Hessian matrix is <strong>Indefinite</strong>.</li>
+<li><em>Optimisation challenge:</em> Saddle points make locating global minima much harder because algorithms can easily get stuck or slowed down at these coordinates.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">40</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">40</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">outer</span>(x, y, <span class="cf">function</span>(x, y) x<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> y<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_ly</span>(<span class="at">x =</span> <span class="sc">~</span>x, <span class="at">y =</span> <span class="sc">~</span>y, <span class="at">z =</span> <span class="sc">~</span>z) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_surface</span>(<span class="at">colorscale =</span> <span class="st">"Viridis"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layout</span>(</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">list</span>(<span class="at">text =</span> <span class="st">"Interactive 3D Saddle Surface: z = x² - y²"</span>),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">scene =</span> <span class="fu">list</span>(</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">xaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">"x (Curves Up)"</span>),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">yaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">"y (Curves Down)"</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">zaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">"z = f(x,y)"</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="fig-saddle-point-3d" class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-saddle-point-3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-1d7a7a669ef198fe9e68" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-1d7a7a669ef198fe9e68">{"x":{"visdat":{"1a3632878831":["function () ","plotlyVisDat"]},"cur_data":"1a3632878831","attrs":{"1a3632878831":{"x":{},"y":{},"z":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"surface","colorscale":"Viridis","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":{"text":"Interactive 3D Saddle Surface: z = x² - y²"},"scene":{"xaxis":{"title":"x (Curves Up)"},"yaxis":{"title":"y (Curves Down)"},"zaxis":{"title":"z = f(x,y)"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"z","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":"Viridis","showscale":true,"x":[-2,-1.8974358974358974,-1.7948717948717949,-1.6923076923076923,-1.5897435897435899,-1.4871794871794872,-1.3846153846153846,-1.2820512820512819,-1.1794871794871795,-1.0769230769230771,-0.97435897435897445,-0.87179487179487181,-0.76923076923076916,-0.66666666666666674,-0.5641025641025641,-0.46153846153846168,-0.35897435897435903,-0.25641025641025639,-0.15384615384615397,-0.051282051282051322,0.0512820512820511,0.15384615384615374,0.25641025641025639,0.35897435897435903,0.46153846153846168,0.56410256410256387,0.66666666666666652,0.76923076923076916,0.87179487179487181,0.97435897435897445,1.0769230769230766,1.1794871794871793,1.2820512820512819,1.3846153846153846,1.4871794871794872,1.5897435897435894,1.6923076923076921,1.7948717948717947,1.8974358974358974,2],"y":[-2,-1.8974358974358974,-1.7948717948717949,-1.6923076923076923,-1.5897435897435899,-1.4871794871794872,-1.3846153846153846,-1.2820512820512819,-1.1794871794871795,-1.0769230769230771,-0.97435897435897445,-0.87179487179487181,-0.76923076923076916,-0.66666666666666674,-0.5641025641025641,-0.46153846153846168,-0.35897435897435903,-0.25641025641025639,-0.15384615384615397,-0.051282051282051322,0.0512820512820511,0.15384615384615374,0.25641025641025639,0.35897435897435903,0.46153846153846168,0.56410256410256387,0.66666666666666652,0.76923076923076916,0.87179487179487181,0.97435897435897445,1.0769230769230766,1.1794871794871793,1.2820512820512819,1.3846153846153846,1.4871794871794872,1.5897435897435894,1.6923076923076921,1.7948717948717947,1.8974358974358974,2],"z":[[0,0.39973701512163062,0.77843523997370134,1.136094674556213,1.4727153188691648,1.7882971729125572,2.0828402366863905,2.3563445101906644,2.6088099934253779,2.840236686390532,3.0506245890861274,3.239973701512163,3.4082840236686391,3.5555555555555554,3.6817882971729126,3.7869822485207099,3.8711374095989481,3.9342537804076265,3.9763313609467454,3.9973701512163049,3.9973701512163049,3.9763313609467454,3.9342537804076265,3.8711374095989481,3.7869822485207099,3.681788297172913,3.5555555555555558,3.4082840236686391,3.239973701512163,3.0506245890861274,2.8402366863905328,2.6088099934253783,2.3563445101906644,2.0828402366863905,1.7882971729125572,1.4727153188691662,1.1360946745562139,0.77843523997370223,0.39973701512163062,0],[-0.39973701512163062,0,0.37869822485207072,0.73635765943458242,1.0729783037475342,1.3885601577909266,1.6831032215647601,1.9566074950690338,2.2090729783037473,2.4404996712689018,2.6508875739644968,2.8402366863905324,3.0085470085470085,3.1558185404339247,3.2820512820512819,3.3872452333990792,3.4714003944773175,3.5345167652859959,3.5765943458251148,3.5976331360946743,3.5976331360946743,3.5765943458251148,3.5345167652859959,3.4714003944773175,3.3872452333990792,3.2820512820512824,3.1558185404339252,3.0085470085470085,2.8402366863905324,2.6508875739644968,2.4404996712689027,2.2090729783037482,1.9566074950690338,1.6831032215647601,1.3885601577909266,1.0729783037475356,0.73635765943458331,0.37869822485207161,0,-0.39973701512163062],[-0.77843523997370134,-0.37869822485207072,0,0.3576594345825117,0.6942800788954635,1.0098619329388558,1.3044049967126894,1.577909270216963,1.8303747534516766,2.0618014464168306,2.2721893491124261,2.4615384615384617,2.6298487836949378,2.777120315581854,2.9033530571992112,3.0085470085470085,3.0927021696252468,3.1558185404339252,3.1978961209730441,3.2189349112426036,3.2189349112426036,3.1978961209730441,3.1558185404339252,3.0927021696252468,3.0085470085470085,2.9033530571992117,2.7771203155818545,2.6298487836949378,2.4615384615384617,2.2721893491124261,2.0618014464168315,1.8303747534516772,1.577909270216963,1.3044049967126894,1.0098619329388558,0.69428007889546484,0.35765943458251259,8.8817841970012523e-16,-0.37869822485207072,-0.77843523997370134],[-1.136094674556213,-0.73635765943458242,-0.3576594345825117,0,0.3366206443129518,0.65220249835634414,0.94674556213017769,1.2202498356344513,1.4727153188691648,1.7041420118343191,1.9145299145299144,2.10387902695595,2.2721893491124261,2.4194608809993423,2.5456936226166995,2.6508875739644968,2.7350427350427351,2.7981591058514135,2.8402366863905324,2.8612754766600919,2.8612754766600919,2.8402366863905324,2.7981591058514135,2.7350427350427351,2.6508875739644968,2.5456936226167,2.4194608809993428,2.2721893491124261,2.10387902695595,1.9145299145299144,1.70414201183432,1.4727153188691655,1.2202498356344513,0.94674556213017769,0.65220249835634414,0.33662064431295313,8.8817841970012523e-16,-0.35765943458251082,-0.73635765943458242,-1.136094674556213],[-1.4727153188691648,-1.0729783037475342,-0.6942800788954635,-0.3366206443129518,0,0.31558185404339234,0.61012491781722589,0.88362919132149953,1.136094674556213,1.3675213675213673,1.5779092702169626,1.7672583826429982,1.9355687047994743,2.0828402366863905,2.2090729783037477,2.314266929651545,2.3984220907297833,2.4615384615384617,2.5036160420775806,2.5246548323471401,2.5246548323471401,2.5036160420775806,2.4615384615384617,2.3984220907297833,2.314266929651545,2.2090729783037482,2.082840236686391,1.9355687047994743,1.7672583826429982,1.5779092702169626,1.3675213675213682,1.1360946745562137,0.88362919132149953,0.61012491781722589,0.31558185404339234,1.3322676295501878e-15,-0.33662064431295091,-0.69428007889546262,-1.0729783037475342,-1.4727153188691648],[-1.7882971729125572,-1.3885601577909266,-1.0098619329388558,-0.65220249835634414,-0.31558185404339234,0,0.29454306377383355,0.56804733727810719,0.82051282051282071,1.051939513477975,1.2623274161735702,1.4516765285996058,1.619986850756082,1.7672583826429982,1.8934911242603554,1.9986850756081527,2.082840236686391,2.1459566074950693,2.1880341880341883,2.2090729783037477,2.2090729783037477,2.1880341880341883,2.1459566074950693,2.082840236686391,1.9986850756081527,1.8934911242603556,1.7672583826429986,1.619986850756082,1.4516765285996058,1.2623274161735702,1.0519395134779759,0.82051282051282137,0.56804733727810719,0.29454306377383355,0,-0.31558185404339101,-0.65220249835634325,-1.009861932938855,-1.3885601577909266,-1.7882971729125572],[-2.0828402366863905,-1.6831032215647601,-1.3044049967126894,-0.94674556213017769,-0.61012491781722589,-0.29454306377383355,0,0.27350427350427364,0.52596975673898716,0.75739644970414144,0.96778435239973659,1.1571334648257723,1.3254437869822484,1.4727153188691648,1.5989480604865218,1.7041420118343191,1.7882971729125572,1.8514135437212358,1.8934911242603547,1.9145299145299144,1.9145299145299144,1.8934911242603549,1.8514135437212358,1.7882971729125572,1.7041420118343191,1.598948060486522,1.4727153188691651,1.3254437869822484,1.1571334648257723,0.96778435239973659,0.75739644970414233,0.52596975673898783,0.27350427350427364,0,-0.29454306377383355,-0.61012491781722455,-0.9467455621301768,-1.3044049967126885,-1.6831032215647601,-2.0828402366863905],[-2.3563445101906644,-1.9566074950690338,-1.577909270216963,-1.2202498356344513,-0.88362919132149953,-0.56804733727810719,-0.27350427350427364,0,0.25246548323471352,0.4838921761998678,0.69428007889546295,0.88362919132149864,1.0519395134779748,1.199211045364891,1.3254437869822482,1.4306377383300455,1.5147928994082838,1.5779092702169621,1.6199868507560811,1.6410256410256407,1.6410256410256407,1.6199868507560813,1.5779092702169621,1.5147928994082838,1.4306377383300455,1.3254437869822484,1.1992110453648914,1.0519395134779748,0.88362919132149864,0.69428007889546295,0.48389217619986868,0.25246548323471418,0,-0.27350427350427364,-0.56804733727810719,-0.8836291913214982,-1.2202498356344504,-1.5779092702169621,-1.9566074950690338,-2.3563445101906644],[-2.6088099934253779,-2.2090729783037473,-1.8303747534516766,-1.4727153188691648,-1.136094674556213,-0.82051282051282071,-0.52596975673898716,-0.25246548323471352,0,0.23142669296515428,0.44181459566074943,0.63116370808678512,0.79947403024326125,0.94674556213017758,1.0729783037475347,1.178172255095332,1.2623274161735702,1.3254437869822486,1.3675213675213675,1.3885601577909272,1.3885601577909272,1.3675213675213678,1.3254437869822486,1.2623274161735702,1.178172255095332,1.0729783037475349,0.94674556213017791,0.79947403024326125,0.63116370808678512,0.44181459566074943,0.23142669296515517,6.6613381477509392e-16,-0.25246548323471352,-0.52596975673898716,-0.82051282051282071,-1.1360946745562117,-1.472715318869164,-1.8303747534516757,-2.2090729783037473,-2.6088099934253779],[-2.840236686390532,-2.4404996712689018,-2.0618014464168306,-1.7041420118343191,-1.3675213675213673,-1.051939513477975,-0.75739644970414144,-0.4838921761998678,-0.23142669296515428,0,0.21038790269559515,0.39973701512163085,0.56804733727810697,0.7153188691650233,0.84155161078238039,0.9467455621301778,1.0309007232084157,1.0940170940170943,1.1360946745562133,1.157133464825773,1.157133464825773,1.1360946745562135,1.0940170940170943,1.0309007232084157,0.9467455621301778,0.84155161078238061,0.71531886916502363,0.56804733727810697,0.39973701512163085,0.21038790269559515,8.8817841970012523e-16,-0.23142669296515361,-0.4838921761998678,-0.75739644970414144,-1.051939513477975,-1.367521367521366,-1.7041420118343182,-2.0618014464168297,-2.4404996712689018,-2.840236686390532],[-3.0506245890861274,-2.6508875739644968,-2.2721893491124261,-1.9145299145299144,-1.5779092702169626,-1.2623274161735702,-0.96778435239973659,-0.69428007889546295,-0.44181459566074943,-0.21038790269559515,0,0.18934911242603569,0.35765943458251181,0.50493096646942814,0.63116370808678524,0.73635765943458265,0.82051282051282071,0.88362919132149931,0.92570677186061823,0.94674556213017769,0.9467455621301778,0.92570677186061823,0.88362919132149931,0.82051282051282071,0.73635765943458265,0.63116370808678557,0.50493096646942837,0.35765943458251181,0.18934911242603569,0,-0.21038790269559426,-0.44181459566074877,-0.69428007889546295,-0.96778435239973659,-1.2623274161735702,-1.5779092702169613,-1.9145299145299135,-2.2721893491124252,-2.6508875739644968,-3.0506245890861274],[-3.239973701512163,-2.8402366863905324,-2.4615384615384617,-2.10387902695595,-1.7672583826429982,-1.4516765285996058,-1.1571334648257723,-0.88362919132149864,-0.63116370808678512,-0.39973701512163085,-0.18934911242603569,0,0.16831032215647612,0.31558185404339245,0.44181459566074954,0.54700854700854695,0.63116370808678501,0.6942800788954635,0.73635765943458253,0.75739644970414199,0.75739644970414211,0.73635765943458253,0.6942800788954635,0.63116370808678501,0.54700854700854695,0.44181459566074982,0.31558185404339273,0.16831032215647612,0,-0.18934911242603569,-0.39973701512162996,-0.63116370808678446,-0.88362919132149864,-1.1571334648257723,-1.4516765285996058,-1.7672583826429968,-2.1038790269559491,-2.4615384615384608,-2.8402366863905324,-3.239973701512163],[-3.4082840236686391,-3.0085470085470085,-2.6298487836949378,-2.2721893491124261,-1.9355687047994743,-1.619986850756082,-1.3254437869822484,-1.0519395134779748,-0.79947403024326125,-0.56804733727810697,-0.35765943458251181,-0.16831032215647612,0,0.14727153188691633,0.27350427350427342,0.37869822485207083,0.46285338593030889,0.52596975673898738,0.56804733727810641,0.58908612754766587,0.58908612754766598,0.56804733727810641,0.52596975673898738,0.46285338593030889,0.37869822485207083,0.2735042735042737,0.14727153188691661,0,-0.16831032215647612,-0.35765943458251181,-0.56804733727810608,-0.79947403024326058,-1.0519395134779748,-1.3254437869822484,-1.619986850756082,-1.935568704799473,-2.2721893491124252,-2.6298487836949369,-3.0085470085470085,-3.4082840236686391],[-3.5555555555555554,-3.1558185404339247,-2.777120315581854,-2.4194608809993423,-2.0828402366863905,-1.7672583826429982,-1.4727153188691648,-1.199211045364891,-0.94674556213017758,-0.7153188691650233,-0.50493096646942814,-0.31558185404339245,-0.14727153188691633,0,0.12623274161735709,0.23142669296515447,0.31558185404339256,0.37869822485207111,0.42077580539119008,0.4418145956607496,0.4418145956607496,0.42077580539119014,0.37869822485207111,0.31558185404339256,0.23142669296515447,0.12623274161735737,2.7755575615628914e-16,-0.14727153188691633,-0.31558185404339245,-0.50493096646942814,-0.71531886916502241,-0.94674556213017691,-1.199211045364891,-1.4727153188691648,-1.7672583826429982,-2.0828402366863892,-2.4194608809993414,-2.7771203155818531,-3.1558185404339247,-3.5555555555555554],[-3.6817882971729126,-3.2820512820512819,-2.9033530571992112,-2.5456936226166995,-2.2090729783037477,-1.8934911242603554,-1.5989480604865218,-1.3254437869822482,-1.0729783037475347,-0.84155161078238039,-0.63116370808678524,-0.44181459566074954,-0.27350427350427342,-0.12623274161735709,0,0.10519395134779738,0.18934911242603547,0.25246548323471402,0.29454306377383299,0.31558185404339251,0.31558185404339251,0.29454306377383305,0.25246548323471402,0.18934911242603547,0.10519395134779738,2.7755575615628914e-16,-0.12623274161735681,-0.27350427350427342,-0.44181459566074954,-0.63116370808678524,-0.8415516107823795,-1.072978303747534,-1.3254437869822482,-1.5989480604865218,-1.8934911242603554,-2.2090729783037464,-2.5456936226166986,-2.9033530571992103,-3.2820512820512819,-3.6817882971729126],[-3.7869822485207099,-3.3872452333990792,-3.0085470085470085,-2.6508875739644968,-2.314266929651545,-1.9986850756081527,-1.7041420118343191,-1.4306377383300455,-1.178172255095332,-0.9467455621301778,-0.73635765943458265,-0.54700854700854695,-0.37869822485207083,-0.23142669296515447,-0.10519395134779738,0,0.084155161078238089,0.14727153188691663,0.18934911242603558,0.21038790269559512,0.21038790269559512,0.18934911242603564,0.14727153188691663,0.084155161078238089,0,-0.1051939513477971,-0.2314266929651542,-0.37869822485207083,-0.54700854700854695,-0.73635765943458265,-0.94674556213017691,-1.1781722550953313,-1.4306377383300455,-1.7041420118343191,-1.9986850756081527,-2.3142669296515437,-2.6508875739644959,-3.0085470085470076,-3.3872452333990792,-3.7869822485207099],[-3.8711374095989481,-3.4714003944773175,-3.0927021696252468,-2.7350427350427351,-2.3984220907297833,-2.082840236686391,-1.7882971729125572,-1.5147928994082838,-1.2623274161735702,-1.0309007232084157,-0.82051282051282071,-0.63116370808678501,-0.46285338593030889,-0.31558185404339256,-0.18934911242603547,-0.084155161078238089,0,0.063116370808678546,0.10519395134779749,0.12623274161735704,0.12623274161735704,0.10519395134779756,0.063116370808678546,0,-0.084155161078238089,-0.18934911242603519,-0.31558185404339228,-0.46285338593030889,-0.63116370808678501,-0.82051282051282071,-1.0309007232084149,-1.2623274161735694,-1.5147928994082838,-1.7882971729125572,-2.082840236686391,-2.398422090729782,-2.7350427350427342,-3.0927021696252459,-3.4714003944773175,-3.8711374095989481],[-3.9342537804076265,-3.5345167652859959,-3.1558185404339252,-2.7981591058514135,-2.4615384615384617,-2.1459566074950693,-1.8514135437212358,-1.5779092702169621,-1.3254437869822486,-1.0940170940170943,-0.88362919132149931,-0.6942800788954635,-0.52596975673898738,-0.37869822485207111,-0.25246548323471402,-0.14727153188691663,-0.063116370808678546,0,0.042077580539118947,0.063116370808678476,0.063116370808678504,0.042077580539119017,0,-0.063116370808678546,-0.14727153188691663,-0.25246548323471374,-0.37869822485207083,-0.52596975673898738,-0.6942800788954635,-0.88362919132149931,-1.0940170940170935,-1.325443786982248,-1.5779092702169621,-1.8514135437212358,-2.1459566074950693,-2.4615384615384603,-2.7981591058514126,-3.1558185404339243,-3.5345167652859959,-3.9342537804076265],[-3.9763313609467454,-3.5765943458251148,-3.1978961209730441,-2.8402366863905324,-2.5036160420775806,-2.1880341880341883,-1.8934911242603547,-1.6199868507560811,-1.3675213675213675,-1.1360946745562133,-0.92570677186061823,-0.73635765943458253,-0.56804733727810641,-0.42077580539119008,-0.29454306377383299,-0.18934911242603558,-0.10519395134779749,-0.042077580539118947,0,0.021038790269559533,0.021038790269559557,6.9388939039072284e-17,-0.042077580539118947,-0.10519395134779749,-0.18934911242603558,-0.29454306377383266,-0.42077580539118975,-0.56804733727810641,-0.73635765943458253,-0.92570677186061823,-1.1360946745562124,-1.3675213675213669,-1.6199868507560811,-1.8934911242603547,-2.1880341880341883,-2.5036160420775793,-2.8402366863905315,-3.1978961209730432,-3.5765943458251148,-3.9763313609467454],[-3.9973701512163049,-3.5976331360946743,-3.2189349112426036,-2.8612754766600919,-2.5246548323471401,-2.2090729783037477,-1.9145299145299144,-1.6410256410256407,-1.3885601577909272,-1.157133464825773,-0.94674556213017769,-0.75739644970414199,-0.58908612754766587,-0.4418145956607496,-0.31558185404339251,-0.21038790269559512,-0.12623274161735704,-0.063116370808678476,-0.021038790269559533,0,2.2551405187698492e-17,-0.021038790269559463,-0.063116370808678476,-0.12623274161735704,-0.21038790269559512,-0.31558185404339223,-0.44181459566074932,-0.58908612754766587,-0.75739644970414199,-0.94674556213017769,-1.1571334648257721,-1.3885601577909266,-1.6410256410256407,-1.9145299145299144,-2.2090729783037477,-2.5246548323471387,-2.861275476660091,-3.2189349112426027,-3.5976331360946743,-3.9973701512163049],[-3.9973701512163049,-3.5976331360946743,-3.2189349112426036,-2.8612754766600919,-2.5246548323471401,-2.2090729783037477,-1.9145299145299144,-1.6410256410256407,-1.3885601577909272,-1.157133464825773,-0.9467455621301778,-0.75739644970414211,-0.58908612754766598,-0.4418145956607496,-0.31558185404339251,-0.21038790269559512,-0.12623274161735704,-0.063116370808678504,-0.021038790269559557,-2.2551405187698492e-17,0,-0.021038790269559488,-0.063116370808678504,-0.12623274161735704,-0.21038790269559512,-0.31558185404339223,-0.44181459566074932,-0.58908612754766598,-0.75739644970414211,-0.9467455621301778,-1.1571334648257721,-1.3885601577909266,-1.6410256410256407,-1.9145299145299144,-2.2090729783037477,-2.5246548323471387,-2.861275476660091,-3.2189349112426027,-3.5976331360946743,-3.9973701512163049],[-3.9763313609467454,-3.5765943458251148,-3.1978961209730441,-2.8402366863905324,-2.5036160420775806,-2.1880341880341883,-1.8934911242603549,-1.6199868507560813,-1.3675213675213678,-1.1360946745562135,-0.92570677186061823,-0.73635765943458253,-0.56804733727810641,-0.42077580539119014,-0.29454306377383305,-0.18934911242603564,-0.10519395134779756,-0.042077580539119017,-6.9388939039072284e-17,0.021038790269559463,0.021038790269559488,0,-0.042077580539119017,-0.10519395134779756,-0.18934911242603564,-0.29454306377383277,-0.42077580539118986,-0.56804733727810641,-0.73635765943458253,-0.92570677186061823,-1.1360946745562126,-1.3675213675213671,-1.6199868507560813,-1.8934911242603549,-2.1880341880341883,-2.5036160420775793,-2.8402366863905315,-3.1978961209730432,-3.5765943458251148,-3.9763313609467454],[-3.9342537804076265,-3.5345167652859959,-3.1558185404339252,-2.7981591058514135,-2.4615384615384617,-2.1459566074950693,-1.8514135437212358,-1.5779092702169621,-1.3254437869822486,-1.0940170940170943,-0.88362919132149931,-0.6942800788954635,-0.52596975673898738,-0.37869822485207111,-0.25246548323471402,-0.14727153188691663,-0.063116370808678546,0,0.042077580539118947,0.063116370808678476,0.063116370808678504,0.042077580539119017,0,-0.063116370808678546,-0.14727153188691663,-0.25246548323471374,-0.37869822485207083,-0.52596975673898738,-0.6942800788954635,-0.88362919132149931,-1.0940170940170935,-1.325443786982248,-1.5779092702169621,-1.8514135437212358,-2.1459566074950693,-2.4615384615384603,-2.7981591058514126,-3.1558185404339243,-3.5345167652859959,-3.9342537804076265],[-3.8711374095989481,-3.4714003944773175,-3.0927021696252468,-2.7350427350427351,-2.3984220907297833,-2.082840236686391,-1.7882971729125572,-1.5147928994082838,-1.2623274161735702,-1.0309007232084157,-0.82051282051282071,-0.63116370808678501,-0.46285338593030889,-0.31558185404339256,-0.18934911242603547,-0.084155161078238089,0,0.063116370808678546,0.10519395134779749,0.12623274161735704,0.12623274161735704,0.10519395134779756,0.063116370808678546,0,-0.084155161078238089,-0.18934911242603519,-0.31558185404339228,-0.46285338593030889,-0.63116370808678501,-0.82051282051282071,-1.0309007232084149,-1.2623274161735694,-1.5147928994082838,-1.7882971729125572,-2.082840236686391,-2.398422090729782,-2.7350427350427342,-3.0927021696252459,-3.4714003944773175,-3.8711374095989481],[-3.7869822485207099,-3.3872452333990792,-3.0085470085470085,-2.6508875739644968,-2.314266929651545,-1.9986850756081527,-1.7041420118343191,-1.4306377383300455,-1.178172255095332,-0.9467455621301778,-0.73635765943458265,-0.54700854700854695,-0.37869822485207083,-0.23142669296515447,-0.10519395134779738,0,0.084155161078238089,0.14727153188691663,0.18934911242603558,0.21038790269559512,0.21038790269559512,0.18934911242603564,0.14727153188691663,0.084155161078238089,0,-0.1051939513477971,-0.2314266929651542,-0.37869822485207083,-0.54700854700854695,-0.73635765943458265,-0.94674556213017691,-1.1781722550953313,-1.4306377383300455,-1.7041420118343191,-1.9986850756081527,-2.3142669296515437,-2.6508875739644959,-3.0085470085470076,-3.3872452333990792,-3.7869822485207099],[-3.681788297172913,-3.2820512820512824,-2.9033530571992117,-2.5456936226167,-2.2090729783037482,-1.8934911242603556,-1.598948060486522,-1.3254437869822484,-1.0729783037475349,-0.84155161078238061,-0.63116370808678557,-0.44181459566074982,-0.2735042735042737,-0.12623274161735737,-2.7755575615628914e-16,0.1051939513477971,0.18934911242603519,0.25246548323471374,0.29454306377383266,0.31558185404339223,0.31558185404339223,0.29454306377383277,0.25246548323471374,0.18934911242603519,0.1051939513477971,0,-0.12623274161735709,-0.2735042735042737,-0.44181459566074982,-0.63116370808678557,-0.84155161078237972,-1.0729783037475342,-1.3254437869822484,-1.598948060486522,-1.8934911242603556,-2.2090729783037468,-2.5456936226166991,-2.9033530571992108,-3.2820512820512824,-3.681788297172913],[-3.5555555555555558,-3.1558185404339252,-2.7771203155818545,-2.4194608809993428,-2.082840236686391,-1.7672583826429986,-1.4727153188691651,-1.1992110453648914,-0.94674556213017791,-0.71531886916502363,-0.50493096646942837,-0.31558185404339273,-0.14727153188691661,-2.7755575615628914e-16,0.12623274161735681,0.2314266929651542,0.31558185404339228,0.37869822485207083,0.42077580539118975,0.44181459566074932,0.44181459566074932,0.42077580539118986,0.37869822485207083,0.31558185404339228,0.2314266929651542,0.12623274161735709,0,-0.14727153188691661,-0.31558185404339273,-0.50493096646942837,-0.71531886916502274,-0.94674556213017724,-1.1992110453648914,-1.4727153188691651,-1.7672583826429986,-2.0828402366863896,-2.4194608809993419,-2.7771203155818536,-3.1558185404339252,-3.5555555555555558],[-3.4082840236686391,-3.0085470085470085,-2.6298487836949378,-2.2721893491124261,-1.9355687047994743,-1.619986850756082,-1.3254437869822484,-1.0519395134779748,-0.79947403024326125,-0.56804733727810697,-0.35765943458251181,-0.16831032215647612,0,0.14727153188691633,0.27350427350427342,0.37869822485207083,0.46285338593030889,0.52596975673898738,0.56804733727810641,0.58908612754766587,0.58908612754766598,0.56804733727810641,0.52596975673898738,0.46285338593030889,0.37869822485207083,0.2735042735042737,0.14727153188691661,0,-0.16831032215647612,-0.35765943458251181,-0.56804733727810608,-0.79947403024326058,-1.0519395134779748,-1.3254437869822484,-1.619986850756082,-1.935568704799473,-2.2721893491124252,-2.6298487836949369,-3.0085470085470085,-3.4082840236686391],[-3.239973701512163,-2.8402366863905324,-2.4615384615384617,-2.10387902695595,-1.7672583826429982,-1.4516765285996058,-1.1571334648257723,-0.88362919132149864,-0.63116370808678512,-0.39973701512163085,-0.18934911242603569,0,0.16831032215647612,0.31558185404339245,0.44181459566074954,0.54700854700854695,0.63116370808678501,0.6942800788954635,0.73635765943458253,0.75739644970414199,0.75739644970414211,0.73635765943458253,0.6942800788954635,0.63116370808678501,0.54700854700854695,0.44181459566074982,0.31558185404339273,0.16831032215647612,0,-0.18934911242603569,-0.39973701512162996,-0.63116370808678446,-0.88362919132149864,-1.1571334648257723,-1.4516765285996058,-1.7672583826429968,-2.1038790269559491,-2.4615384615384608,-2.8402366863905324,-3.239973701512163],[-3.0506245890861274,-2.6508875739644968,-2.2721893491124261,-1.9145299145299144,-1.5779092702169626,-1.2623274161735702,-0.96778435239973659,-0.69428007889546295,-0.44181459566074943,-0.21038790269559515,0,0.18934911242603569,0.35765943458251181,0.50493096646942814,0.63116370808678524,0.73635765943458265,0.82051282051282071,0.88362919132149931,0.92570677186061823,0.94674556213017769,0.9467455621301778,0.92570677186061823,0.88362919132149931,0.82051282051282071,0.73635765943458265,0.63116370808678557,0.50493096646942837,0.35765943458251181,0.18934911242603569,0,-0.21038790269559426,-0.44181459566074877,-0.69428007889546295,-0.96778435239973659,-1.2623274161735702,-1.5779092702169613,-1.9145299145299135,-2.2721893491124252,-2.6508875739644968,-3.0506245890861274],[-2.8402366863905328,-2.4404996712689027,-2.0618014464168315,-1.70414201183432,-1.3675213675213682,-1.0519395134779759,-0.75739644970414233,-0.48389217619986868,-0.23142669296515517,-8.8817841970012523e-16,0.21038790269559426,0.39973701512162996,0.56804733727810608,0.71531886916502241,0.8415516107823795,0.94674556213017691,1.0309007232084149,1.0940170940170935,1.1360946745562124,1.1571334648257721,1.1571334648257721,1.1360946745562126,1.0940170940170935,1.0309007232084149,0.94674556213017691,0.84155161078237972,0.71531886916502274,0.56804733727810608,0.39973701512162996,0.21038790269559426,0,-0.2314266929651545,-0.48389217619986868,-0.75739644970414233,-1.0519395134779759,-1.3675213675213669,-1.7041420118343191,-2.0618014464168306,-2.4404996712689027,-2.8402366863905328],[-2.6088099934253783,-2.2090729783037482,-1.8303747534516772,-1.4727153188691655,-1.1360946745562137,-0.82051282051282137,-0.52596975673898783,-0.25246548323471418,-6.6613381477509392e-16,0.23142669296515361,0.44181459566074877,0.63116370808678446,0.79947403024326058,0.94674556213017691,1.072978303747534,1.1781722550953313,1.2623274161735694,1.325443786982248,1.3675213675213669,1.3885601577909266,1.3885601577909266,1.3675213675213671,1.325443786982248,1.2623274161735694,1.1781722550953313,1.0729783037475342,0.94674556213017724,0.79947403024326058,0.63116370808678446,0.44181459566074877,0.2314266929651545,0,-0.25246548323471418,-0.52596975673898783,-0.82051282051282137,-1.1360946745562124,-1.4727153188691646,-1.8303747534516763,-2.2090729783037482,-2.6088099934253783],[-2.3563445101906644,-1.9566074950690338,-1.577909270216963,-1.2202498356344513,-0.88362919132149953,-0.56804733727810719,-0.27350427350427364,0,0.25246548323471352,0.4838921761998678,0.69428007889546295,0.88362919132149864,1.0519395134779748,1.199211045364891,1.3254437869822482,1.4306377383300455,1.5147928994082838,1.5779092702169621,1.6199868507560811,1.6410256410256407,1.6410256410256407,1.6199868507560813,1.5779092702169621,1.5147928994082838,1.4306377383300455,1.3254437869822484,1.1992110453648914,1.0519395134779748,0.88362919132149864,0.69428007889546295,0.48389217619986868,0.25246548323471418,0,-0.27350427350427364,-0.56804733727810719,-0.8836291913214982,-1.2202498356344504,-1.5779092702169621,-1.9566074950690338,-2.3563445101906644],[-2.0828402366863905,-1.6831032215647601,-1.3044049967126894,-0.94674556213017769,-0.61012491781722589,-0.29454306377383355,0,0.27350427350427364,0.52596975673898716,0.75739644970414144,0.96778435239973659,1.1571334648257723,1.3254437869822484,1.4727153188691648,1.5989480604865218,1.7041420118343191,1.7882971729125572,1.8514135437212358,1.8934911242603547,1.9145299145299144,1.9145299145299144,1.8934911242603549,1.8514135437212358,1.7882971729125572,1.7041420118343191,1.598948060486522,1.4727153188691651,1.3254437869822484,1.1571334648257723,0.96778435239973659,0.75739644970414233,0.52596975673898783,0.27350427350427364,0,-0.29454306377383355,-0.61012491781722455,-0.9467455621301768,-1.3044049967126885,-1.6831032215647601,-2.0828402366863905],[-1.7882971729125572,-1.3885601577909266,-1.0098619329388558,-0.65220249835634414,-0.31558185404339234,0,0.29454306377383355,0.56804733727810719,0.82051282051282071,1.051939513477975,1.2623274161735702,1.4516765285996058,1.619986850756082,1.7672583826429982,1.8934911242603554,1.9986850756081527,2.082840236686391,2.1459566074950693,2.1880341880341883,2.2090729783037477,2.2090729783037477,2.1880341880341883,2.1459566074950693,2.082840236686391,1.9986850756081527,1.8934911242603556,1.7672583826429986,1.619986850756082,1.4516765285996058,1.2623274161735702,1.0519395134779759,0.82051282051282137,0.56804733727810719,0.29454306377383355,0,-0.31558185404339101,-0.65220249835634325,-1.009861932938855,-1.3885601577909266,-1.7882971729125572],[-1.4727153188691662,-1.0729783037475356,-0.69428007889546484,-0.33662064431295313,-1.3322676295501878e-15,0.31558185404339101,0.61012491781722455,0.8836291913214982,1.1360946745562117,1.367521367521366,1.5779092702169613,1.7672583826429968,1.935568704799473,2.0828402366863892,2.2090729783037464,2.3142669296515437,2.398422090729782,2.4615384615384603,2.5036160420775793,2.5246548323471387,2.5246548323471387,2.5036160420775793,2.4615384615384603,2.398422090729782,2.3142669296515437,2.2090729783037468,2.0828402366863896,1.935568704799473,1.7672583826429968,1.5779092702169613,1.3675213675213669,1.1360946745562124,0.8836291913214982,0.61012491781722455,0.31558185404339101,0,-0.33662064431295224,-0.69428007889546395,-1.0729783037475356,-1.4727153188691662],[-1.1360946745562139,-0.73635765943458331,-0.35765943458251259,-8.8817841970012523e-16,0.33662064431295091,0.65220249835634325,0.9467455621301768,1.2202498356344504,1.472715318869164,1.7041420118343182,1.9145299145299135,2.1038790269559491,2.2721893491124252,2.4194608809993414,2.5456936226166986,2.6508875739644959,2.7350427350427342,2.7981591058514126,2.8402366863905315,2.861275476660091,2.861275476660091,2.8402366863905315,2.7981591058514126,2.7350427350427342,2.6508875739644959,2.5456936226166991,2.4194608809993419,2.2721893491124252,2.1038790269559491,1.9145299145299135,1.7041420118343191,1.4727153188691646,1.2202498356344504,0.9467455621301768,0.65220249835634325,0.33662064431295224,0,-0.3576594345825117,-0.73635765943458331,-1.1360946745562139],[-0.77843523997370223,-0.37869822485207161,-8.8817841970012523e-16,0.35765943458251082,0.69428007889546262,1.009861932938855,1.3044049967126885,1.5779092702169621,1.8303747534516757,2.0618014464168297,2.2721893491124252,2.4615384615384608,2.6298487836949369,2.7771203155818531,2.9033530571992103,3.0085470085470076,3.0927021696252459,3.1558185404339243,3.1978961209730432,3.2189349112426027,3.2189349112426027,3.1978961209730432,3.1558185404339243,3.0927021696252459,3.0085470085470076,2.9033530571992108,2.7771203155818536,2.6298487836949369,2.4615384615384608,2.2721893491124252,2.0618014464168306,1.8303747534516763,1.5779092702169621,1.3044049967126885,1.009861932938855,0.69428007889546395,0.3576594345825117,0,-0.37869822485207161,-0.77843523997370223],[-0.39973701512163062,0,0.37869822485207072,0.73635765943458242,1.0729783037475342,1.3885601577909266,1.6831032215647601,1.9566074950690338,2.2090729783037473,2.4404996712689018,2.6508875739644968,2.8402366863905324,3.0085470085470085,3.1558185404339247,3.2820512820512819,3.3872452333990792,3.4714003944773175,3.5345167652859959,3.5765943458251148,3.5976331360946743,3.5976331360946743,3.5765943458251148,3.5345167652859959,3.4714003944773175,3.3872452333990792,3.2820512820512824,3.1558185404339252,3.0085470085470085,2.8402366863905324,2.6508875739644968,2.4404996712689027,2.2090729783037482,1.9566074950690338,1.6831032215647601,1.3885601577909266,1.0729783037475356,0.73635765943458331,0.37869822485207161,0,-0.39973701512163062],[0,0.39973701512163062,0.77843523997370134,1.136094674556213,1.4727153188691648,1.7882971729125572,2.0828402366863905,2.3563445101906644,2.6088099934253779,2.840236686390532,3.0506245890861274,3.239973701512163,3.4082840236686391,3.5555555555555554,3.6817882971729126,3.7869822485207099,3.8711374095989481,3.9342537804076265,3.9763313609467454,3.9973701512163049,3.9973701512163049,3.9763313609467454,3.9342537804076265,3.8711374095989481,3.7869822485207099,3.681788297172913,3.5555555555555558,3.4082840236686391,3.239973701512163,3.0506245890861274,2.8402366863905328,2.6088099934253783,2.3563445101906644,2.0828402366863905,1.7882971729125572,1.4727153188691662,1.1360946745562139,0.77843523997370223,0.39973701512163062,0]],"type":"surface","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-saddle-point-3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.3: Interactive 3D surface plot of the saddle function <span class="math inline">\(z = x^2 - y^2\)</span>. Click and drag to rotate the plot to observe how the surface curves upward along the <span class="math inline">\(x\)</span>-axis and downward along the <span class="math inline">\(y\)</span>-axis.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>grid_saddle <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">100</span>), <span class="at">y =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">100</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>grid_saddle<span class="sc">$</span>z <span class="ot">&lt;-</span> grid_saddle<span class="sc">$</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> grid_saddle<span class="sc">$</span>y<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(grid_saddle, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_contour_filled</span>(<span class="fu">aes</span>(<span class="at">z =</span> z), <span class="at">bins =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="fl">0.3</span>, <span class="at">label =</span> <span class="st">"Saddle Point (0,0)"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">1.3</span>, <span class="at">y =</span> <span class="fl">0.15</span>, <span class="at">label =</span> <span class="st">"Curves Up (\u2192 Min)"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">fontface =</span> <span class="st">"italic"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.3</span>, <span class="at">y =</span> <span class="fl">1.4</span>, <span class="at">label =</span> <span class="st">"Curves Down (\u2191 Max)"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">fontface =</span> <span class="st">"italic"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">name =</span> <span class="st">"f(x,y)"</span>) <span class="sc">+</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"x"</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"y"</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Contour Plot of a Saddle Point: f(x,y) = x\u00b2 - y\u00b2"</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-saddle-point" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-saddle-point-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="week11_optimisation-part2_files/figure-html/fig-saddle-point-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;16.4: Contour map of the saddle function f(x,y) = x^2 - y^2. The point (0,0) is a relative minimum along the x-axis (curves up) and a relative maximum along the y-axis (curves down)."><img src="week11_optimisation-part2_files/figure-html/fig-saddle-point-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="624"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-saddle-point-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.4: Contour map of the saddle function <span class="math inline">\(f(x,y) = x^2 - y^2\)</span>. The point <span class="math inline">\((0,0)\)</span> is a relative minimum along the <span class="math inline">\(x\)</span>-axis (curves up) and a relative maximum along the <span class="math inline">\(y\)</span>-axis (curves down).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="inflection-point" class="level3">
+<h3 class="anchored" data-anchor-id="inflection-point">3. Inflection Point</h3>
+<p>A concept easily confused with a stationary point is the <strong>inflection point</strong>. An inflection point is where the <em>curvature</em> of the curve changes sign (i.e., the second derivative changes sign).</p>
+<ul>
+<li><em>Key Distinction:</em> Stationary points are defined by the <strong>first derivative</strong> being zero. Inflection points are defined by the <strong>second derivative</strong>.</li>
+<li>An inflection point does <em>not</em> necessarily have a zero gradient. However, if an inflection point <em>is</em> also a stationary point (gradient is zero), it is technically a saddle point. While saddle points and inflection points are strictly speaking not identical, for many elementary functions, a saddle point acts as an inflection point.</li>
+</ul>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+// Persistent bi-directional light/dark theme handler across chapter navigations
+(function() {
+  function getSavedTheme() {
+    try {
+      return sessionStorage.getItem("quarto-color-scheme-forced") || localStorage.getItem("quarto-color-scheme");
+    } catch(e) {
+      return null;
+    }
+  }
+
+  function saveTheme(themeValue) { // "alternate" for dark, "default" for light
+    try {
+      sessionStorage.setItem("quarto-color-scheme-forced", themeValue);
+      try { localStorage.setItem("quarto-color-scheme", themeValue); } catch(e) {}
+    } catch(e) {}
+  }
+
+  var saved = getSavedTheme();
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // 1. Apply saved theme state on initial page load
+    if (saved === "alternate" || saved === "dark") {
+      var alternateSheets = document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      alternateSheets.forEach(function(s) {
+        if (s.rel !== 'stylesheet') s.rel = 'stylesheet';
+      });
+      document.body.classList.add('quarto-dark');
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+      
+      var toggles = document.querySelectorAll('.quarto-color-scheme-toggle');
+      toggles.forEach(function(t) { t.classList.add('alternate'); });
+    } else if (saved === "default" || saved === "light") {
+      var alternateSheets = document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      alternateSheets.forEach(function(s) {
+        s.rel = 'disabled-stylesheet';
+      });
+      document.body.classList.remove('quarto-dark');
+      document.documentElement.setAttribute('data-bs-theme', 'light');
+      
+      var toggles = document.querySelectorAll('.quarto-color-scheme-toggle');
+      toggles.forEach(function(t) { t.classList.remove('alternate'); });
+    }
+
+    // 2. Listen for clicks on the theme toggle button to accurately save user preference
+    document.addEventListener("click", function(e) {
+      var toggle = e.target.closest('.quarto-color-scheme-toggle');
+      if (toggle) {
+        setTimeout(function() {
+          // Check if dark mode stylesheet is currently enabled
+          var darkSheet = document.querySelector('link.quarto-color-scheme.quarto-color-alternate');
+          var isDark = toggle.classList.contains('alternate') || (darkSheet && darkSheet.rel === 'stylesheet');
+          
+          if (isDark) {
+            saveTheme("alternate");
+            document.body.classList.add('quarto-dark');
+            document.documentElement.setAttribute('data-bs-theme', 'dark');
+          } else {
+            saveTheme("default");
+            document.body.classList.remove('quarto-dark');
+            document.documentElement.setAttribute('data-bs-theme', 'light');
+            // Ensure alternate stylesheets are disabled
+            var alternateSheets = document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+            alternateSheets.forEach(function(s) {
+              s.rel = 'disabled-stylesheet';
+            });
+          }
+        }, 100);
+      }
+    });
+  });
+})();
+
+document.addEventListener("DOMContentLoaded", function () {
+  const tocEl = document.querySelector('nav#TOC[role="doc-toc"]');
+  if (!tocEl) return;
+
+  const tocLinks = Array.from(tocEl.querySelectorAll("a[data-scroll-target]"));
+  if (!tocLinks.length) return;
+
+  const sections = tocLinks.map(link => {
+    const target = link.getAttribute("data-scroll-target");
+    if (!target) return null;
+    if (target.startsWith("#")) {
+      return document.getElementById(decodeURI(target.slice(1)));
+    } else {
+      return document.querySelector(decodeURI(target));
+    }
+  });
+
+  function getAbsoluteTop(elem) {
+    if (!elem) return 0;
+    return elem.getBoundingClientRect().top + window.pageYOffset;
+  }
+
+  let currentActive = -1;
+
+  function updateTOC() {
+    const pageY = window.pageYOffset;
+    const windowHeight = window.innerHeight;
+    const bodyHeight = document.body.offsetHeight;
+
+    let sectionIndex = -1;
+
+    // If scrolled at the very bottom of page, activate last section
+    if (pageY + windowHeight >= bodyHeight - 50) {
+      sectionIndex = sections.length - 1;
+    } else {
+      // Find section currently in view using absolute offset
+      for (let i = sections.length - 1; i >= 0; i--) {
+        if (sections[i]) {
+          const top = getAbsoluteTop(sections[i]);
+          if (pageY >= top - 140) {
+            sectionIndex = i;
+            break;
+          }
+        }
+      }
+    }
+
+    if (sectionIndex === -1 && sections.length > 0) {
+      sectionIndex = 0;
+    }
+
+    if (sectionIndex !== currentActive && sectionIndex >= 0) {
+      currentActive = sectionIndex;
+
+      tocLinks.forEach((link, idx) => {
+        if (idx === sectionIndex) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+    }
+  }
+
+  window.addEventListener("scroll", function() {
+    requestAnimationFrame(updateTOC);
+  }, { passive: true, capture: true });
+
+  window.addEventListener("resize", updateTOC, { passive: true });
+  setTimeout(updateTOC, 100);
+  setTimeout(updateTOC, 500);
+  setTimeout(updateTOC, 1000);
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../optimisation/week10_intro-to-optimisation.html" class="pagination-link" aria-label="Introduction to Engineering Optimisation Methods">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Introduction to Engineering Optimisation Methods</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../optimisation/week12_constrained_classic_optimisation.html" class="pagination-link" aria-label="Constrained Classical Optimisation (Lagrange Multipliers)">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Constrained Classical Optimisation (Lagrange Multipliers)</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Mathematical Foundations of Optimisation"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "ENGG7518 Research Methods for Engineers: Week 11"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Prof. Zuduo Zheng"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "Semester 2, 2026"</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Learning Objectives</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>By the end of this chapter, you should be able to:</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Understand vector operations, inner products, and matrix transformations.</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Calculate gradient vectors ($\nabla f$) and Hessian matrices ($\mathbf{H}$) for multivariable functions.</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Test sets and functions for convexity using first- and second-order conditions.</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Classify matrix definiteness (positive definite, negative definite, indefinite) using Sylvester's Criterion and leading principal minor determinants.</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Categorise critical points into local minima, local maxima, saddle points, and inflection points.</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Linear Algebra Fundamentals</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>Before diving into multivariate optimisation, we must establish the basic mathematical vocabulary used to describe multi-dimensional space.</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Vector:** A one-dimensional matrix representing the solution of a system of linear equations. In numerical optimisation, unless otherwise stated, a vector refers to a **column vector**. (The transpose of a column vector becomes a row vector).</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Matrix:** A rectangular array of numbers. A vector is simply a special type of matrix with only one column or one row. Matrices are essential for storing the higher-order derivatives of complex functions.</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Rates of Change and Curvature: Gradients and Hessians</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>To find optimal points mathematically, optimisation algorithms must evaluate how functions change in multiple dimensions simultaneously. </span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. The Gradient (First Derivative)</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>For a function of several variables, the standard derivative is replaced by the **Gradient ($\nabla f$)**, which is a vector of its first-order partial derivatives.</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>**Geometric Interpretation:** </span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>The gradient always points in the direction of the **greatest rate of increase** of the function. Intuitively, this means that the *negative* gradient ($-\nabla f$) points in the direction where the function value decreases at the fastest rate. </span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-gradient-contour</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Contour plot of $f(x,y) = x^2 + y^2$ showing the gradient vector $\\nabla f(1, 1.5) = [2, 3]^T$ pointing in the direction of steepest ascent, perpendicular to the contour line."</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6.5</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">100</span>), <span class="at">y =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">100</span>))</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>grid<span class="sc">$</span>z <span class="ot">&lt;-</span> grid<span class="sc">$</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> grid<span class="sc">$</span>y<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Current location and gradient vector</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>py <span class="ot">&lt;-</span> <span class="fl">1.5</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>gx <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> px <span class="co"># 2</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>gy <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> py <span class="co"># 3</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>arrow_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> px, <span class="at">y =</span> py,</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>  <span class="at">xend =</span> px <span class="sc">+</span> <span class="fl">0.4</span> <span class="sc">*</span> gx, <span class="at">yend =</span> py <span class="sc">+</span> <span class="fl">0.4</span> <span class="sc">*</span> gy</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(grid, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_contour</span>(<span class="fu">aes</span>(<span class="at">z =</span> z, <span class="at">color =</span> <span class="fu">after_stat</span>(level)), <span class="at">bins =</span> <span class="dv">10</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> px, <span class="at">y =</span> py), <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrow_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend),</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">"cm"</span>)), <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> px <span class="sc">-</span> <span class="fl">0.35</span>, <span class="at">y =</span> py <span class="sc">-</span> <span class="fl">0.15</span>, <span class="at">label =</span> <span class="st">"Current Point (1, 1.5)"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> px <span class="sc">+</span> <span class="fl">0.6</span>, <span class="at">y =</span> py <span class="sc">+</span> <span class="fl">0.8</span>, <span class="at">label =</span> <span class="st">"Gradient Vector \u2207f"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">size =</span> <span class="fl">3.8</span>) <span class="sc">+</span></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">name =</span> <span class="st">"f(x,y)"</span>) <span class="sc">+</span></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"x"</span>,</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"y"</span>,</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Gradient Vector Points in Direction of Steepest Ascent"</span></span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## Example: Evaluating a Gradient Direction</span></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>Suppose you are at a current location $(x=2, y=3, z=4)$ in a 3D space, and the general gradient vector of your objective function is given as $\nabla f = (1, 2y, z^2)^T$. </span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>To find the direction that increases the function's value the fastest from your current location, substitute your coordinates into the gradient:</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>$$ \nabla f(2,3,4) = (1, 2(3), 4^2)^T = \begin{bmatrix} 1 <span class="sc">\\</span> 6 <span class="sc">\\</span> 16 \end{bmatrix} $$</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>You must move in the direction of vector $<span class="co">[</span><span class="ot">1, 6, 16</span><span class="co">]</span>$ to ascend as efficiently as possible. </span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>*Note on Terminology:* The **Jacobian Matrix ($J$)** is the generalisation of the gradient for vector-valued functions. It is the matrix of all first-order partial derivatives. </span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. The Hessian Matrix (Second Derivative)</span></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>While the gradient tells us the slope, the **Hessian Matrix ($\mathbf{H}$)** tells us the *curvature*. The Hessian is a square matrix of second-order partial derivatives of a scalar-valued function.</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>$$ \mathbf{H} = \begin{bmatrix} </span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>\frac{\partial^2 f}{\partial x_1^2} &amp; \frac{\partial^2 f}{\partial x_1 \partial x_2} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x_1 \partial x_n} <span class="sc">\\</span> </span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>\frac{\partial^2 f}{\partial x_2 \partial x_1} &amp; \frac{\partial^2 f}{\partial x_2^2} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x_2 \partial x_n} <span class="sc">\\</span></span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>\vdots &amp; \vdots &amp; \ddots &amp; \vdots <span class="sc">\\</span></span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>\frac{\partial^2 f}{\partial x_n \partial x_1} &amp; \frac{\partial^2 f}{\partial x_n \partial x_2} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x_n^2} </span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>\end{bmatrix} $$</span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>For most real-life continuous functions, the Hessian matrix is **symmetric**. It is a critical component in Newton-type optimisation algorithms, acting as the coefficient of the quadratic term in a local Taylor expansion.</span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## In-Class Exercise: Calculating the Hessian</span></span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a>**Problem:** Obtain the Hessian for the function $f(x,y) = -x^4 + 4(x^2 - y^2) - 3$.</span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>**Step 1: First Derivatives (The Gradient)**</span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$\frac{\partial f}{\partial x} = -4x^3 + 8x$</span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$\frac{\partial f}{\partial y} = -8y$</span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>$$ \nabla f = \begin{bmatrix} -4x^3 + 8x <span class="sc">\\</span> -8y \end{bmatrix} $$</span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>**Step 2: Second Derivatives (The Hessian)**</span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$\frac{\partial^2 f}{\partial x^2} = -12x^2 + 8$</span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$\frac{\partial^2 f}{\partial y^2} = -8$</span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$\frac{\partial^2 f}{\partial x \partial y} = \frac{\partial^2 f}{\partial y \partial x} = 0$</span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a>$$ \mathbf{H} = \begin{bmatrix} -12x^2 + 8 &amp; 0 <span class="sc">\\</span> 0 &amp; -8 \end{bmatrix} $$</span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a><span class="fu">## Convex Sets and Convexity</span></span>
+<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a><span class="fu">### Convex Sets</span></span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a>A set $C$ is **convex** if, for any two points $x_1$ and $x_2$ inside the set, the line segment joining them lies entirely within the set. Mathematically:</span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a>$$ \forall x_1 \in C, \forall x_2 \in C \text{ and } \forall \lambda \in <span class="co">[</span><span class="ot">0,1</span><span class="co">]</span>, \quad \lambda x_1 + (1 - \lambda)x_2 \in C $$</span>
+<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-convex-sets</span></span>
+<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Visual comparison of a convex set (left) where any line segment connecting two points stays entirely inside the set, versus a non-convex set (right) where the connecting line segment leaves the set."</span></span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a><span class="co"># Circle (Convex Set)</span></span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2</span><span class="sc">*</span>pi, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a>convex_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">cos</span>(t),</span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">sin</span>(t),</span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a>  <span class="at">Type =</span> <span class="st">"Convex Set</span><span class="sc">\n</span><span class="st">(Line stays inside)"</span></span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a><span class="co"># C-Shape / Ring Notch (Non-convex Set)</span></span>
+<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a>t_outer <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.7</span>, <span class="dv">2</span><span class="sc">*</span>pi <span class="sc">-</span> <span class="fl">0.7</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a>t_inner <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">2</span><span class="sc">*</span>pi <span class="sc">-</span> <span class="fl">0.7</span>, <span class="fl">0.7</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a>nonconvex_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">cos</span>(t_outer), <span class="fl">0.45</span> <span class="sc">*</span> <span class="fu">cos</span>(t_inner)),</span>
+<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="fu">sin</span>(t_outer), <span class="fl">0.45</span> <span class="sc">*</span> <span class="fu">sin</span>(t_inner)),</span>
+<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a>  <span class="at">Type =</span> <span class="st">"Non-Convex Set</span><span class="sc">\n</span><span class="st">(Line leaves set)"</span></span>
+<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a>all_sets <span class="ot">&lt;-</span> <span class="fu">rbind</span>(convex_df, nonconvex_df)</span>
+<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a><span class="co"># Points for Convex Set (both inside circle)</span></span>
+<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a>pts_convex <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.4</span>, <span class="fl">0.5</span>),</span>
+<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a>  <span class="at">Type =</span> <span class="st">"Convex Set</span><span class="sc">\n</span><span class="st">(Line stays inside)"</span></span>
+<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a><span class="co"># Points for Non-Convex Set (both inside top/bottom arms of C-shape, segment crosses central hole)</span></span>
+<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a>pts_nonconvex <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fl">1.0</span>), <span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="sc">-</span><span class="fl">1.0</span>)),</span>
+<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fl">1.0</span>), <span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="sc">-</span><span class="fl">1.0</span>)),</span>
+<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a>  <span class="at">Type =</span> <span class="st">"Non-Convex Set</span><span class="sc">\n</span><span class="st">(Line leaves set)"</span></span>
+<span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_sets, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_polygon</span>(<span class="at">fill =</span> <span class="st">"#2b5c8f22"</span>, <span class="at">color =</span> <span class="st">"#2b5c8f"</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Type) <span class="sc">+</span></span>
+<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">rbind</span>(pts_convex, pts_nonconvex), <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">rbind</span>(pts_convex, pts_nonconvex), <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>)</span>
+<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span>
+<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a><span class="fu">### Convex vs. Concave Functions</span></span>
+<span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Linearity:** A property of a function graphically represented as a straight line.</span>
+<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Convexity:** A function is strictly "bowl-shaped". Any line segment drawn between two points on the graph lies *above or on* the graph.</span>
+<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a>    $$ f(\alpha x + \beta y) \le \alpha f(x) + \beta f(y) \quad \text{where } \alpha + \beta = 1, \; \alpha \ge 0, \; \beta \ge 0 $$</span>
+<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Concavity:** A function is "dome-shaped" or "concave downward". The line segment between two points lies *below or on* the graph.</span>
+<span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Second Derivative Test for Convexity</span></span>
+<span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a>To prove a function is convex without graphing it, we look at its second derivative:</span>
+<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **Rule:** If the Hessian matrix of a function $f$ is **positive semi-definite**, the function $f$ is convex.</span></span>
+<span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a><span class="fu">## In-Class Exercise: Testing Convexity</span></span>
+<span id="cb5-195"><a href="#cb5-195" aria-hidden="true" tabindex="-1"></a>Determine whether the following single-variable functions are convex:</span>
+<span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>$f(x) = x^2 \implies f''(x) = 2$. Since $2 &gt; 0$ globally, it is **convex**.</span>
+<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>$f(x) = e^x \implies f''(x) = e^x$. Since $e^x &gt; 0$ globally, it is **convex**.</span>
+<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>$f(x) = \frac{1}{x} \text{ for } x &gt; 0 \implies f'(x) = -x^{-2} \implies f''(x) = 2x^{-3}$. For $x &gt; 0$, $2/x^3 &gt; 0$, so it is **convex** in this domain.</span>
+<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a><span class="fu">## Matrix Definiteness and Sylvester’s Criterion</span></span>
+<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a>To classify stationary points and test for convexity, we must determine the **definiteness** of the Hessian matrix. For an $n \times n$ symmetric matrix $A$:</span>
+<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Positive Definite:** $x^T A x &gt; 0$ for all non-zero vectors $x$. ($x=0$ is a unique global minimum).</span>
+<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**Positive Semidefinite:** $x^T A x \ge 0$. ($x=0$ is a global minimum, but not necessarily unique).</span>
+<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**Negative Definite:** $x^T A x &lt; 0$. ($x=0$ is a unique global maximum).</span>
+<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>**Negative Semidefinite:** $x^T A x \le 0$. ($x=0$ is a global maximum, but not necessarily unique).</span>
+<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>**Indefinite:** The quadratic form is positive in some directions and negative in others. ($x=0$ is a saddle point).</span>
+<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a><span class="fu">### Testing Definiteness: Leading Principal Minors</span></span>
+<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a>To test definiteness without calculating eigenvalues, we evaluate the **Leading Principal Minors**. A leading principal minor is the determinant of the top-left submatrix.</span>
+<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a>For a $3 \times 3$ matrix, the minors are:</span>
+<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$|A_1| = a_{11}$</span>
+<span id="cb5-218"><a href="#cb5-218" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$|A_2| = (a_{11}a_{22}) - (a_{12}a_{21})$</span>
+<span id="cb5-219"><a href="#cb5-219" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$|A_3| = \det(A)$</span>
+<span id="cb5-220"><a href="#cb5-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-221"><a href="#cb5-221" aria-hidden="true" tabindex="-1"></a>**The Rules:**</span>
+<span id="cb5-222"><a href="#cb5-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$A$ is **Positive Definite** if and only if ALL leading principal minors are strictly positive ($|A_1|&gt;0, |A_2|&gt;0, |A_3|&gt;0$).</span>
+<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$A$ is **Negative Definite** if and only if the minors *alternate in sign*, starting with negative ($|A_1|&lt;0, |A_2|&gt;0, |A_3|&lt;0$).</span>
+<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>If a minor is non-zero but does not fit either sign pattern, the matrix is **Indefinite**.</span>
+<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-227"><a href="#cb5-227" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb5-228"><a href="#cb5-228" aria-hidden="true" tabindex="-1"></a><span class="fu">## In-Class Exercise: Matrix Definiteness</span></span>
+<span id="cb5-229"><a href="#cb5-229" aria-hidden="true" tabindex="-1"></a>Determine the definiteness of the following matrices:</span>
+<span id="cb5-230"><a href="#cb5-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-231"><a href="#cb5-231" aria-hidden="true" tabindex="-1"></a>**Matrix 1:** $A = \begin{pmatrix} 2 &amp; 4 <span class="sc">\\</span> 4 &amp; 8 \end{pmatrix}$</span>
+<span id="cb5-232"><a href="#cb5-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-233"><a href="#cb5-233" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$|A_1| = 2 &gt; 0$</span>
+<span id="cb5-234"><a href="#cb5-234" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$|A_2| = (2 \times 8) - (4 \times 4) = 16 - 16 = 0$</span>
+<span id="cb5-235"><a href="#cb5-235" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>*Result:* Because $|A_1| &gt; 0$ and $|A_2| \ge 0$, the matrix is **Positive Semidefinite**.</span>
+<span id="cb5-236"><a href="#cb5-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-237"><a href="#cb5-237" aria-hidden="true" tabindex="-1"></a>**Matrix 2:** $B = \begin{pmatrix} 1 &amp; 2 &amp; 0 <span class="sc">\\</span> 2 &amp; 4 &amp; 5 <span class="sc">\\</span> 0 &amp; 5 &amp; 6 \end{pmatrix}$</span>
+<span id="cb5-238"><a href="#cb5-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-239"><a href="#cb5-239" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$|B_1| = 1 &gt; 0$</span>
+<span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$|B_2| = (1 \times 4) - (2 \times 2) = 0$</span>
+<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>$|B_3| = 1(24 - 25) - 2(12 - 0) + 0 = -1 - 24 = -25$</span>
+<span id="cb5-242"><a href="#cb5-242" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>*Result:* The minors are $1$, $0$, and $-25$. This fits neither the purely positive nor the alternating sign pattern. The matrix is **Indefinite**.</span>
+<span id="cb5-243"><a href="#cb5-243" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a><span class="fu">## Categorising Critical Points</span></span>
+<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a>With gradients and Hessians understood, we can definitively categorise the critical points of any objective function.</span>
+<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. Stationary Point</span></span>
+<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a>For a continuous, differentiable function, a **stationary point** is a point where the gradient is exactly zero ($\nabla f = \mathbf{0}$). The function stops changing at this point. It can be a relative minimum, a relative maximum, or a saddle point.</span>
+<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-252"><a href="#cb5-252" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. Saddle Point (Minimax)</span></span>
+<span id="cb5-253"><a href="#cb5-253" aria-hidden="true" tabindex="-1"></a>A **saddle point** is a stationary point where the function curves *up* in one direction and *down* in another. It is a relative minimum along one axis (between peaks) and a relative maximum along the crossing axis. </span>
+<span id="cb5-254"><a href="#cb5-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-255"><a href="#cb5-255" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>*Geometric view:* Resembles a horse riding saddle or a mountain pass.</span>
+<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>*Mathematical condition:* Occurs when the Hessian matrix is **Indefinite**.</span>
+<span id="cb5-257"><a href="#cb5-257" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>*Optimisation challenge:* Saddle points make locating global minima much harder because algorithms can easily get stuck or slowed down at these coordinates.</span>
+<span id="cb5-258"><a href="#cb5-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-259"><a href="#cb5-259" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-format="html"}</span>
+<span id="cb5-262"><a href="#cb5-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-263"><a href="#cb5-263" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-saddle-point-3d</span></span>
+<span id="cb5-264"><a href="#cb5-264" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Interactive 3D surface plot of the saddle function $z = x^2 - y^2$. Click and drag to rotate the plot to observe how the surface curves upward along the $x$-axis and downward along the $y$-axis."</span></span>
+<span id="cb5-265"><a href="#cb5-265" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb5-266"><a href="#cb5-266" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: !expr knitr::is_html_output()</span></span>
+<span id="cb5-267"><a href="#cb5-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-268"><a href="#cb5-268" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb5-269"><a href="#cb5-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-270"><a href="#cb5-270" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">40</span>)</span>
+<span id="cb5-271"><a href="#cb5-271" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">40</span>)</span>
+<span id="cb5-272"><a href="#cb5-272" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">outer</span>(x, y, <span class="cf">function</span>(x, y) x<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> y<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb5-273"><a href="#cb5-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-274"><a href="#cb5-274" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_ly</span>(<span class="at">x =</span> <span class="sc">~</span>x, <span class="at">y =</span> <span class="sc">~</span>y, <span class="at">z =</span> <span class="sc">~</span>z) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-275"><a href="#cb5-275" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_surface</span>(<span class="at">colorscale =</span> <span class="st">"Viridis"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-276"><a href="#cb5-276" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layout</span>(</span>
+<span id="cb5-277"><a href="#cb5-277" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">list</span>(<span class="at">text =</span> <span class="st">"Interactive 3D Saddle Surface: z = x² - y²"</span>),</span>
+<span id="cb5-278"><a href="#cb5-278" aria-hidden="true" tabindex="-1"></a>    <span class="at">scene =</span> <span class="fu">list</span>(</span>
+<span id="cb5-279"><a href="#cb5-279" aria-hidden="true" tabindex="-1"></a>      <span class="at">xaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">"x (Curves Up)"</span>),</span>
+<span id="cb5-280"><a href="#cb5-280" aria-hidden="true" tabindex="-1"></a>      <span class="at">yaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">"y (Curves Down)"</span>),</span>
+<span id="cb5-281"><a href="#cb5-281" aria-hidden="true" tabindex="-1"></a>      <span class="at">zaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">"z = f(x,y)"</span>)</span>
+<span id="cb5-282"><a href="#cb5-282" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-283"><a href="#cb5-283" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-284"><a href="#cb5-284" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-285"><a href="#cb5-285" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-286"><a href="#cb5-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-289"><a href="#cb5-289" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-290"><a href="#cb5-290" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-saddle-point</span></span>
+<span id="cb5-291"><a href="#cb5-291" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Contour map of the saddle function $f(x,y) = x^2 - y^2$. The point $(0,0)$ is a relative minimum along the $x$-axis (curves up) and a relative maximum along the $y$-axis (curves down)."</span></span>
+<span id="cb5-292"><a href="#cb5-292" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb5-293"><a href="#cb5-293" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6.5</span></span>
+<span id="cb5-294"><a href="#cb5-294" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5.2</span></span>
+<span id="cb5-295"><a href="#cb5-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-296"><a href="#cb5-296" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-297"><a href="#cb5-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-298"><a href="#cb5-298" aria-hidden="true" tabindex="-1"></a>grid_saddle <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">100</span>), <span class="at">y =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">100</span>))</span>
+<span id="cb5-299"><a href="#cb5-299" aria-hidden="true" tabindex="-1"></a>grid_saddle<span class="sc">$</span>z <span class="ot">&lt;-</span> grid_saddle<span class="sc">$</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> grid_saddle<span class="sc">$</span>y<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb5-300"><a href="#cb5-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-301"><a href="#cb5-301" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(grid_saddle, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb5-302"><a href="#cb5-302" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_contour_filled</span>(<span class="fu">aes</span>(<span class="at">z =</span> z), <span class="at">bins =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb5-303"><a href="#cb5-303" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb5-304"><a href="#cb5-304" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb5-305"><a href="#cb5-305" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb5-306"><a href="#cb5-306" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="fl">0.3</span>, <span class="at">label =</span> <span class="st">"Saddle Point (0,0)"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb5-307"><a href="#cb5-307" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">1.3</span>, <span class="at">y =</span> <span class="fl">0.15</span>, <span class="at">label =</span> <span class="st">"Curves Up (\u2192 Min)"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">fontface =</span> <span class="st">"italic"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb5-308"><a href="#cb5-308" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.3</span>, <span class="at">y =</span> <span class="fl">1.4</span>, <span class="at">label =</span> <span class="st">"Curves Down (\u2191 Max)"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">fontface =</span> <span class="st">"italic"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb5-309"><a href="#cb5-309" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">name =</span> <span class="st">"f(x,y)"</span>) <span class="sc">+</span></span>
+<span id="cb5-310"><a href="#cb5-310" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb5-311"><a href="#cb5-311" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-312"><a href="#cb5-312" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"x"</span>,</span>
+<span id="cb5-313"><a href="#cb5-313" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"y"</span>,</span>
+<span id="cb5-314"><a href="#cb5-314" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Contour Plot of a Saddle Point: f(x,y) = x\u00b2 - y\u00b2"</span></span>
+<span id="cb5-315"><a href="#cb5-315" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-316"><a href="#cb5-316" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span>
+<span id="cb5-317"><a href="#cb5-317" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-318"><a href="#cb5-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-319"><a href="#cb5-319" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. Inflection Point</span></span>
+<span id="cb5-320"><a href="#cb5-320" aria-hidden="true" tabindex="-1"></a>A concept easily confused with a stationary point is the **inflection point**. An inflection point is where the *curvature* of the curve changes sign (i.e., the second derivative changes sign). </span>
+<span id="cb5-321"><a href="#cb5-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-322"><a href="#cb5-322" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>*Key Distinction:* Stationary points are defined by the **first derivative** being zero. Inflection points are defined by the **second derivative**. </span>
+<span id="cb5-323"><a href="#cb5-323" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>An inflection point does *not* necessarily have a zero gradient. However, if an inflection point *is* also a stationary point (gradient is zero), it is technically a saddle point. While saddle points and inflection points are strictly speaking not identical, for many elementary functions, a saddle point acts as an inflection point.</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 The University of Queensland | School of Civil Engineering</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ENGG7518/ENGG7518-book/edit/main/optimisation/week11_optimisation-part2.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ENGG7518/ENGG7518-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>ENGG7518 Course Book</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

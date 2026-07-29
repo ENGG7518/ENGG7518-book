@@ -1,0 +1,2402 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Prof. Zuduo Zheng">
+
+<title>7&nbsp; Practical Research Skills – ENGG7518: Research Methods for Engineers</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../tutorials/week1-2_introduction_to_R.html" rel="next">
+<link href="../fundamentals/week2_norms-and-method.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-be0fa7996514c9577e88cc86b2fc19af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-a1d348fa29c6608567c8b83a5a18fa86.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-be0fa7996514c9577e88cc86b2fc19af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">ENGG7518 Research Methods for Engineers</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+    <a href="https://github.com/ENGG7518/ENGG7518-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../fundamentals/week1_what-is-science.html">Research Fundamentals</a></li><li class="breadcrumb-item"><a href="../fundamentals/week3_practical-research-skills.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Practical Research Skills</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Welcome &amp; Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Administration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../admin/course-overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Course Overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../admin/assessments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessments</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../admin/communication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Communication &amp; Support</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Research Fundamentals</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fundamentals/week1_what-is-science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">What is Science?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fundamentals/week2_norms-and-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reason, Logic &amp; Common Pitfalls</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fundamentals/week3_practical-research-skills.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Practical Research Skills</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Tutorial Labs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tutorials/week1-2_introduction_to_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Practical Lab 1: Introduction to R, Data Structures, and Data Import</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistics, Data Quality &amp; Reproducibility</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week4_basic-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Statistics Basics: From Description to Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week5_basic-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Statistics Basics: From Description to Inference and Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week6_reproducible-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Reproducible Data Analysis &amp; Research</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week6_intro-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to Linear Regression Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week7_linear-regression-diagnostics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Linear Regression Diagnostics, Interpretation &amp; Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stats/week8_data-cleaning-and-quality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Data Quality &amp; Cleansing: Outliers, Missing Data &amp; Noise</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Engineering Optimisation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week10_intro-to-optimisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Introduction to Engineering Optimisation Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week11_optimisation-part2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mathematical Foundations of Optimisation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week12_constrained_classic_optimisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Constrained Classical Optimisation (Lagrange Multipliers)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week12_1d_iterative_search.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Numerical Optimisation &amp; 1D Iterative Search</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../optimisation/week12_multivariable_numerical_methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Multivariable Numerical Algorithms (Gradient &amp; Newton Methods)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">7.1</span> Introduction</a></li>
+  <li><a href="#the-research-process-a-quick-reminder" id="toc-the-research-process-a-quick-reminder" class="nav-link" data-scroll-target="#the-research-process-a-quick-reminder"><span class="header-section-number">7.2</span> The Research Process: A Quick Reminder</a></li>
+  <li><a href="#what-is-a-literature-review" id="toc-what-is-a-literature-review" class="nav-link" data-scroll-target="#what-is-a-literature-review"><span class="header-section-number">7.3</span> What Is a Literature Review?</a></li>
+  <li><a href="#why-is-the-literature-review-so-important" id="toc-why-is-the-literature-review-so-important" class="nav-link" data-scroll-target="#why-is-the-literature-review-so-important"><span class="header-section-number">7.4</span> Why Is the Literature Review So Important?</a></li>
+  <li><a href="#goals-of-a-literature-review" id="toc-goals-of-a-literature-review" class="nav-link" data-scroll-target="#goals-of-a-literature-review"><span class="header-section-number">7.5</span> Goals of a Literature Review</a></li>
+  <li><a href="#how-to-conduct-a-systematic-review-the-prisma-framework" id="toc-how-to-conduct-a-systematic-review-the-prisma-framework" class="nav-link" data-scroll-target="#how-to-conduct-a-systematic-review-the-prisma-framework"><span class="header-section-number">7.6</span> How to Conduct a Systematic Review: The PRISMA Framework</a></li>
+  <li><a href="#searching-the-literature-with-google-scholar" id="toc-searching-the-literature-with-google-scholar" class="nav-link" data-scroll-target="#searching-the-literature-with-google-scholar"><span class="header-section-number">7.7</span> Searching the Literature with Google Scholar</a></li>
+  <li><a href="#how-to-read-papers-efficiently" id="toc-how-to-read-papers-efficiently" class="nav-link" data-scroll-target="#how-to-read-papers-efficiently"><span class="header-section-number">7.8</span> How to Read Papers Efficiently</a></li>
+  <li><a href="#organising-your-review-the-summary-table" id="toc-organising-your-review-the-summary-table" class="nav-link" data-scroll-target="#organising-your-review-the-summary-table"><span class="header-section-number">7.9</span> Organising Your Review: The Summary Table</a></li>
+  <li><a href="#what-a-good-review-looks-like" id="toc-what-a-good-review-looks-like" class="nav-link" data-scroll-target="#what-a-good-review-looks-like"><span class="header-section-number">7.10</span> What a Good Review Looks Like</a></li>
+  <li><a href="#formulating-a-research-problem" id="toc-formulating-a-research-problem" class="nav-link" data-scroll-target="#formulating-a-research-problem"><span class="header-section-number">7.11</span> Formulating a Research Problem</a></li>
+  <li><a href="#constructing-hypotheses" id="toc-constructing-hypotheses" class="nav-link" data-scroll-target="#constructing-hypotheses"><span class="header-section-number">7.12</span> Constructing Hypotheses</a></li>
+  <li><a href="#writing-a-research-proposal" id="toc-writing-a-research-proposal" class="nav-link" data-scroll-target="#writing-a-research-proposal"><span class="header-section-number">7.13</span> Writing a Research Proposal</a></li>
+  <li><a href="#writing-a-research-report" id="toc-writing-a-research-report" class="nav-link" data-scroll-target="#writing-a-research-report"><span class="header-section-number">7.14</span> Writing a Research Report</a></li>
+  <li><a href="#professionalism-matters-formatting-your-report" id="toc-professionalism-matters-formatting-your-report" class="nav-link" data-scroll-target="#professionalism-matters-formatting-your-report"><span class="header-section-number">7.15</span> Professionalism Matters: Formatting Your Report</a></li>
+  <li><a href="#citing-sources-properly" id="toc-citing-sources-properly" class="nav-link" data-scroll-target="#citing-sources-properly"><span class="header-section-number">7.16</span> Citing Sources Properly</a></li>
+  <li><a href="#critical-thinking" id="toc-critical-thinking" class="nav-link" data-scroll-target="#critical-thinking"><span class="header-section-number">7.17</span> Critical Thinking</a></li>
+  <li><a href="#key-takeaways-for-this-chapter" id="toc-key-takeaways-for-this-chapter" class="nav-link" data-scroll-target="#key-takeaways-for-this-chapter"><span class="header-section-number">7.18</span> Key Takeaways for This Chapter</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">7.19</span> Further Reading</a></li>
+  </ul>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/ENGG7518/ENGG7518-book/edit/main/fundamentals/week3_practical-research-skills.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ENGG7518/ENGG7518-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../fundamentals/week1_what-is-science.html">Research Fundamentals</a></li><li class="breadcrumb-item"><a href="../fundamentals/week3_practical-research-skills.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Practical Research Skills</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Practical Research Skills</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<p class="subtitle lead">ENGG7518 Research Methods for Engineers: Week 3</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Prof. Zuduo Zheng </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><em>“Passion and obsession, even talent, are only useful tools if you have the work ethic to back them up.”</em><br>
+- **David Goggins</p>
+</blockquote>
+<section id="introduction" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">7.1</span> Introduction</h2>
+<p>In the first two weeks we built the philosophical foundations of science and research. Now we shift to the <strong>practical tasks</strong> you will face when starting your own project, whether it is a semester‑long research assignment or a larger thesis. The journey begins with one of the most underestimated yet most powerful tools a researcher possesses: the <strong>literature review</strong>.</p>
+<p>This chapter will take you through the entire practical workflow:</p>
+<ul>
+<li>Why a literature review is essential and how to do it systematically</li>
+<li>How to use Google Scholar like a pro to find, manage, and stay current with the literature</li>
+<li>How to read papers efficiently and organise your findings</li>
+<li>How to turn gaps into a solid research problem and testable hypothesis</li>
+<li>How to write a compelling research proposal and a professional research report</li>
+<li>How to think critically about everything you read and write</li>
+</ul>
+<p>Let’s begin at the beginning.</p>
+</section>
+<section id="the-research-process-a-quick-reminder" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="the-research-process-a-quick-reminder"><span class="header-section-number">7.2</span> The Research Process: A Quick Reminder</h2>
+<p>Every research project follows a well‑defined cycle. At its centre lies <strong>theory</strong>, and an essential early step is <em>selecting a good topic</em>. How do you choose? The answer, as many of you correctly recalled, is through a thorough review of what others have already done.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../images/research-process.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="The typical research process"><img src="../images/research-process.png" class="img-fluid figure-img" alt="The typical research process"></a></p>
+<figcaption>The typical research process</figcaption>
+</figure>
+</div>
+</section>
+<section id="what-is-a-literature-review" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="what-is-a-literature-review"><span class="header-section-number">7.3</span> What Is a Literature Review?</h2>
+<p>A literature review is the process of <strong>gathering, evaluating, and synthesising</strong> the existing body of knowledge on a particular topic. The underlying assumption is that science is cumulative: over generations, researchers build on each other’s work. If those past studies were conducted with scientific rigour, their collective findings become increasingly reliable and accurate.</p>
+<p>For you as a beginner, the most efficient way to start is to <strong>stand on the shoulders of giants</strong> (as Isaac Newton famously said). Instead of reinventing the wheel, you first educate yourself about the development history, the current state, and the state‑of‑the‑art in your field.</p>
+</section>
+<section id="why-is-the-literature-review-so-important" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="why-is-the-literature-review-so-important"><span class="header-section-number">7.4</span> Why Is the Literature Review So Important?</h2>
+<section id="avoid-the-ultimate-embarrassment" class="level3">
+<h3 class="anchored" data-anchor-id="avoid-the-ultimate-embarrassment">Avoid the ultimate embarrassment</h3>
+<p>Imagine spending years of effort and millions of dollars, only to have a colleague point out during a conference presentation: “<em>Somebody already discovered the same thing ten years ago.</em>” This actually happened at the prestigious ISTTT conference in transport engineering. The very first question from the audience was: “Have you conducted a literature review or not?” The presenter had no good defence.</p>
+<p>Conducting a proper review protects you from wasting time on questions that have already been answered, and from public embarrassment.</p>
+</section>
+<section id="the-hierarchy-of-scientific-evidence" class="level3">
+<h3 class="anchored" data-anchor-id="the-hierarchy-of-scientific-evidence">The hierarchy of scientific evidence</h3>
+<p>Not all evidence carries the same weight. Think of the strength of evidence as a pyramid:</p>
+<ul>
+<li><strong>Bottom layer (weakest):</strong> personal opinion, anecdotes, newspaper articles.</li>
+<li><strong>Middle layers:</strong> case studies, cross‑sectional studies, well‑designed experiments.</li>
+<li><strong>Top layer (strongest):</strong> <strong>systematic reviews and meta‑analyses.</strong></li>
+</ul>
+<p>A systematic review is a special type of literature review that:</p>
+<ul>
+<li>Scrutinises the quality of every included study,</li>
+<li>Identifies common issues and consensus conclusions,</li>
+<li>Points out future research needs.</li>
+</ul>
+<p>Because its conclusion is based on the <em>entirety</em> of available evidence rather than a single study, a systematic review provides the most trustworthy scientific evidence.</p>
+</section>
+</section>
+<section id="goals-of-a-literature-review" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="goals-of-a-literature-review"><span class="header-section-number">7.5</span> Goals of a Literature Review</h2>
+<p>A good review should help you:</p>
+<ol type="1">
+<li><strong>Educate yourself</strong>: Become an expert on what has already been done.</li>
+<li><strong>Demonstrate familiarity</strong> with a body of knowledge: show that you know what you’re talking about.</li>
+<li><strong>Show the path of prior research</strong>: Explain how your project connects to earlier work.</li>
+<li><strong>Integrate and condense</strong> a massive amount of information into key, digestible points.</li>
+<li><strong>Learn from others’ mistakes</strong>: Avoid pitfalls that have already been identified.</li>
+<li><strong>Identify gaps</strong>: Those gaps become the foundation for your own research question.</li>
+</ol>
+<section id="types-of-literature-review" class="level3">
+<h3 class="anchored" data-anchor-id="types-of-literature-review">Types of literature review</h3>
+<p>Depending on your goal, your review may take one or more of the following forms:</p>
+<ul>
+<li><strong>Self‑study review</strong>: Increases the reader’s confidence in your understanding of the field.</li>
+<li><strong>Context review</strong>: Places your specific project in the big picture.</li>
+<li><strong>Historical review</strong>: Traces the development of an issue over time.</li>
+<li><strong>Theoretical review</strong>: Compares how different theories address the same issue.</li>
+<li><strong>Integrative review</strong>: Summarises what is known at a given point in time.</li>
+<li><strong>Methodological review</strong>: Examines how methodology varies across studies.</li>
+</ul>
+<p>Most student projects will be a combination of self‑study, context, and integrative reviews.</p>
+</section>
+</section>
+<section id="how-to-conduct-a-systematic-review-the-prisma-framework" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="how-to-conduct-a-systematic-review-the-prisma-framework"><span class="header-section-number">7.6</span> How to Conduct a Systematic Review: The PRISMA Framework</h2>
+<p>When you write a literature review, someone else should be able to <strong>reproduce</strong> exactly what you did. Unfortunately, many published reviews fail this test: they do not report which keywords were used, which databases were searched, or why certain papers were excluded.</p>
+<p>The <strong>PRISMA</strong> (Preferred Reporting Items for Systematic Reviews and Meta‑Analyses) framework solves this problem. It provides a clear, transparent checklist and a flow diagram that documents every decision you make during the review process.</p>
+<section id="the-prisma-flow-diagram" class="level3">
+<h3 class="anchored" data-anchor-id="the-prisma-flow-diagram">The PRISMA flow diagram</h3>
+<p>The process consists of three major phases:</p>
+<ol type="1">
+<li><strong>Identification</strong>: Search databases, remove duplicates, record numbers.</li>
+<li><strong>Screening</strong>: Read titles and abstracts, exclude irrelevant records, retrieve full texts, assess eligibility.</li>
+<li><strong>Included</strong>: The final set of studies that form the basis of your review.</li>
+</ol>
+<p>At every step you document <em>how many</em> records were kept or excluded and <em>why</em>. This guarantees transparency and reproducibility.</p>
+</section>
+<section id="tools-to-help" class="level3">
+<h3 class="anchored" data-anchor-id="tools-to-help">Tools to help</h3>
+<ul>
+<li><strong>Covidence</strong>: an online platform that streamlines PRISMA workflows (duplicate detection, screening, data extraction). UQ provides <strong>free access</strong> to all students.</li>
+<li>For smaller projects you can manage the process manually, but always keep a detailed log of your search strategy and decisions.</li>
+</ul>
+<p>For more resources, visit the UQ Library’s systematic review guide or talk to a librarian.</p>
+<hr>
+</section>
+</section>
+<section id="searching-the-literature-with-google-scholar" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="searching-the-literature-with-google-scholar"><span class="header-section-number">7.7</span> Searching the Literature with Google Scholar</h2>
+<p>Before the internet, researchers had to physically browse shelves of journals. In the early internet era, we had to search multiple databases one by one. Today, <strong>Google Scholar</strong> is the go‑to tool that integrates almost everything into a single, powerful search engine. It should be your first stop for any literature search.</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>If you haven’t used Google Scholar before, open it now at <a href="https://scholar.google.com">scholar.google.com</a> and follow along.</p>
+</div>
+</div>
+</div>
+<section id="basic-vs.-advanced-search" class="level3">
+<h3 class="anchored" data-anchor-id="basic-vs.-advanced-search">Basic vs. Advanced Search</h3>
+<p>By default, Google Scholar treats your search terms as:</p>
+<ul>
+<li><strong>Not case‑sensitive</strong> (“Traffic” = “traffic”)</li>
+<li><strong>Combined with AND</strong> if you type multiple words</li>
+<li><strong>Searched everywhere</strong>: Full text, title, abstract, citations</li>
+</ul>
+<p>This gives you a huge number of results, many of which are irrelevant. To narrow things down, use the <strong>Advanced Search</strong> (accessible from the menu). You can:</p>
+<ul>
+<li><strong>Find articles with all words</strong>: Only show papers that contain every keyword you specify.</li>
+<li><strong>Find articles with the exact phrase</strong>: Useful for multi‑word terms like “climate change”.</li>
+<li><strong>Find articles without certain words</strong>: Exclude topics you don’t care about.</li>
+<li><strong>Find articles by a specific author</strong>: Track the work of a leading researcher.</li>
+<li><strong>Limit by publication date</strong>: Focus on recent developments.</li>
+</ul>
+<p>Additional tips:</p>
+<ul>
+<li>Use <strong>quotes</strong> to search for an exact phrase.</li>
+<li>Use <strong>Boolean operators</strong> (AND, OR, NOT) to refine your search.</li>
+<li>Use keywords, not full sentences.</li>
+</ul>
+<p>Practise with a few searches and compare the number and relevance of results. A well‑crafted advanced search can reduce thousands of hits to a manageable, focused list.</p>
+</section>
+<section id="oneclick-access-to-full-text" class="level3">
+<h3 class="anchored" data-anchor-id="oneclick-access-to-full-text">One‑click access to full text</h3>
+<p>Google Scholar can be linked directly to the <strong>UQ Library</strong>. Once you set this up, you’ll see a “Find it @ UQ Library” link next to search results. Click it, log in with your UQ credentials, and you’ll be taken straight to the full paper; no need to worry about which database or journal it comes from.</p>
+<p><strong>How to set up Library Links:</strong></p>
+<ol type="1">
+<li>Go to <strong>Settings</strong> → <strong>Library links</strong>.</li>
+<li>Search for “University of Queensland” and select it.</li>
+<li>Save. The “Find it @ UQ Library” link will now appear.</li>
+</ol>
+<p>If the library doesn’t have access to a particular paper, you can request it for free through the library’s document delivery service.</p>
+</section>
+<section id="citation-management-made-painless" class="level3">
+<h3 class="anchored" data-anchor-id="citation-management-made-painless">Citation management made painless</h3>
+<p>Managing references manually is tedious and error‑prone. Google Scholar gives you a simple shortcut:</p>
+<ul>
+<li>Click the <strong>“Cite”</strong> button (the quotation mark icon) under any search result.</li>
+<li>Google Scholar displays the reference in five common styles (MLA, APA, Chicago, Harvard, Vancouver); APA is often used in engineering.</li>
+<li>You can copy and paste the formatted reference directly into your report, or export it in a format compatible with <strong>EndNote</strong> (which UQ provides for free).</li>
+</ul>
+<p>You can also set your preferred bibliography manager (e.g., EndNote) in the Settings menu so that an “Import into EndNote” link appears with every search result.</p>
+</section>
+<section id="stay-uptodate-with-alerts" class="level3">
+<h3 class="anchored" data-anchor-id="stay-uptodate-with-alerts">Stay up‑to‑date with Alerts</h3>
+<p>If you’re serious about a research topic, create a <strong>Google Scholar Alert</strong>:</p>
+<ul>
+<li>Perform a search for your keywords or a specific author.</li>
+<li>Click <strong>“Create alert”</strong> (on the left sidebar).</li>
+<li>Choose how often you want to receive email updates (weekly is a good start).</li>
+</ul>
+<p>Google Scholar will then automatically notify you whenever a new paper matches your search. This is the most efficient way to keep abreast of the latest research without constantly re‑checking.</p>
+</section>
+<section id="assessing-journal-and-conference-quality" class="level3">
+<h3 class="anchored" data-anchor-id="assessing-journal-and-conference-quality">Assessing journal and conference quality</h3>
+<p>Not all publications are equal. Some journals are profit‑driven and will publish almost anything for a fee; these are essentially unvetted. You need to know which venues are trustworthy.</p>
+<p>Google Scholar’s <strong>Metrics</strong> page (accessible from the top menu) helps:</p>
+<ol type="1">
+<li>Click <strong>Metrics</strong>.</li>
+<li>Select the category <strong>Engineering &amp; Computer Science</strong>.</li>
+<li>Choose the subcategory most relevant to you (e.g., Transportation).</li>
+<li>The list shows the top‑ranked journals and conferences in that field, sorted by their h5‑index (a measure of citation impact).</li>
+</ol>
+<p>The ranking is not perfect, but the top 20 to 30 venues are almost certainly reputable. In transport engineering, for instance, <em>Transportation Research Part B</em> and <em>Part C</em> are widely recognised as top journals. Publication in such journals involves a rigorous peer‑review process that can take a year or more, so you know the papers have been thoroughly scrutinised.</p>
+<p>When you assess the quality of a study during your review, the venue in which it was published is a useful (though not the only) indicator.</p>
+</section>
+<section id="expanding-your-review-forward-and-backward-searching" class="level3">
+<h3 class="anchored" data-anchor-id="expanding-your-review-forward-and-backward-searching">Expanding your review: forward and backward searching</h3>
+<p>Two powerful techniques can quickly expand your literature review:</p>
+<ul>
+<li><strong>Forward searching</strong>: Look at papers that have <em>cited</em> the paper you just read. Google Scholar’s “Cited by” link shows you more recent work that builds on the same foundations.</li>
+<li><strong>Backward searching</strong>: Examine the reference list of a key paper to find earlier, foundational studies.</li>
+</ul>
+<p>These methods turn one good paper into a web of related work.</p>
+<hr>
+</section>
+</section>
+<section id="how-to-read-papers-efficiently" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="how-to-read-papers-efficiently"><span class="header-section-number">7.8</span> How to Read Papers Efficiently</h2>
+<p>After your search you may face a stack of 100+ papers. Reading every word of every paper is impossible, and unnecessary. Here is a strategy that works.</p>
+<section id="step-1-skim-the-title-and-abstract" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-skim-the-title-and-abstract">Step 1: Skim the title and abstract</h3>
+<p>This takes seconds. Ask: <em>Is this paper genuinely relevant to my topic?</em> If no, discard it.</p>
+</section>
+<section id="step-2-read-the-introduction-and-conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-read-the-introduction-and-conclusion">Step 2: Read the introduction and conclusion</h3>
+<ul>
+<li>The <strong>introduction</strong> explains the research background, the gap being addressed, and the authors’ contributions. It’s usually straightforward, with few equations.</li>
+<li>The <strong>conclusion</strong> summarises key findings and, crucially, points out <strong>limitations and future work</strong>. This is where authors are most honest about what they didn’t achieve.</li>
+</ul>
+<p>After reading these two sections you should have a very good idea of whether the paper is a <strong>VIP</strong> for your project. Most papers won’t be.</p>
+</section>
+<section id="step-3-for-vip-papers-only-read-the-middle" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-for-vip-papers-only-read-the-middle">Step 3: For VIP Papers Only: Read the Middle</h3>
+<p>If a paper’s research question is very close to yours, and the limitations they mention are things you think you could improve, then it’s a VIP. Only at this stage do you invest the time to read the methodology and results in detail.</p>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>During the literature review phase, you <strong>do not</strong> need to understand every equation. Your goal is to see <em>what kinds of methods</em> are being used, not to master each one. Later, once you’ve chosen your own method, you can return to the relevant VIP papers and study the technical details more deeply.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="a-tip-read-with-a-clear-purpose" class="level3">
+<h3 class="anchored" data-anchor-id="a-tip-read-with-a-clear-purpose">A tip: read with a clear purpose</h3>
+<p>Before you even open a paper, ask yourself: <em>What do I need from this paper right now?</em> Are you looking for background knowledge, a specific method, a data source, or a gap to exploit? This focus will speed up your reading enormously.</p>
+<hr>
+</section>
+</section>
+<section id="organising-your-review-the-summary-table" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="organising-your-review-the-summary-table"><span class="header-section-number">7.9</span> Organising Your Review: The Summary Table</h2>
+<p>The biggest mistake students make is reading a paper, understanding it, and then forgetting everything three days later. To avoid this, create a <strong>summary table</strong> as you read.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 11%">
+<col style="width: 24%">
+<col style="width: 10%">
+<col style="width: 21%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Title</th>
+<th>Year</th>
+<th>Country</th>
+<th>Research Question</th>
+<th>Method</th>
+<th>Major Findings</th>
+<th>My Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Paper 1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Paper 2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>My Comments</strong>: Your own thoughts, criticisms, or ideas sparked by the paper. Write these down <em>immediately</em> before you forget.</li>
+</ul>
+<p>When the time comes to write your literature review, this table becomes your single source of truth. You won’t need to re‑read every paper; you’ll just synthesise the table.</p>
+</section>
+<section id="what-a-good-review-looks-like" class="level2" data-number="7.10">
+<h2 data-number="7.10" class="anchored" data-anchor-id="what-a-good-review-looks-like"><span class="header-section-number">7.10</span> What a Good Review Looks Like</h2>
+<p>A <strong>bad</strong> literature review is a collection of disconnected paragraphs, each summarising one paper in isolation, often stitched together with copied sentences.</p>
+<p>A <strong>good</strong> literature review:</p>
+<ul>
+<li><strong>Compares and contrasts</strong> studies: who agrees, who disagrees, and why?</li>
+<li><strong>Identifies themes</strong>: Groups papers by approach, finding, or theory.</li>
+<li><strong>Establishes the connection</strong> between past work and your own research question.</li>
+<li><strong>Highlights gaps</strong>: Specifically those gaps that your project will address.</li>
+</ul>
+<p>It is not a list of summaries; it is a <strong>story</strong> that leads the reader inexorably to the conclusion that your research is necessary.</p>
+<hr>
+</section>
+<section id="formulating-a-research-problem" class="level2" data-number="7.11">
+<h2 data-number="7.11" class="anchored" data-anchor-id="formulating-a-research-problem"><span class="header-section-number">7.11</span> Formulating a Research Problem</h2>
+<p>A thorough literature review should have revealed <strong>gaps</strong>: Questions that previous studies have not fully answered, or limitations in their methods that you could improve. Your research problem is born directly from those gaps.</p>
+<p>The formulation should be:</p>
+<ul>
+<li><strong>Specific</strong>: Avoid broad, vague statements.</li>
+<li><strong>Rooted in the literature</strong>: You must be able to say exactly which studies left the gap open.</li>
+<li><strong>Answerable</strong>: You need to have (or be able to collect) the data and apply the methods to address it.</li>
+</ul>
+<p>To articulate the gap clearly, follow this structure:</p>
+<ol type="1">
+<li>Clearly state the gap(s) in the literature.</li>
+<li>Clearly state the consequence of the gap(s).</li>
+<li>Clearly state which gap(s) your research project focuses on.</li>
+</ol>
+<section id="types-of-research-gaps" class="level3">
+<h3 class="anchored" data-anchor-id="types-of-research-gaps">Types of research gaps</h3>
+<p>Not all gaps are the same. Understanding the <em>type</em> of gap can help you articulate your research problem more precisely:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Gap type</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Evidence gap</strong> (Contradictory evidence)</td>
+<td>Results from individual studies allow for conclusions, but they contradict each other when examined from a higher perspective.</td>
+</tr>
+<tr class="even">
+<td><strong>Knowledge gap</strong> (Knowledge void)</td>
+<td>Desired research findings simply do not exist yet.</td>
+</tr>
+<tr class="odd">
+<td><strong>Practical‑knowledge gap</strong> (Action‑knowledge conflict)</td>
+<td>Professional behaviour or practice deviates from what research suggests, or is not covered by research at all.</td>
+</tr>
+<tr class="even">
+<td><strong>Methodological gap</strong></td>
+<td>A variation of research methods is needed to generate new insights or avoid distorted findings.</td>
+</tr>
+<tr class="odd">
+<td><strong>Empirical gap</strong> (Evaluation void)</td>
+<td>Research findings or propositions have not been empirically verified.</td>
+</tr>
+<tr class="even">
+<td><strong>Theoretical gap</strong> (Theory application void)</td>
+<td>Theory should be applied to certain research issues to generate new insights; a lack of theory creates a gap.</td>
+</tr>
+<tr class="odd">
+<td><strong>Population gap</strong></td>
+<td>A specific population (e.g., gender, age, ethnicity) is not adequately represented or under‑researched.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Source: Kumar DM (2020), adapted from Miles (2017) and others.</em></p>
+</section>
+<section id="examples-of-real-research-problem-statements" class="level3">
+<h3 class="anchored" data-anchor-id="examples-of-real-research-problem-statements">Examples of real research problem statements</h3>
+<p>Here are two examples from successful ARC (Australian Research Council) proposals. Notice how each one states the knowledge deficit, its consequence, and the proposed solution.</p>
+<p><strong>Example 1: Connected and automated vehicles</strong></p>
+<blockquote class="blockquote">
+<p><em>“Connected and automated vehicle research will leverage the potentially transformative capabilities of wireless technology to make road transport safer, smarter, and greener. However, <strong>no existing traffic flow models are capable of reproducing features of mixed traffic flow</strong> consisting of traditional, connected, and automated vehicles. This project addresses this knowledge deficit and develops an analytical tool with the capability of accurately modelling mixed traffic flow.”</em></p>
+</blockquote>
+<p><strong>Example 2: Balancing safety and efficiency</strong></p>
+<blockquote class="blockquote">
+<p><em>“This project aims to balance road safety and efficiency as conflicting goals of transport systems mixed with connected and automated vehicles. <strong>Existing models cannot co‑estimate efficiency and safety impacts</strong> of CAVs. This project will generate ground‑breaking models capable of doing so, and develop control strategies to safely and efficiently integrate CAVs into existing transport systems.”</em></p>
+</blockquote>
+<p>In both cases, the gap is specific, its consequence is clear, and the response is directly tied to the gap.</p>
+<hr>
+</section>
+</section>
+<section id="constructing-hypotheses" class="level2" data-number="7.12">
+<h2 data-number="7.12" class="anchored" data-anchor-id="constructing-hypotheses"><span class="header-section-number">7.12</span> Constructing Hypotheses</h2>
+<p>A <strong>hypothesis</strong> is a tentative proposition that states a predicted relationship between two or more variables. According to Bailey (1978), a hypothesis is:</p>
+<blockquote class="blockquote">
+<p>“a proposition that is stated in a testable form and that predicts a particular relationship between two (or more) variables. If we think that a relationship exists, we first state it as a hypothesis and then test the hypothesis in the field.”</p>
+</blockquote>
+<section id="characteristics-of-a-hypothesis" class="level3">
+<h3 class="anchored" data-anchor-id="characteristics-of-a-hypothesis">Characteristics of a hypothesis</h3>
+<ul>
+<li>It is <strong>tentative</strong>: Its validity is unknown at the time it is proposed.</li>
+<li>It specifies a <strong>relationship</strong> between variables.</li>
+<li>It must be <strong>testable</strong>: You need to be able to collect data and analyse it to determine whether the hypothesis is supported or not.</li>
+</ul>
+</section>
+<section id="examples-of-simple-hypotheses" class="level3">
+<h3 class="anchored" data-anchor-id="examples-of-simple-hypotheses">Examples of simple hypotheses</h3>
+<ul>
+<li>Automation makes roads safer.</li>
+<li>The summer in Brisbane is getting hotter.</li>
+<li>Humans are getting taller.</li>
+<li>Human life expectancy is becoming longer.</li>
+<li>Talking on a mobile phone while driving leads to more collisions.</li>
+</ul>
+<p>Some of these are broad; in practice you will need to operationalise them (e.g., “drivers using a hand‑held mobile phone have longer reaction times than drivers not using one”). Hypothesis construction and testing will be covered in greater depth when we move into statistical methods.</p>
+<hr>
+</section>
+</section>
+<section id="writing-a-research-proposal" class="level2" data-number="7.13">
+<h2 data-number="7.13" class="anchored" data-anchor-id="writing-a-research-proposal"><span class="header-section-number">7.13</span> Writing a Research Proposal</h2>
+<p>A research proposal is fundamentally a <strong>sales pitch</strong>. Your potential “customers” are funding bodies (e.g., the Australian Research Council, government departments, industry partners) or your thesis committee. They control resources (money, time, equipment), and you must convince them that:</p>
+<ol type="1">
+<li>Your idea is important.</li>
+<li>You have a feasible plan to execute it.</li>
+<li>You are the right person (or team) to carry it out.</li>
+</ol>
+<section id="the-what-why-how-framework" class="level3">
+<h3 class="anchored" data-anchor-id="the-what-why-how-framework">The “What, Why, How” framework</h3>
+<ul>
+<li><strong>What</strong> is your research idea?</li>
+<li><strong>Why</strong> is it important?</li>
+<li><strong>How</strong> will you do it? (methodology, timeline, your qualifications)</li>
+</ul>
+<p><strong>What a proposal should NOT do</strong>: it should not try to answer the research question. You haven’t done the work yet! The proposal is about planning and convincing, not reporting results.</p>
+</section>
+<section id="typical-structure-of-a-research-proposal" class="level3">
+<h3 class="anchored" data-anchor-id="typical-structure-of-a-research-proposal">Typical structure of a research proposal</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Section</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Project title</strong></td>
+<td>A concise, descriptive statement of the project.</td>
+</tr>
+<tr class="even">
+<td><strong>Aims and objectives</strong></td>
+<td>A bullet‑proof list of what the project will achieve.</td>
+</tr>
+<tr class="odd">
+<td><strong>Background/introduction</strong></td>
+<td>Sets the scene: what is known, what is unknown.</td>
+</tr>
+<tr class="even">
+<td><strong>Literature review</strong></td>
+<td>A critical synthesis that demonstrates you understand the field and have identified the gap.</td>
+</tr>
+<tr class="odd">
+<td><strong>Proposed methodology</strong></td>
+<td>The step‑by‑step approach: data, models, experiments, analysis.</td>
+</tr>
+<tr class="even">
+<td><strong>Significance/expected contribution</strong></td>
+<td>Why this matters: practical impact, theoretical contribution.</td>
+</tr>
+<tr class="odd">
+<td><strong>Workplan/timeline</strong></td>
+<td>A realistic schedule (e.g., Gantt chart).</td>
+</tr>
+<tr class="even">
+<td><strong>References</strong></td>
+<td>Only the key sources that directly support your proposal.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="writing-a-research-report" class="level2" data-number="7.14">
+<h2 data-number="7.14" class="anchored" data-anchor-id="writing-a-research-report"><span class="header-section-number">7.14</span> Writing a Research Report</h2>
+<p>Once your proposal has been accepted and the hard work of data collection and analysis is complete, you must communicate your findings clearly. A research report follows a different structure:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 66%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Section</th>
+<th>What it contains</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Project title</strong></td>
+<td>Clear and informative.</td>
+</tr>
+<tr class="even">
+<td><strong>Abstract/summary</strong></td>
+<td>A standalone summary of the problem, method, key results, and conclusion.</td>
+</tr>
+<tr class="odd">
+<td><strong>Introduction</strong></td>
+<td>Background, research gap, objectives, and outline of the report.</td>
+</tr>
+<tr class="even">
+<td><strong>Literature review</strong></td>
+<td>Critical synthesis of prior work.</td>
+</tr>
+<tr class="odd">
+<td><strong>Data and methodology</strong></td>
+<td>How the data were obtained, what methods were used.</td>
+</tr>
+<tr class="even">
+<td><strong>Data analysis</strong></td>
+<td>Present your findings with tables, graphs, and statistical outputs.</td>
+</tr>
+<tr class="odd">
+<td><strong>Results and discussion</strong></td>
+<td>Interpret the results: what do they mean? How do they compare with previous studies? Limitations?</td>
+</tr>
+<tr class="even">
+<td><strong>Conclusions and recommendations</strong></td>
+<td>Summarise the main take‑home message and suggest practical actions or future research.</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that the <strong>proposal</strong> and the <strong>report</strong> serve completely different purposes: one <em>plans</em>, the other <em>reports</em>.</p>
+<hr>
+</section>
+<section id="professionalism-matters-formatting-your-report" class="level2" data-number="7.15">
+<h2 data-number="7.15" class="anchored" data-anchor-id="professionalism-matters-formatting-your-report"><span class="header-section-number">7.15</span> Professionalism Matters: Formatting Your Report</h2>
+<p>Small presentation details can make an enormous difference in how your report is received, and in your final mark.</p>
+<ul>
+<li><strong>Font and layout</strong>: use a consistent, professional font (e.g., Times New Roman or Arial, 12 pt) and stick to it throughout the report unless there is a strong reason not to.</li>
+<li><strong>Tables</strong>: number them consecutively (Table 1, Table 2…). Give each a clear caption, and place it <strong>above</strong> the table. If the table is based on another author’s work, add “Adapted from” or “After” followed by a citation.</li>
+<li><strong>Figures</strong>: number them consecutively (Figure 1, Figure 2…). Give each a clear caption, and place it <strong>below</strong> the figure. Again, cite the source if adapted.</li>
+<li><strong>Equations</strong>: insert using an equation editor (e.g., MS Word Equation Editor). Number equations consecutively.</li>
+<li><strong>Cross‑referencing</strong>: every table, figure, and equation must be cited in the main body of the text before it appears.</li>
+</ul>
+<p>These are the little things that, when done consistently, make a report look polished and professional. In my experience, careful proofreading is the single most effective way to increase your mark before submission.</p>
+<hr>
+</section>
+<section id="citing-sources-properly" class="level2" data-number="7.16">
+<h2 data-number="7.16" class="anchored" data-anchor-id="citing-sources-properly"><span class="header-section-number">7.16</span> Citing Sources Properly</h2>
+<section id="when-must-you-cite" class="level3">
+<h3 class="anchored" data-anchor-id="when-must-you-cite">When must you cite?</h3>
+<p>You must always cite the source of:</p>
+<ul>
+<li>Direct quotations, opinions, and predictions (whether quoted or paraphrased).</li>
+<li>Statistics derived by the original author.</li>
+<li>Visuals (tables, figures, images).</li>
+<li>Another author’s theories or case studies.</li>
+<li>Another author’s experimental methods, results, or specialised procedures.</li>
+</ul>
+<p>When in doubt, cite. It is better to over‑cite than to risk plagiarism.</p>
+</section>
+<section id="two-common-citation-systems" class="level3">
+<h3 class="anchored" data-anchor-id="two-common-citation-systems">Two common citation systems</h3>
+<p><strong>Author‑year system (Harvard, APA, Chicago author‑date)</strong>: Indicate the author(s) and year right in the text, in parentheses. - Example: <em>In recent decades, anthropogenic activities have significantly altered the land surface (Nicholson 2007).</em> - Example: <em>Furlong et al.&nbsp;(2001) estimate that…</em> - If two or more articles by the same author(s) in the same year, distinguish them with a, b, c: <em>(Toon 1989a)</em>, <em>(Toon 1989b)</em>.</p>
+<p><strong>Number system (Vancouver, IEEE)</strong>: Assign a number to each source in the order it appears. Use that number in brackets or parentheses throughout the text. - Example: <em>If the load on the thrust bearing can be decreased, the life of the turbodrill can be significantly increased (1).</em> - If you cite the same source again, reuse its original number.</p>
+</section>
+<section id="managing-references" class="level3">
+<h3 class="anchored" data-anchor-id="managing-references">Managing references</h3>
+<p>Don’t manually format your reference list. Use reference management software like <strong>EndNote</strong> (free via UQ) or the built‑in tools in MS Word. Google Scholar’s “Cite” button can export references directly into EndNote or give you a pre‑formatted citation to paste.</p>
+<p>Stick to <strong>one referencing style</strong> throughout your document. In engineering, APA and Harvard are common, but check your assignment guidelines.</p>
+<hr>
+</section>
+</section>
+<section id="critical-thinking" class="level2" data-number="7.17">
+<h2 data-number="7.17" class="anchored" data-anchor-id="critical-thinking"><span class="header-section-number">7.17</span> Critical Thinking</h2>
+<p>Critical thinking is the skill of questioning, analysing, interpreting, evaluating, and making a judgement about what you read, hear, say, or write. It is <strong>not</strong> about being negative; it is about making reliable judgements based on reliable information.</p>
+<section id="the-six-steps-to-developing-critical-thinking" class="level3">
+<h3 class="anchored" data-anchor-id="the-six-steps-to-developing-critical-thinking">The six steps to developing critical thinking</h3>
+<ol type="1">
+<li><strong>Clarify your thinking purpose and context</strong>: What is the problem? What question am I addressing? What different viewpoints must I consider?</li>
+<li><strong>Question your sources of information</strong>: Not all sources are equally credible, accurate, or relevant.</li>
+<li><strong>Identify arguments</strong>: Recognise when someone is trying to persuade you or prove a point.</li>
+<li><strong>Analyse sources and arguments</strong>: Examine evidence, reasoning, assumptions, and methodologies.</li>
+<li><strong>Evaluate the arguments of others</strong>: Weigh the strengths and weaknesses.</li>
+<li><strong>Create your own arguments</strong>: Synthesise evidence, reasoning, and claims to form your own well‑supported position.</li>
+</ol>
+</section>
+<section id="the-ultimate-cheatsheet-for-critical-thinking" class="level3">
+<h3 class="anchored" data-anchor-id="the-ultimate-cheatsheet-for-critical-thinking">The Ultimate Cheatsheet for Critical Thinking</h3>
+<p>Whenever you encounter new information, ask yourself these questions:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 14%">
+<col style="width: 16%">
+<col style="width: 18%">
+<col style="width: 16%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Who</strong></th>
+<th><strong>What</strong></th>
+<th><strong>Where</strong></th>
+<th><strong>When</strong></th>
+<th><strong>Why</strong></th>
+<th><strong>How</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>…benefits from this?</strong></td>
+<td>…are the strengths/weaknesses?</td>
+<td>…would we see this in the real world?</td>
+<td>…is this acceptable/unacceptable?</td>
+<td>…is this a problem?</td>
+<td>…is this similar to ___?</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>…is this harmful to?</strong></td>
+<td>…is another perspective?</td>
+<td>…are there similar concepts?</td>
+<td>…would this benefit society?</td>
+<td>…is it relevant?</td>
+<td>…does this disrupt things?</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>…makes decisions?</strong></td>
+<td>…is another alternative?</td>
+<td>…is there the most need?</td>
+<td>…would this cause a problem?</td>
+<td>…is this the best/worst scenario?</td>
+<td>…do we know the truth?</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>…is most affected?</strong></td>
+<td>…would be a counter-argument?</td>
+<td>…is this a problem in the world?</td>
+<td>…is the best time to act?</td>
+<td>…are people influenced?</td>
+<td>…will we approach this safely?</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>These questions are simple but powerful. Get into the habit of using them every time you read a paper, hear a claim, or write your own arguments.</p>
+<hr>
+</section>
+</section>
+<section id="key-takeaways-for-this-chapter" class="level2" data-number="7.18">
+<h2 data-number="7.18" class="anchored" data-anchor-id="key-takeaways-for-this-chapter"><span class="header-section-number">7.18</span> Key Takeaways for This Chapter</h2>
+<ol type="1">
+<li>A <strong>literature review</strong> is the foundation of all research; it educates you, reveals gaps, and justifies your project.</li>
+<li>Use <strong>Google Scholar</strong> with Advanced Search, Library Links, and Alerts to work efficiently.</li>
+<li>Read papers strategically: abstract → intro &amp; conclusion → VIP papers only → full reading. Keep a <strong>summary table</strong>.</li>
+<li>Your <strong>research problem</strong> must flow directly from the gaps you identified. Know the <em>type</em> of gap you are addressing.</li>
+<li>A <strong>hypothesis</strong> is a testable prediction; it is the cornerstone of the scientific method.</li>
+<li>A <strong>research proposal</strong> sells an idea; a <strong>research report</strong> presents results. Do not confuse the two.</li>
+<li>Pay obsessive attention to <strong>formatting and citations</strong>: They signal professionalism.</li>
+<li><strong>Critical thinking</strong> is not optional; it is the engine that drives good science. Use the cheatsheet every day.</li>
+</ol>
+</section>
+<section id="further-reading" class="level2" data-number="7.19">
+<h2 data-number="7.19" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">7.19</span> Further Reading</h2>
+<ul>
+<li>Neuman, W. L. (2013). <em>Social Research Methods</em> (7th ed.). Chapter 5: How to Review the Literature and Conduct Ethical Studies.</li>
+<li>Schall, J. <em>Style for Students Online</em> - Effective Technical Writing in the Information Age. <a href="https://www.e-education.psu.edu/styleforstudents/">Free access</a></li>
+<li>UQ Library’s systematic review guide: <a href="https://guides.library.uq.edu.au">guides.library.uq.edu.au</a></li>
+</ul>
+<hr>
+<p><em>This concludes the Week 3 lecture material. Next week we move into data quality and the beginning of statistical analysis; things will get more technical, but you now have the practical toolkit to handle them.</em></p>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script>
+// Persistent bi-directional light/dark theme handler across chapter navigations
+(function() {
+  function getSavedTheme() {
+    try {
+      return sessionStorage.getItem("quarto-color-scheme-forced") || localStorage.getItem("quarto-color-scheme");
+    } catch(e) {
+      return null;
+    }
+  }
+
+  function saveTheme(themeValue) { // "alternate" for dark, "default" for light
+    try {
+      sessionStorage.setItem("quarto-color-scheme-forced", themeValue);
+      try { localStorage.setItem("quarto-color-scheme", themeValue); } catch(e) {}
+    } catch(e) {}
+  }
+
+  var saved = getSavedTheme();
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // 1. Apply saved theme state on initial page load
+    if (saved === "alternate" || saved === "dark") {
+      var alternateSheets = document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      alternateSheets.forEach(function(s) {
+        if (s.rel !== 'stylesheet') s.rel = 'stylesheet';
+      });
+      document.body.classList.add('quarto-dark');
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+      
+      var toggles = document.querySelectorAll('.quarto-color-scheme-toggle');
+      toggles.forEach(function(t) { t.classList.add('alternate'); });
+    } else if (saved === "default" || saved === "light") {
+      var alternateSheets = document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      alternateSheets.forEach(function(s) {
+        s.rel = 'disabled-stylesheet';
+      });
+      document.body.classList.remove('quarto-dark');
+      document.documentElement.setAttribute('data-bs-theme', 'light');
+      
+      var toggles = document.querySelectorAll('.quarto-color-scheme-toggle');
+      toggles.forEach(function(t) { t.classList.remove('alternate'); });
+    }
+
+    // 2. Listen for clicks on the theme toggle button to accurately save user preference
+    document.addEventListener("click", function(e) {
+      var toggle = e.target.closest('.quarto-color-scheme-toggle');
+      if (toggle) {
+        setTimeout(function() {
+          // Check if dark mode stylesheet is currently enabled
+          var darkSheet = document.querySelector('link.quarto-color-scheme.quarto-color-alternate');
+          var isDark = toggle.classList.contains('alternate') || (darkSheet && darkSheet.rel === 'stylesheet');
+          
+          if (isDark) {
+            saveTheme("alternate");
+            document.body.classList.add('quarto-dark');
+            document.documentElement.setAttribute('data-bs-theme', 'dark');
+          } else {
+            saveTheme("default");
+            document.body.classList.remove('quarto-dark');
+            document.documentElement.setAttribute('data-bs-theme', 'light');
+            // Ensure alternate stylesheets are disabled
+            var alternateSheets = document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+            alternateSheets.forEach(function(s) {
+              s.rel = 'disabled-stylesheet';
+            });
+          }
+        }, 100);
+      }
+    });
+  });
+})();
+
+document.addEventListener("DOMContentLoaded", function () {
+  const tocEl = document.querySelector('nav#TOC[role="doc-toc"]');
+  if (!tocEl) return;
+
+  const tocLinks = Array.from(tocEl.querySelectorAll("a[data-scroll-target]"));
+  if (!tocLinks.length) return;
+
+  const sections = tocLinks.map(link => {
+    const target = link.getAttribute("data-scroll-target");
+    if (!target) return null;
+    if (target.startsWith("#")) {
+      return document.getElementById(decodeURI(target.slice(1)));
+    } else {
+      return document.querySelector(decodeURI(target));
+    }
+  });
+
+  function getAbsoluteTop(elem) {
+    if (!elem) return 0;
+    return elem.getBoundingClientRect().top + window.pageYOffset;
+  }
+
+  let currentActive = -1;
+
+  function updateTOC() {
+    const pageY = window.pageYOffset;
+    const windowHeight = window.innerHeight;
+    const bodyHeight = document.body.offsetHeight;
+
+    let sectionIndex = -1;
+
+    // If scrolled at the very bottom of page, activate last section
+    if (pageY + windowHeight >= bodyHeight - 50) {
+      sectionIndex = sections.length - 1;
+    } else {
+      // Find section currently in view using absolute offset
+      for (let i = sections.length - 1; i >= 0; i--) {
+        if (sections[i]) {
+          const top = getAbsoluteTop(sections[i]);
+          if (pageY >= top - 140) {
+            sectionIndex = i;
+            break;
+          }
+        }
+      }
+    }
+
+    if (sectionIndex === -1 && sections.length > 0) {
+      sectionIndex = 0;
+    }
+
+    if (sectionIndex !== currentActive && sectionIndex >= 0) {
+      currentActive = sectionIndex;
+
+      tocLinks.forEach((link, idx) => {
+        if (idx === sectionIndex) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+    }
+  }
+
+  window.addEventListener("scroll", function() {
+    requestAnimationFrame(updateTOC);
+  }, { passive: true, capture: true });
+
+  window.addEventListener("resize", updateTOC, { passive: true });
+  setTimeout(updateTOC, 100);
+  setTimeout(updateTOC, 500);
+  setTimeout(updateTOC, 1000);
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../fundamentals/week2_norms-and-method.html" class="pagination-link" aria-label="Reason, Logic &amp; Common Pitfalls">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reason, Logic &amp; Common Pitfalls</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../tutorials/week1-2_introduction_to_R.html" class="pagination-link" aria-label="Practical Lab 1: Introduction to R, Data Structures, and Data Import">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Practical Lab 1: Introduction to R, Data Structures, and Data Import</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Practical Research Skills"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "ENGG7518 Research Methods for Engineers: Week 3"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Prof. Zuduo Zheng"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "Semester 2, 2026"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *“Passion and obsession, even talent, are only useful tools if you have the work ethic to back them up.”*</span>  </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; - **David Goggins</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>In the first two weeks we built the philosophical foundations of science and research. Now we shift to the **practical tasks** you will face when starting your own project, whether it is a semester‑long research assignment or a larger thesis. The journey begins with one of the most underestimated yet most powerful tools a researcher possesses: the **literature review**.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>This chapter will take you through the entire practical workflow:</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Why a literature review is essential and how to do it systematically</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>How to use Google Scholar like a pro to find, manage, and stay current with the literature</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>How to read papers efficiently and organise your findings</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>How to turn gaps into a solid research problem and testable hypothesis</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>How to write a compelling research proposal and a professional research report</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>How to think critically about everything you read and write</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>Let’s begin at the beginning.</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Research Process: A Quick Reminder</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>Every research project follows a well‑defined cycle. At its centre lies **theory**, and an essential early step is *selecting a good topic*. How do you choose? The answer, as many of you correctly recalled, is through a thorough review of what others have already done.</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="al">![The typical research process](../images/research-process.png)</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## What Is a Literature Review?</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>A literature review is the process of **gathering, evaluating, and synthesising** the existing body of knowledge on a particular topic. The underlying assumption is that science is cumulative: over generations, researchers build on each other’s work. If those past studies were conducted with scientific rigour, their collective findings become increasingly reliable and accurate.</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>For you as a beginner, the most efficient way to start is to **stand on the shoulders of giants** (as Isaac Newton famously said). Instead of reinventing the wheel, you first educate yourself about the development history, the current state, and the state‑of‑the‑art in your field.</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Is the Literature Review So Important?</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="fu">### Avoid the ultimate embarrassment</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>Imagine spending years of effort and millions of dollars, only to have a colleague point out during a conference presentation: “*Somebody already discovered the same thing ten years ago.*” This actually happened at the prestigious ISTTT conference in transport engineering. The very first question from the audience was: “Have you conducted a literature review or not?” The presenter had no good defence.</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>Conducting a proper review protects you from wasting time on questions that have already been answered, and from public embarrassment.</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="fu">### The hierarchy of scientific evidence</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>Not all evidence carries the same weight. Think of the strength of evidence as a pyramid:</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Bottom layer (weakest):** personal opinion, anecdotes, newspaper articles.</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Middle layers:** case studies, cross‑sectional studies, well‑designed experiments.</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Top layer (strongest):** **systematic reviews and meta‑analyses.**</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>A systematic review is a special type of literature review that:</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Scrutinises the quality of every included study,</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Identifies common issues and consensus conclusions,</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Points out future research needs.</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>Because its conclusion is based on the *entirety* of available evidence rather than a single study, a systematic review provides the most trustworthy scientific evidence.</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## Goals of a Literature Review</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>A good review should help you:</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Educate yourself**: Become an expert on what has already been done.</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Demonstrate familiarity** with a body of knowledge: show that you know what you’re talking about.</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Show the path of prior research**: Explain how your project connects to earlier work.</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Integrate and condense** a massive amount of information into key, digestible points.</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Learn from others’ mistakes**: Avoid pitfalls that have already been identified.</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Identify gaps**: Those gaps become the foundation for your own research question.</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="fu">### Types of literature review</span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>Depending on your goal, your review may take one or more of the following forms:</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Self‑study review**: Increases the reader’s confidence in your understanding of the field.</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Context review**: Places your specific project in the big picture.</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Historical review**: Traces the development of an issue over time.</span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Theoretical review**: Compares how different theories address the same issue.</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Integrative review**: Summarises what is known at a given point in time.</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Methodological review**: Examines how methodology varies across studies.</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>Most student projects will be a combination of self‑study, context, and integrative reviews.</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## How to Conduct a Systematic Review: The PRISMA Framework</span></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>When you write a literature review, someone else should be able to **reproduce** exactly what you did. Unfortunately, many published reviews fail this test: they do not report which keywords were used, which databases were searched, or why certain papers were excluded.</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>The **PRISMA** (Preferred Reporting Items for Systematic Reviews and Meta‑Analyses) framework solves this problem. It provides a clear, transparent checklist and a flow diagram that documents every decision you make during the review process.</span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="fu">### The PRISMA flow diagram</span></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>The process consists of three major phases:</span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Identification**: Search databases, remove duplicates, record numbers.</span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Screening**: Read titles and abstracts, exclude irrelevant records, retrieve full texts, assess eligibility.</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Included**: The final set of studies that form the basis of your review.</span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>At every step you document *how many* records were kept or excluded and *why*. This guarantees transparency and reproducibility.</span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="fu">### Tools to help</span></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Covidence**: an online platform that streamlines PRISMA workflows (duplicate detection, screening, data extraction). UQ provides **free access** to all students.</span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For smaller projects you can manage the process manually, but always keep a detailed log of your search strategy and decisions.</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>For more resources, visit the UQ Library’s systematic review guide or talk to a librarian.</span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="fu">## Searching the Literature with Google Scholar</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>Before the internet, researchers had to physically browse shelves of journals. In the early internet era, we had to search multiple databases one by one. Today, **Google Scholar** is the go‑to tool that integrates almost everything into a single, powerful search engine. It should be your first stop for any literature search.</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>If you haven’t used Google Scholar before, open it now at <span class="co">[</span><span class="ot">scholar.google.com</span><span class="co">](https://scholar.google.com)</span> and follow along.</span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a><span class="fu">### Basic vs. Advanced Search</span></span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>By default, Google Scholar treats your search terms as:</span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Not case‑sensitive** (“Traffic” = “traffic”)</span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Combined with AND** if you type multiple words</span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Searched everywhere**: Full text, title, abstract, citations</span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>This gives you a huge number of results, many of which are irrelevant. To narrow things down, use the **Advanced Search** (accessible from the menu). You can:</span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Find articles with all words**: Only show papers that contain every keyword you specify.</span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Find articles with the exact phrase**: Useful for multi‑word terms like “climate change”.</span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Find articles without certain words**: Exclude topics you don’t care about.</span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Find articles by a specific author**: Track the work of a leading researcher.</span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Limit by publication date**: Focus on recent developments.</span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>Additional tips:</span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use **quotes** to search for an exact phrase.</span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use **Boolean operators** (AND, OR, NOT) to refine your search.</span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use keywords, not full sentences.</span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>Practise with a few searches and compare the number and relevance of results. A well‑crafted advanced search can reduce thousands of hits to a manageable, focused list.</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a><span class="fu">### One‑click access to full text</span></span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>Google Scholar can be linked directly to the **UQ Library**. Once you set this up, you’ll see a “Find it @ UQ Library” link next to search results. Click it, log in with your UQ credentials, and you’ll be taken straight to the full paper; no need to worry about which database or journal it comes from.</span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>**How to set up Library Links:**</span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Go to **Settings** → **Library links**.</span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Search for “University of Queensland” and select it.</span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Save. The “Find it @ UQ Library” link will now appear.</span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>If the library doesn’t have access to a particular paper, you can request it for free through the library’s document delivery service.</span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a><span class="fu">### Citation management made painless</span></span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>Managing references manually is tedious and error‑prone. Google Scholar gives you a simple shortcut:</span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Click the **“Cite”** button (the quotation mark icon) under any search result.</span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Google Scholar displays the reference in five common styles (MLA, APA, Chicago, Harvard, Vancouver); APA is often used in engineering.</span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You can copy and paste the formatted reference directly into your report, or export it in a format compatible with **EndNote** (which UQ provides for free).</span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>You can also set your preferred bibliography manager (e.g., EndNote) in the Settings menu so that an “Import into EndNote” link appears with every search result.</span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a><span class="fu">### Stay up‑to‑date with Alerts</span></span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a>If you’re serious about a research topic, create a **Google Scholar Alert**:</span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Perform a search for your keywords or a specific author.</span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Click **“Create alert”** (on the left sidebar).</span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Choose how often you want to receive email updates (weekly is a good start).</span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>Google Scholar will then automatically notify you whenever a new paper matches your search. This is the most efficient way to keep abreast of the latest research without constantly re‑checking.</span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a><span class="fu">### Assessing journal and conference quality</span></span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>Not all publications are equal. Some journals are profit‑driven and will publish almost anything for a fee; these are essentially unvetted. You need to know which venues are trustworthy.</span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>Google Scholar’s **Metrics** page (accessible from the top menu) helps:</span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click **Metrics**.</span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Select the category **Engineering &amp; Computer Science**.</span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Choose the subcategory most relevant to you (e.g., Transportation).</span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>The list shows the top‑ranked journals and conferences in that field, sorted by their h5‑index (a measure of citation impact).</span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>The ranking is not perfect, but the top 20 to 30 venues are almost certainly reputable. In transport engineering, for instance, *Transportation Research Part B* and *Part C* are widely recognised as top journals. Publication in such journals involves a rigorous peer‑review process that can take a year or more, so you know the papers have been thoroughly scrutinised.</span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>When you assess the quality of a study during your review, the venue in which it was published is a useful (though not the only) indicator.</span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a><span class="fu">### Expanding your review: forward and backward searching</span></span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>Two powerful techniques can quickly expand your literature review:</span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Forward searching**: Look at papers that have *cited* the paper you just read. Google Scholar’s “Cited by” link shows you more recent work that builds on the same foundations.</span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Backward searching**: Examine the reference list of a key paper to find earlier, foundational studies.</span>
+<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a>These methods turn one good paper into a web of related work.</span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a><span class="fu">## How to Read Papers Efficiently</span></span>
+<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a>After your search you may face a stack of 100+ papers. Reading every word of every paper is impossible, and unnecessary. Here is a strategy that works.</span>
+<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 1: Skim the title and abstract</span></span>
+<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a>This takes seconds. Ask: *Is this paper genuinely relevant to my topic?* If no, discard it.</span>
+<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 2: Read the introduction and conclusion</span></span>
+<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The **introduction** explains the research background, the gap being addressed, and the authors’ contributions. It’s usually straightforward, with few equations.</span>
+<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The **conclusion** summarises key findings and, crucially, points out **limitations and future work**. This is where authors are most honest about what they didn’t achieve.</span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a>After reading these two sections you should have a very good idea of whether the paper is a **VIP** for your project. Most papers won’t be.</span>
+<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 3: For VIP Papers Only: Read the Middle</span></span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a>If a paper’s research question is very close to yours, and the limitations they mention are things you think you could improve, then it’s a VIP. Only at this stage do you invest the time to read the methodology and results in detail.</span>
+<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a>During the literature review phase, you **do not** need to understand every equation. Your goal is to see *what kinds of methods* are being used, not to master each one. Later, once you’ve chosen your own method, you can return to the relevant VIP papers and study the technical details more deeply.</span>
+<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a><span class="fu">### A tip: read with a clear purpose</span></span>
+<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a>Before you even open a paper, ask yourself: *What do I need from this paper right now?* Are you looking for background knowledge, a specific method, a data source, or a gap to exploit? This focus will speed up your reading enormously.</span>
+<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a><span class="fu">## Organising Your Review: The Summary Table</span></span>
+<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a>The biggest mistake students make is reading a paper, understanding it, and then forgetting everything three days later. To avoid this, create a **summary table** as you read.</span>
+<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Title <span class="pp">|</span> Year <span class="pp">|</span> Country <span class="pp">|</span> Research Question <span class="pp">|</span> Method <span class="pp">|</span> Major Findings <span class="pp">|</span> My Comments <span class="pp">|</span></span>
+<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a><span class="pp">|-------|------|---------|-------------------|--------|-----------------|-------------|</span></span>
+<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Paper 1 <span class="pp">|</span> <span class="pp">|</span> <span class="pp">|</span> <span class="pp">|</span> <span class="pp">|</span> <span class="pp">|</span> <span class="pp">|</span></span>
+<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Paper 2 <span class="pp">|</span> <span class="pp">|</span> <span class="pp">|</span> <span class="pp">|</span> <span class="pp">|</span> <span class="pp">|</span> <span class="pp">|</span></span>
+<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ... <span class="pp">|</span> <span class="pp">|</span> <span class="pp">|</span> <span class="pp">|</span> <span class="pp">|</span> <span class="pp">|</span> <span class="pp">|</span></span>
+<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**My Comments**: Your own thoughts, criticisms, or ideas sparked by the paper. Write these down *immediately* before you forget.</span>
+<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a>When the time comes to write your literature review, this table becomes your single source of truth. You won’t need to re‑read every paper; you’ll just synthesise the table.</span>
+<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a><span class="fu">## What a Good Review Looks Like</span></span>
+<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a>A **bad** literature review is a collection of disconnected paragraphs, each summarising one paper in isolation, often stitched together with copied sentences.</span>
+<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a>A **good** literature review:</span>
+<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Compares and contrasts** studies: who agrees, who disagrees, and why?</span>
+<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Identifies themes**: Groups papers by approach, finding, or theory.</span>
+<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Establishes the connection** between past work and your own research question.</span>
+<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Highlights gaps**: Specifically those gaps that your project will address.</span>
+<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a>It is not a list of summaries; it is a **story** that leads the reader inexorably to the conclusion that your research is necessary.</span>
+<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a><span class="fu">## Formulating a Research Problem</span></span>
+<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a>A thorough literature review should have revealed **gaps**: Questions that previous studies have not fully answered, or limitations in their methods that you could improve. Your research problem is born directly from those gaps.</span>
+<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a>The formulation should be:</span>
+<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Specific**: Avoid broad, vague statements.</span>
+<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Rooted in the literature**: You must be able to say exactly which studies left the gap open.</span>
+<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Answerable**: You need to have (or be able to collect) the data and apply the methods to address it.</span>
+<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a>To articulate the gap clearly, follow this structure:</span>
+<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Clearly state the gap(s) in the literature.</span>
+<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Clearly state the consequence of the gap(s).</span>
+<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Clearly state which gap(s) your research project focuses on.</span>
+<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a><span class="fu">### Types of research gaps</span></span>
+<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a>Not all gaps are the same. Understanding the *type* of gap can help you articulate your research problem more precisely:</span>
+<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Gap type <span class="pp">|</span> Definition <span class="pp">|</span></span>
+<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|------------|</span></span>
+<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Evidence gap** (Contradictory evidence) <span class="pp">|</span> Results from individual studies allow for conclusions, but they contradict each other when examined from a higher perspective. <span class="pp">|</span></span>
+<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Knowledge gap** (Knowledge void) <span class="pp">|</span> Desired research findings simply do not exist yet. <span class="pp">|</span></span>
+<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Practical‑knowledge gap** (Action‑knowledge conflict) <span class="pp">|</span> Professional behaviour or practice deviates from what research suggests, or is not covered by research at all. <span class="pp">|</span></span>
+<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Methodological gap** <span class="pp">|</span> A variation of research methods is needed to generate new insights or avoid distorted findings. <span class="pp">|</span></span>
+<span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Empirical gap** (Evaluation void) <span class="pp">|</span> Research findings or propositions have not been empirically verified. <span class="pp">|</span></span>
+<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Theoretical gap** (Theory application void) <span class="pp">|</span> Theory should be applied to certain research issues to generate new insights; a lack of theory creates a gap. <span class="pp">|</span></span>
+<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Population gap** <span class="pp">|</span> A specific population (e.g., gender, age, ethnicity) is not adequately represented or under‑researched. <span class="pp">|</span></span>
+<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a>*Source: Kumar DM (2020), adapted from Miles (2017) and others.*</span>
+<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a><span class="fu">### Examples of real research problem statements</span></span>
+<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a>Here are two examples from successful ARC (Australian Research Council) proposals. Notice how each one states the knowledge deficit, its consequence, and the proposed solution.</span>
+<span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-295"><a href="#cb1-295" aria-hidden="true" tabindex="-1"></a>**Example 1: Connected and automated vehicles**</span>
+<span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-297"><a href="#cb1-297" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *“Connected and automated vehicle research will leverage the potentially transformative capabilities of wireless technology to make road transport safer, smarter, and greener. However, **no existing traffic flow models are capable of reproducing features of mixed traffic flow** consisting of traditional, connected, and automated vehicles. This project addresses this knowledge deficit and develops an analytical tool with the capability of accurately modelling mixed traffic flow.”*</span></span>
+<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-299"><a href="#cb1-299" aria-hidden="true" tabindex="-1"></a>**Example 2: Balancing safety and efficiency**</span>
+<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-301"><a href="#cb1-301" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *“This project aims to balance road safety and efficiency as conflicting goals of transport systems mixed with connected and automated vehicles. **Existing models cannot co‑estimate efficiency and safety impacts** of CAVs. This project will generate ground‑breaking models capable of doing so, and develop control strategies to safely and efficiently integrate CAVs into existing transport systems.”*</span></span>
+<span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-303"><a href="#cb1-303" aria-hidden="true" tabindex="-1"></a>In both cases, the gap is specific, its consequence is clear, and the response is directly tied to the gap.</span>
+<span id="cb1-304"><a href="#cb1-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-305"><a href="#cb1-305" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-306"><a href="#cb1-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-307"><a href="#cb1-307" aria-hidden="true" tabindex="-1"></a><span class="fu">## Constructing Hypotheses</span></span>
+<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-309"><a href="#cb1-309" aria-hidden="true" tabindex="-1"></a>A **hypothesis** is a tentative proposition that states a predicted relationship between two or more variables. According to Bailey (1978), a hypothesis is:</span>
+<span id="cb1-310"><a href="#cb1-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-311"><a href="#cb1-311" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; “a proposition that is stated in a testable form and that predicts a particular relationship between two (or more) variables. If we think that a relationship exists, we first state it as a hypothesis and then test the hypothesis in the field.”</span></span>
+<span id="cb1-312"><a href="#cb1-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-313"><a href="#cb1-313" aria-hidden="true" tabindex="-1"></a><span class="fu">### Characteristics of a hypothesis</span></span>
+<span id="cb1-314"><a href="#cb1-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-315"><a href="#cb1-315" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>It is **tentative**: Its validity is unknown at the time it is proposed.</span>
+<span id="cb1-316"><a href="#cb1-316" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>It specifies a **relationship** between variables.</span>
+<span id="cb1-317"><a href="#cb1-317" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>It must be **testable**: You need to be able to collect data and analyse it to determine whether the hypothesis is supported or not.</span>
+<span id="cb1-318"><a href="#cb1-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-319"><a href="#cb1-319" aria-hidden="true" tabindex="-1"></a><span class="fu">### Examples of simple hypotheses</span></span>
+<span id="cb1-320"><a href="#cb1-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-321"><a href="#cb1-321" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Automation makes roads safer.</span>
+<span id="cb1-322"><a href="#cb1-322" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The summer in Brisbane is getting hotter.</span>
+<span id="cb1-323"><a href="#cb1-323" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Humans are getting taller.</span>
+<span id="cb1-324"><a href="#cb1-324" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Human life expectancy is becoming longer.</span>
+<span id="cb1-325"><a href="#cb1-325" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Talking on a mobile phone while driving leads to more collisions.</span>
+<span id="cb1-326"><a href="#cb1-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-327"><a href="#cb1-327" aria-hidden="true" tabindex="-1"></a>Some of these are broad; in practice you will need to operationalise them (e.g., “drivers using a hand‑held mobile phone have longer reaction times than drivers not using one”). Hypothesis construction and testing will be covered in greater depth when we move into statistical methods.</span>
+<span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-329"><a href="#cb1-329" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-330"><a href="#cb1-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-331"><a href="#cb1-331" aria-hidden="true" tabindex="-1"></a><span class="fu">## Writing a Research Proposal</span></span>
+<span id="cb1-332"><a href="#cb1-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-333"><a href="#cb1-333" aria-hidden="true" tabindex="-1"></a>A research proposal is fundamentally a **sales pitch**. Your potential “customers” are funding bodies (e.g., the Australian Research Council, government departments, industry partners) or your thesis committee. They control resources (money, time, equipment), and you must convince them that:</span>
+<span id="cb1-334"><a href="#cb1-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-335"><a href="#cb1-335" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Your idea is important.</span>
+<span id="cb1-336"><a href="#cb1-336" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>You have a feasible plan to execute it.</span>
+<span id="cb1-337"><a href="#cb1-337" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>You are the right person (or team) to carry it out.</span>
+<span id="cb1-338"><a href="#cb1-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-339"><a href="#cb1-339" aria-hidden="true" tabindex="-1"></a><span class="fu">### The “What, Why, How” framework</span></span>
+<span id="cb1-340"><a href="#cb1-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-341"><a href="#cb1-341" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**What** is your research idea?</span>
+<span id="cb1-342"><a href="#cb1-342" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Why** is it important?</span>
+<span id="cb1-343"><a href="#cb1-343" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**How** will you do it? (methodology, timeline, your qualifications)</span>
+<span id="cb1-344"><a href="#cb1-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-345"><a href="#cb1-345" aria-hidden="true" tabindex="-1"></a>**What a proposal should NOT do**: it should not try to answer the research question. You haven’t done the work yet! The proposal is about planning and convincing, not reporting results.</span>
+<span id="cb1-346"><a href="#cb1-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-347"><a href="#cb1-347" aria-hidden="true" tabindex="-1"></a><span class="fu">### Typical structure of a research proposal</span></span>
+<span id="cb1-348"><a href="#cb1-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-349"><a href="#cb1-349" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Section <span class="pp">|</span> Purpose <span class="pp">|</span></span>
+<span id="cb1-350"><a href="#cb1-350" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|---------|</span></span>
+<span id="cb1-351"><a href="#cb1-351" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Project title** <span class="pp">|</span> A concise, descriptive statement of the project. <span class="pp">|</span></span>
+<span id="cb1-352"><a href="#cb1-352" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Aims and objectives** <span class="pp">|</span> A bullet‑proof list of what the project will achieve. <span class="pp">|</span></span>
+<span id="cb1-353"><a href="#cb1-353" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Background/introduction** <span class="pp">|</span> Sets the scene: what is known, what is unknown. <span class="pp">|</span></span>
+<span id="cb1-354"><a href="#cb1-354" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Literature review** <span class="pp">|</span> A critical synthesis that demonstrates you understand the field and have identified the gap. <span class="pp">|</span></span>
+<span id="cb1-355"><a href="#cb1-355" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Proposed methodology** <span class="pp">|</span> The step‑by‑step approach: data, models, experiments, analysis. <span class="pp">|</span></span>
+<span id="cb1-356"><a href="#cb1-356" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Significance/expected contribution** <span class="pp">|</span> Why this matters: practical impact, theoretical contribution. <span class="pp">|</span></span>
+<span id="cb1-357"><a href="#cb1-357" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Workplan/timeline** <span class="pp">|</span> A realistic schedule (e.g., Gantt chart). <span class="pp">|</span></span>
+<span id="cb1-358"><a href="#cb1-358" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **References** <span class="pp">|</span> Only the key sources that directly support your proposal. <span class="pp">|</span></span>
+<span id="cb1-359"><a href="#cb1-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-360"><a href="#cb1-360" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-361"><a href="#cb1-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-362"><a href="#cb1-362" aria-hidden="true" tabindex="-1"></a><span class="fu">## Writing a Research Report</span></span>
+<span id="cb1-363"><a href="#cb1-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-364"><a href="#cb1-364" aria-hidden="true" tabindex="-1"></a>Once your proposal has been accepted and the hard work of data collection and analysis is complete, you must communicate your findings clearly. A research report follows a different structure:</span>
+<span id="cb1-365"><a href="#cb1-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-366"><a href="#cb1-366" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Section <span class="pp">|</span> What it contains <span class="pp">|</span></span>
+<span id="cb1-367"><a href="#cb1-367" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|------------------|</span></span>
+<span id="cb1-368"><a href="#cb1-368" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Project title** <span class="pp">|</span> Clear and informative. <span class="pp">|</span></span>
+<span id="cb1-369"><a href="#cb1-369" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Abstract/summary** <span class="pp">|</span> A standalone summary of the problem, method, key results, and conclusion. <span class="pp">|</span></span>
+<span id="cb1-370"><a href="#cb1-370" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Introduction** <span class="pp">|</span> Background, research gap, objectives, and outline of the report. <span class="pp">|</span></span>
+<span id="cb1-371"><a href="#cb1-371" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Literature review** <span class="pp">|</span> Critical synthesis of prior work. <span class="pp">|</span></span>
+<span id="cb1-372"><a href="#cb1-372" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Data and methodology** <span class="pp">|</span> How the data were obtained, what methods were used. <span class="pp">|</span></span>
+<span id="cb1-373"><a href="#cb1-373" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Data analysis** <span class="pp">|</span> Present your findings with tables, graphs, and statistical outputs. <span class="pp">|</span></span>
+<span id="cb1-374"><a href="#cb1-374" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Results and discussion** <span class="pp">|</span> Interpret the results: what do they mean? How do they compare with previous studies? Limitations? <span class="pp">|</span></span>
+<span id="cb1-375"><a href="#cb1-375" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Conclusions and recommendations** <span class="pp">|</span> Summarise the main take‑home message and suggest practical actions or future research. <span class="pp">|</span></span>
+<span id="cb1-376"><a href="#cb1-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-377"><a href="#cb1-377" aria-hidden="true" tabindex="-1"></a>Notice that the **proposal** and the **report** serve completely different purposes: one *plans*, the other *reports*.</span>
+<span id="cb1-378"><a href="#cb1-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-379"><a href="#cb1-379" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-380"><a href="#cb1-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-381"><a href="#cb1-381" aria-hidden="true" tabindex="-1"></a><span class="fu">## Professionalism Matters: Formatting Your Report</span></span>
+<span id="cb1-382"><a href="#cb1-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-383"><a href="#cb1-383" aria-hidden="true" tabindex="-1"></a>Small presentation details can make an enormous difference in how your report is received, and in your final mark.</span>
+<span id="cb1-384"><a href="#cb1-384" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-385"><a href="#cb1-385" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Font and layout**: use a consistent, professional font (e.g., Times New Roman or Arial, 12 pt) and stick to it throughout the report unless there is a strong reason not to.</span>
+<span id="cb1-386"><a href="#cb1-386" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Tables**: number them consecutively (Table 1, Table 2…). Give each a clear caption, and place it **above** the table. If the table is based on another author’s work, add “Adapted from” or “After” followed by a citation.</span>
+<span id="cb1-387"><a href="#cb1-387" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Figures**: number them consecutively (Figure 1, Figure 2…). Give each a clear caption, and place it **below** the figure. Again, cite the source if adapted.</span>
+<span id="cb1-388"><a href="#cb1-388" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Equations**: insert using an equation editor (e.g., MS Word Equation Editor). Number equations consecutively.</span>
+<span id="cb1-389"><a href="#cb1-389" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Cross‑referencing**: every table, figure, and equation must be cited in the main body of the text before it appears.</span>
+<span id="cb1-390"><a href="#cb1-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-391"><a href="#cb1-391" aria-hidden="true" tabindex="-1"></a>These are the little things that, when done consistently, make a report look polished and professional. In my experience, careful proofreading is the single most effective way to increase your mark before submission.</span>
+<span id="cb1-392"><a href="#cb1-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-393"><a href="#cb1-393" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-394"><a href="#cb1-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-395"><a href="#cb1-395" aria-hidden="true" tabindex="-1"></a><span class="fu">## Citing Sources Properly</span></span>
+<span id="cb1-396"><a href="#cb1-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-397"><a href="#cb1-397" aria-hidden="true" tabindex="-1"></a><span class="fu">### When must you cite?</span></span>
+<span id="cb1-398"><a href="#cb1-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-399"><a href="#cb1-399" aria-hidden="true" tabindex="-1"></a>You must always cite the source of:</span>
+<span id="cb1-400"><a href="#cb1-400" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-401"><a href="#cb1-401" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Direct quotations, opinions, and predictions (whether quoted or paraphrased).</span>
+<span id="cb1-402"><a href="#cb1-402" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Statistics derived by the original author.</span>
+<span id="cb1-403"><a href="#cb1-403" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Visuals (tables, figures, images).</span>
+<span id="cb1-404"><a href="#cb1-404" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Another author’s theories or case studies.</span>
+<span id="cb1-405"><a href="#cb1-405" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Another author’s experimental methods, results, or specialised procedures.</span>
+<span id="cb1-406"><a href="#cb1-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-407"><a href="#cb1-407" aria-hidden="true" tabindex="-1"></a>When in doubt, cite. It is better to over‑cite than to risk plagiarism.</span>
+<span id="cb1-408"><a href="#cb1-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-409"><a href="#cb1-409" aria-hidden="true" tabindex="-1"></a><span class="fu">### Two common citation systems</span></span>
+<span id="cb1-410"><a href="#cb1-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-411"><a href="#cb1-411" aria-hidden="true" tabindex="-1"></a>**Author‑year system (Harvard, APA, Chicago author‑date)**: Indicate the author(s) and year right in the text, in parentheses.</span>
+<span id="cb1-412"><a href="#cb1-412" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Example: *In recent decades, anthropogenic activities have significantly altered the land surface (Nicholson 2007).*</span>
+<span id="cb1-413"><a href="#cb1-413" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Example: *Furlong et al. (2001) estimate that…*</span>
+<span id="cb1-414"><a href="#cb1-414" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If two or more articles by the same author(s) in the same year, distinguish them with a, b, c: *(Toon 1989a)*, *(Toon 1989b)*.</span>
+<span id="cb1-415"><a href="#cb1-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-416"><a href="#cb1-416" aria-hidden="true" tabindex="-1"></a>**Number system (Vancouver, IEEE)**: Assign a number to each source in the order it appears. Use that number in brackets or parentheses throughout the text.</span>
+<span id="cb1-417"><a href="#cb1-417" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Example: *If the load on the thrust bearing can be decreased, the life of the turbodrill can be significantly increased (1).*</span>
+<span id="cb1-418"><a href="#cb1-418" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If you cite the same source again, reuse its original number.</span>
+<span id="cb1-419"><a href="#cb1-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-420"><a href="#cb1-420" aria-hidden="true" tabindex="-1"></a><span class="fu">### Managing references</span></span>
+<span id="cb1-421"><a href="#cb1-421" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-422"><a href="#cb1-422" aria-hidden="true" tabindex="-1"></a>Don’t manually format your reference list. Use reference management software like **EndNote** (free via UQ) or the built‑in tools in MS Word. Google Scholar’s “Cite” button can export references directly into EndNote or give you a pre‑formatted citation to paste.</span>
+<span id="cb1-423"><a href="#cb1-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-424"><a href="#cb1-424" aria-hidden="true" tabindex="-1"></a>Stick to **one referencing style** throughout your document. In engineering, APA and Harvard are common, but check your assignment guidelines.</span>
+<span id="cb1-425"><a href="#cb1-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-426"><a href="#cb1-426" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-427"><a href="#cb1-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-428"><a href="#cb1-428" aria-hidden="true" tabindex="-1"></a><span class="fu">## Critical Thinking</span></span>
+<span id="cb1-429"><a href="#cb1-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-430"><a href="#cb1-430" aria-hidden="true" tabindex="-1"></a>Critical thinking is the skill of questioning, analysing, interpreting, evaluating, and making a judgement about what you read, hear, say, or write. It is **not** about being negative; it is about making reliable judgements based on reliable information.</span>
+<span id="cb1-431"><a href="#cb1-431" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-432"><a href="#cb1-432" aria-hidden="true" tabindex="-1"></a><span class="fu">### The six steps to developing critical thinking</span></span>
+<span id="cb1-433"><a href="#cb1-433" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-434"><a href="#cb1-434" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Clarify your thinking purpose and context**: What is the problem? What question am I addressing? What different viewpoints must I consider?</span>
+<span id="cb1-435"><a href="#cb1-435" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Question your sources of information**: Not all sources are equally credible, accurate, or relevant.</span>
+<span id="cb1-436"><a href="#cb1-436" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Identify arguments**: Recognise when someone is trying to persuade you or prove a point.</span>
+<span id="cb1-437"><a href="#cb1-437" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Analyse sources and arguments**: Examine evidence, reasoning, assumptions, and methodologies.</span>
+<span id="cb1-438"><a href="#cb1-438" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Evaluate the arguments of others**: Weigh the strengths and weaknesses.</span>
+<span id="cb1-439"><a href="#cb1-439" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Create your own arguments**: Synthesise evidence, reasoning, and claims to form your own well‑supported position.</span>
+<span id="cb1-440"><a href="#cb1-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-441"><a href="#cb1-441" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Ultimate Cheatsheet for Critical Thinking</span></span>
+<span id="cb1-442"><a href="#cb1-442" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-443"><a href="#cb1-443" aria-hidden="true" tabindex="-1"></a>Whenever you encounter new information, ask yourself these questions:</span>
+<span id="cb1-444"><a href="#cb1-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-445"><a href="#cb1-445" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>   <span class="pp">|</span> **Who** | **What** | **Where** | **When** | **Why** | **How** <span class="pp">|</span></span>
+<span id="cb1-446"><a href="#cb1-446" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---------|----------|-----------|----------|---------|---------|</span></span>
+<span id="cb1-447"><a href="#cb1-447" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **…benefits from this?** <span class="pp">|</span> …are the strengths/weaknesses? <span class="pp">|</span> …would we see this in the real world? <span class="pp">|</span> …is this acceptable/unacceptable? <span class="pp">|</span> …is this a problem? <span class="pp">|</span> …is this similar to ___? <span class="pp">|</span></span>
+<span id="cb1-448"><a href="#cb1-448" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **…is this harmful to?** <span class="pp">|</span> …is another perspective? <span class="pp">|</span> …are there similar concepts? <span class="pp">|</span> …would this benefit society? <span class="pp">|</span> …is it relevant? <span class="pp">|</span> …does this disrupt things? <span class="pp">|</span></span>
+<span id="cb1-449"><a href="#cb1-449" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **…makes decisions?** <span class="pp">|</span> …is another alternative? <span class="pp">|</span> …is there the most need? <span class="pp">|</span> …would this cause a problem? <span class="pp">|</span> …is this the best/worst scenario? <span class="pp">|</span> …do we know the truth? <span class="pp">|</span></span>
+<span id="cb1-450"><a href="#cb1-450" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **…is most affected?** <span class="pp">|</span> …would be a counter-argument? <span class="pp">|</span> …is this a problem in the world? <span class="pp">|</span> …is the best time to act? <span class="pp">|</span> …are people influenced? <span class="pp">|</span> …will we approach this safely? <span class="pp">|</span></span>
+<span id="cb1-451"><a href="#cb1-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-452"><a href="#cb1-452" aria-hidden="true" tabindex="-1"></a>These questions are simple but powerful. Get into the habit of using them every time you read a paper, hear a claim, or write your own arguments.</span>
+<span id="cb1-453"><a href="#cb1-453" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-454"><a href="#cb1-454" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-455"><a href="#cb1-455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-456"><a href="#cb1-456" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Takeaways for This Chapter</span></span>
+<span id="cb1-457"><a href="#cb1-457" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-458"><a href="#cb1-458" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>A **literature review** is the foundation of all research; it educates you, reveals gaps, and justifies your project.</span>
+<span id="cb1-459"><a href="#cb1-459" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Use **Google Scholar** with Advanced Search, Library Links, and Alerts to work efficiently.</span>
+<span id="cb1-460"><a href="#cb1-460" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Read papers strategically: abstract → intro &amp; conclusion → VIP papers only → full reading. Keep a **summary table**.</span>
+<span id="cb1-461"><a href="#cb1-461" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Your **research problem** must flow directly from the gaps you identified. Know the *type* of gap you are addressing.</span>
+<span id="cb1-462"><a href="#cb1-462" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>A **hypothesis** is a testable prediction; it is the cornerstone of the scientific method.</span>
+<span id="cb1-463"><a href="#cb1-463" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>A **research proposal** sells an idea; a **research report** presents results. Do not confuse the two.</span>
+<span id="cb1-464"><a href="#cb1-464" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>Pay obsessive attention to **formatting and citations**: They signal professionalism.</span>
+<span id="cb1-465"><a href="#cb1-465" aria-hidden="true" tabindex="-1"></a><span class="ss">8. </span>**Critical thinking** is not optional; it is the engine that drives good science. Use the cheatsheet every day.</span>
+<span id="cb1-466"><a href="#cb1-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-467"><a href="#cb1-467" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further Reading</span></span>
+<span id="cb1-468"><a href="#cb1-468" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-469"><a href="#cb1-469" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Neuman, W. L. (2013). *Social Research Methods* (7th ed.). Chapter 5: How to Review the Literature and Conduct Ethical Studies.</span>
+<span id="cb1-470"><a href="#cb1-470" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Schall, J. *Style for Students Online* -  Effective Technical Writing in the Information Age. <span class="co">[</span><span class="ot">Free access</span><span class="co">](https://www.e-education.psu.edu/styleforstudents/)</span></span>
+<span id="cb1-471"><a href="#cb1-471" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>UQ Library’s systematic review guide: <span class="co">[</span><span class="ot">guides.library.uq.edu.au</span><span class="co">](https://guides.library.uq.edu.au)</span></span>
+<span id="cb1-472"><a href="#cb1-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-473"><a href="#cb1-473" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-474"><a href="#cb1-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-475"><a href="#cb1-475" aria-hidden="true" tabindex="-1"></a>*This concludes the Week 3 lecture material. Next week we move into data quality and the beginning of statistical analysis; things will get more technical, but you now have the practical toolkit to handle them.*</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 The University of Queensland | School of Civil Engineering</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ENGG7518/ENGG7518-book/edit/main/fundamentals/week3_practical-research-skills.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ENGG7518/ENGG7518-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>ENGG7518 Course Book</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
