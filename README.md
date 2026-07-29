@@ -1,5 +1,7 @@
 # ENGG7518: Research Methods for Engineers
 
+📖 **Read the online book:** [https://engg7518.github.io/ENGG7518-book/](https://engg7518.github.io/ENGG7518-book/)
+
 Welcome to the source repository for the **ENGG7518: Research Methods for Engineers** course book at The University of Queensland.
 
 This repository contains the source code for the online course book, which is built using [Quarto](https://quarto.org/). It serves as the central hub for course notes, lecture materials, research principles, statistical foundations, data processing methods, and numerical optimisation techniques.
