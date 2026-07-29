@@ -250,3 +250,20 @@ body.quarto-dark .search-item:hover {
   background-color: rgba(199, 125, 255, 0.3) !important;
   color: #ffffff !important;
 }
+
+/* ==========================================================================
+   Centered Page Layout & Reading Area
+   ========================================================================== */
+@media (min-width: 992px) {
+  #quarto-content {
+    max-width: 1400px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  main.content {
+    max-width: 920px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
