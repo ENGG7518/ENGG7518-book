@@ -1,16 +1,14 @@
 ---
 title: "Reason, Logic & Common Pitfalls"
 subtitle: "ENGG7518 Research Methods for Engineers: Week 2"
-author: "Prof. Zuduo Zheng"
-date: "29 July 2026"
 ---
 
-> *“The best time to plant a tree was 20 years ago. The second best time is now.”*  
-> - **Chinese proverb (shared by Prof. Zheng)
+> *“The best time to plant a tree was 20 years ago. The second best time is now.”*
+> — Chinese proverb
 
 ## A Quick Refresher
 
-Last week we established the foundations: science is a human invention that relies on empirical evidence, and research is a structured, systematic inquiry. We ended with a crucial insight: **theory must guide every step of the research process**.
+The previous chapter established the foundations: science is a human invention that relies on empirical evidence, and research is a structured, systematic inquiry. It ended with a crucial insight: **theory must guide every step of the research process**.
 
 The *desirable* sequence looks like this:
 
@@ -24,9 +22,9 @@ The *undesirable* sequence (increasingly common in the age of big data and AI) r
 Data → Data crunching → Pattern spotting → Post‑hoc theorising
 ```
 
-When we let data dictate our investigation, we risk producing conclusions that are not only wrong but sometimes absurd. The **dead grandmother/exam syndrome** example from last time showed just how ridiculous the outcome can be when we blindly trust data without theory.
+When we let data dictate our investigation, we risk producing conclusions that are not only wrong but sometimes absurd, as the well-known **dead grandmother/exam syndrome** illustrates: students' grandmothers are, statistically, far more likely to die just before a major exam. We revisit this example later in the book; for now, the lesson is simple: never let a pattern in the data replace a plausible explanation for it.
 
-This week we go deeper into how we reason, what causality really means, and the most common traps that researchers fall into.
+This chapter goes deeper into how we reason, what causality really means, and the most common traps that researchers fall into.
 
 ---
 
@@ -68,11 +66,7 @@ Induction is the backbone of empirical science. You collect data on a **sample**
   *Generally good advice, but not an absolute law.*
 :::
 
-Induction is not foolproof, but it becomes increasingly reliable when:
-
-- The sample is representative,
-- The analysis is rigorous,
-- And the conclusion is tested again and again by the wider scientific community.
+Induction is not foolproof, but it becomes increasingly reliable when the sample is representative, the analysis is rigorous, and the conclusion is tested again and again by the wider scientific community.
 
 ### Deduction
 
@@ -83,7 +77,7 @@ Deduction is what we use in mathematics: step‑by‑step, black‑and‑white l
 - “My boss said the person with the highest sales gets a promotion. I had the highest sales. Therefore, I will be promoted.”  
   *The conclusion follows logically, provided the boss keeps their word.*
 
-- “This course has a 40 % hurdle on the final exam. I scored 38 % on the final. Therefore, I cannot pass the course.”  
+- “A course has a 40 % hurdle on the final exam. I scored 38 % on the final. Therefore, I cannot pass the course.”  
   *Unambiguous and certain, once the rule is accepted.*
 :::
 
@@ -122,8 +116,8 @@ If you answered **induction**, you are correct. We have observed the sun rise da
 
 Engineers often ask: *“Does A cause B?”* Answering that question is much harder than it appears.
 
-- **Association (correlation):** two things tend to occur together or vary in a related way.  
-  *Ice‑cream sales and drowning incidents both rise in summer, but eating ice‑cream does not cause drowning.* - **Causality:** changing A directly produces a change in B.
+- **Association (correlation):** two things tend to occur together or vary in a related way. *Ice‑cream sales and drowning incidents both rise in summer, but eating ice‑cream does not cause drowning.*
+- **Causality:** changing A directly produces a change in B.
 
 Most statistical and machine‑learning methods can detect association, **not** causation. Yet researchers (and the media) frequently slip from “A is associated with B” to “A causes B”. This is a serious mistake.
 
@@ -159,7 +153,7 @@ Even well‑trained researchers fall into these traps. Recognising them is the f
 
 **“After, therefore because.”** This is the fallacy of assuming that because event A occurred before event B, A must have caused B.
 
-- *There were no nuclear weapons before women had the right to vote, therefore nuclear war is a product of women voting.* 😕
+- *There were no nuclear weapons before women had the right to vote, therefore nuclear war is a product of women voting.*
 - *My child broke her leg after receiving a vaccine, therefore the vaccine caused the broken leg.*
 - *Everybody who goes to that optometrist ends up wearing glasses, therefore the optometrist makes people’s eyesight worse.*
 
@@ -178,11 +172,7 @@ The hypothesis must come **before** the data that tests it. Anything else is jus
 
 ### 2. Entrapment
 
-Entrapment happens when you have invested so much time, money, or ego into a project that you can no longer admit it might be failing.
-
-- You ignore warning signs.
-- You dismiss competing hypotheses.
-- You may even massage the data to protect your original belief.
+Entrapment happens when you have invested so much time, money, or ego into a project that you can no longer admit it might be failing. You ignore warning signs, dismiss competing hypotheses, and may even massage the data to protect your original belief.
 
 The case of a researcher who spends a $5 million, 5‑year government grant and has nothing to show is a classic example. The pressure to produce a “success” can be overwhelming.  
 
@@ -214,7 +204,7 @@ The story of the **Thanksgiving turkey** (see the next section) shows why carele
 
 ### 5. The Black Swan and the Thanksgiving Turkey
 
-In his book *The Black Swan*, Nassim Nicholas Taleb tells the story of a turkey who is fed every morning by a kind farmer. Day after day, the turkey’s happiness increases. A “smart turkey” even fits a linear regression model and predicts ever‑increasing happiness.
+In his book *The Black Swan* [-@Taleb2010], Nassim Nicholas Taleb tells the story of a turkey who is fed every morning by a kind farmer. Day after day, the turkey’s happiness increases. A “smart turkey” even fits a linear regression model and predicts ever‑increasing happiness.
 
 Until the morning of Thanksgiving. The farmer appears not with a bucket of food, but with a knife. Happiness drops to zero.
 
@@ -256,17 +246,13 @@ As scientists, we must actively fight against this. One of the strongest weapons
 
 ### 8. Publication Bias
 
-Journals are far more likely to publish studies that report **positive, statistically significant results** than studies that find no effect. This creates a distorted picture of reality:
-
-- Researchers may run 20 experiments but only publish the 1 that “worked”.
-- Negative or null results remain hidden in file drawers.
-- Literature reviews then overestimate the strength of an effect.
+Journals are far more likely to publish studies that report **positive, statistically significant results** than studies that find no effect. This creates a distorted picture of reality: researchers may run 20 experiments but only publish the one that "worked", negative or null results remain hidden in file drawers, and literature reviews then overestimate the strength of an effect.
 
 This is another reason why reproducibility and pre‑registration of studies are so important in modern science.
 
 ---
 
-## Key Takeaways for This Week
+## Key Takeaways for This Chapter
 
 1. **Hypothesis first, data second**: Never reverse the order.
 2. Induction is the workhorse of science; deduction gives certainty; abduction is a trap.
@@ -281,4 +267,4 @@ This is another reason why reproducibility and pre‑registration of studies are
 
 - Taleb, N. N. (2010). *The Black Swan: The Impact of the Highly Improbable*. Random House.
 - Wootton, D. (2015). *The Invention of Science: A New History of the Scientific Revolution*. HarperCollins.
-- Neuman, W. L. (2021). *Social Research Methods* (7th ed.). Pearson.
+- Neuman, W. L. (2021). *Social Research Methods: Qualitative and Quantitative Approaches* (8th ed.). Pearson.

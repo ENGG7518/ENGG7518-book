@@ -1,16 +1,14 @@
 ---
 title: "Practical Research Skills"
 subtitle: "ENGG7518 Research Methods for Engineers: Week 3"
-author: "Prof. Zuduo Zheng"
-date: "29 July 2026"
 ---
 
-> *“Passion and obsession, even talent, are only useful tools if you have the work ethic to back them up.”*  
-> - **David Goggins
+> *“Passion and obsession, even talent, are only useful tools if you have the work ethic to back them up.”*
+> — David Goggins
 
 ## Introduction
 
-In the first two weeks we built the philosophical foundations of science and research. Now we shift to the **practical tasks** you will face when starting your own project, whether it is a semester‑long research assignment or a larger thesis. The journey begins with one of the most underestimated yet most powerful tools a researcher possesses: the **literature review**.
+In the previous two chapters we built the philosophical foundations of science and research. Now we shift to the **practical tasks** you will face when starting your own project, whether it is a semester‑long research assignment or a larger thesis. The journey begins with one of the most underestimated yet most powerful tools a researcher possesses: the **literature review**.
 
 This chapter will take you through the entire practical workflow:
 
@@ -25,7 +23,7 @@ Let’s begin at the beginning.
 
 ## The Research Process: A Quick Reminder
 
-Every research project follows a well‑defined cycle. At its centre lies **theory**, and an essential early step is *selecting a good topic*. How do you choose? The answer, as many of you correctly recalled, is through a thorough review of what others have already done.
+Every research project follows a well‑defined cycle. At its centre lies **theory**, and an essential early step is *selecting a good topic*. How do you choose? The answer is through a thorough review of what others have already done.
 
 ![The typical research process](../images/research-process.png)
 
@@ -118,11 +116,7 @@ If you haven’t used Google Scholar before, open it now at [scholar.google.com]
 
 ### Basic vs. Advanced Search
 
-By default, Google Scholar treats your search terms as:
-
-- **Not case‑sensitive** (“Traffic” = “traffic”)
-- **Combined with AND** if you type multiple words
-- **Searched everywhere**: Full text, title, abstract, citations
+By default, Google Scholar treats your search terms as **not case‑sensitive** (“Traffic” = “traffic”), **combined with AND** if you type multiple words, and **searched everywhere**: full text, title, abstract, and citations.
 
 This gives you a huge number of results, many of which are irrelevant. To narrow things down, use the **Advanced Search** (accessible from the menu). You can:
 
@@ -306,7 +300,7 @@ In both cases, the gap is specific, its consequence is clear, and the response i
 
 ## Constructing Hypotheses
 
-A **hypothesis** is a tentative proposition that states a predicted relationship between two or more variables. According to Bailey (1978), a hypothesis is:
+A **hypothesis** is a tentative proposition that states a predicted relationship between two or more variables. According to Bailey [-@Bailey1978], a hypothesis is:
 
 > “a proposition that is stated in a testable form and that predicts a particular relationship between two (or more) variables. If we think that a relationship exists, we first state it as a hypothesis and then test the hypothesis in the field.”
 
@@ -466,10 +460,10 @@ These questions are simple but powerful. Get into the habit of using them every 
 
 ## Further Reading
 
-- Neuman, W. L. (2013). *Social Research Methods* (7th ed.). Chapter 5: How to Review the Literature and Conduct Ethical Studies.
-- Schall, J. *Style for Students Online* -  Effective Technical Writing in the Information Age. [Free access](https://www.e-education.psu.edu/styleforstudents/)
+- Neuman, W. L. (2021). *Social Research Methods: Qualitative and Quantitative Approaches* (8th ed.). Pearson.
+- Schall, J. *Style for Students Online*: Effective Technical Writing in the Information Age. [Free access](https://www.e-education.psu.edu/styleforstudents/)
 - UQ Library’s systematic review guide: [guides.library.uq.edu.au](https://guides.library.uq.edu.au)
 
 ---
 
-*This concludes the Week 3 lecture material. Next week we move into data quality and the beginning of statistical analysis; things will get more technical, but you now have the practical toolkit to handle them.*
+*This concludes this chapter. The next chapter moves into data quality and the beginning of statistical analysis; things get more technical, but you now have the practical toolkit to handle them.*
